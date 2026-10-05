@@ -1,0 +1,28 @@
+name: 契约检查
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - run: make generate-check
+      - run: make test
+      - name: 协议兼容检查
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          if git cat-file -e "origin/${BASE_REF}:proto" 2>/dev/null; then
+            go run github.com/bufbuild/buf/cmd/buf@v1.61.0 breaking proto --against ".git#branch=origin/${BASE_REF},subdir=proto"
+          else
+            echo '首次发布尚无协议基线，后续 PR 必须检查兼容性。'
+          fi
