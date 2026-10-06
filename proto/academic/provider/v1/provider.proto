@@ -264,6 +264,8 @@ message TrainingPlan {
   repeated TrainingPlanCourseGroup course_groups = 4;
   repeated TrainingPlanCreditRequirement credit_requirements = 5;
   double total_required_credit = 6;
+  optional string major_name = 7;
+  optional int32 cohort_year = 8;
 }
 
 message TrainingPlanCourseGroup {

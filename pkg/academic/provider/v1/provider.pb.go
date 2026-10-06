@@ -2175,6 +2175,8 @@ type TrainingPlan struct {
 	CourseGroups        []*TrainingPlanCourseGroup       `protobuf:"bytes,4,rep,name=course_groups,json=courseGroups,proto3" json:"course_groups,omitempty"`
 	CreditRequirements  []*TrainingPlanCreditRequirement `protobuf:"bytes,5,rep,name=credit_requirements,json=creditRequirements,proto3" json:"credit_requirements,omitempty"`
 	TotalRequiredCredit float64                          `protobuf:"fixed64,6,opt,name=total_required_credit,json=totalRequiredCredit,proto3" json:"total_required_credit,omitempty"`
+	MajorName           *string                          `protobuf:"bytes,7,opt,name=major_name,json=majorName,proto3,oneof" json:"major_name,omitempty"`
+	CohortYear          *int32                           `protobuf:"varint,8,opt,name=cohort_year,json=cohortYear,proto3,oneof" json:"cohort_year,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -2247,6 +2249,20 @@ func (x *TrainingPlan) GetCreditRequirements() []*TrainingPlanCreditRequirement 
 func (x *TrainingPlan) GetTotalRequiredCredit() float64 {
 	if x != nil {
 		return x.TotalRequiredCredit
+	}
+	return 0
+}
+
+func (x *TrainingPlan) GetMajorName() string {
+	if x != nil && x.MajorName != nil {
+		return *x.MajorName
+	}
+	return ""
+}
+
+func (x *TrainingPlan) GetCohortYear() int32 {
+	if x != nil && x.CohortYear != nil {
+		return *x.CohortYear
 	}
 	return 0
 }
@@ -2717,7 +2733,7 @@ const file_academic_provider_v1_provider_proto_rawDesc = "" +
 	"credential\x18\x02 \x01(\v2 .academic.provider.v1.CredentialR\n" +
 	"credential\"Q\n" +
 	"\x17GetTrainingPlanResponse\x126\n" +
-	"\x04plan\x18\x01 \x01(\v2\".academic.provider.v1.TrainingPlanR\x04plan\"\xd4\x02\n" +
+	"\x04plan\x18\x01 \x01(\v2\".academic.provider.v1.TrainingPlanR\x04plan\"\xbd\x03\n" +
 	"\fTrainingPlan\x12\x14\n" +
 	"\x05title\x18\x01 \x01(\tR\x05title\x12\x1e\n" +
 	"\n" +
@@ -2726,7 +2742,13 @@ const file_academic_provider_v1_provider_proto_rawDesc = "" +
 	"\vdescription\x18\x03 \x01(\tR\vdescription\x12R\n" +
 	"\rcourse_groups\x18\x04 \x03(\v2-.academic.provider.v1.TrainingPlanCourseGroupR\fcourseGroups\x12d\n" +
 	"\x13credit_requirements\x18\x05 \x03(\v23.academic.provider.v1.TrainingPlanCreditRequirementR\x12creditRequirements\x122\n" +
-	"\x15total_required_credit\x18\x06 \x01(\x01R\x13totalRequiredCredit\"\x9a\x01\n" +
+	"\x15total_required_credit\x18\x06 \x01(\x01R\x13totalRequiredCredit\x12\"\n" +
+	"\n" +
+	"major_name\x18\a \x01(\tH\x00R\tmajorName\x88\x01\x01\x12$\n" +
+	"\vcohort_year\x18\b \x01(\x05H\x01R\n" +
+	"cohortYear\x88\x01\x01B\r\n" +
+	"\v_major_nameB\x0e\n" +
+	"\f_cohort_year\"\x9a\x01\n" +
 	"\x17TrainingPlanCourseGroup\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12'\n" +
 	"\x0fcourses_omitted\x18\x02 \x01(\bR\x0ecoursesOmitted\x12B\n" +
@@ -2886,6 +2908,7 @@ func file_academic_provider_v1_provider_proto_init() {
 	}
 	file_academic_provider_v1_provider_proto_msgTypes[12].OneofWrappers = []any{}
 	file_academic_provider_v1_provider_proto_msgTypes[18].OneofWrappers = []any{}
+	file_academic_provider_v1_provider_proto_msgTypes[29].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
