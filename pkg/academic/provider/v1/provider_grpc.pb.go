@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	AcademicProviderService_VerifyCredential_FullMethodName           = "/academic.provider.v1.AcademicProviderService/VerifyCredential"
+	AcademicProviderService_VerifyManagedCredential_FullMethodName    = "/academic.provider.v1.AcademicProviderService/VerifyManagedCredential"
 	AcademicProviderService_ListCourses_FullMethodName                = "/academic.provider.v1.AcademicProviderService/ListCourses"
 	AcademicProviderService_GetCourseSelectionSchedule_FullMethodName = "/academic.provider.v1.AcademicProviderService/GetCourseSelectionSchedule"
 	AcademicProviderService_ListGrades_FullMethodName                 = "/academic.provider.v1.AcademicProviderService/ListGrades"
@@ -35,6 +36,8 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AcademicProviderServiceClient interface {
 	VerifyCredential(ctx context.Context, in *VerifyCredentialRequest, opts ...grpc.CallOption) (*VerifyCredentialResponse, error)
+	// VerifyManagedCredential 仅验证托管凭据，不建立长期会话。
+	VerifyManagedCredential(ctx context.Context, in *VerifyManagedCredentialRequest, opts ...grpc.CallOption) (*VerifyManagedCredentialResponse, error)
 	ListCourses(ctx context.Context, in *ListCoursesRequest, opts ...grpc.CallOption) (*ListCoursesResponse, error)
 	GetCourseSelectionSchedule(ctx context.Context, in *GetCourseSelectionScheduleRequest, opts ...grpc.CallOption) (*GetCourseSelectionScheduleResponse, error)
 	ListGrades(ctx context.Context, in *ListGradesRequest, opts ...grpc.CallOption) (*ListGradesResponse, error)
@@ -57,6 +60,16 @@ func (c *academicProviderServiceClient) VerifyCredential(ctx context.Context, in
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(VerifyCredentialResponse)
 	err := c.cc.Invoke(ctx, AcademicProviderService_VerifyCredential_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *academicProviderServiceClient) VerifyManagedCredential(ctx context.Context, in *VerifyManagedCredentialRequest, opts ...grpc.CallOption) (*VerifyManagedCredentialResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(VerifyManagedCredentialResponse)
+	err := c.cc.Invoke(ctx, AcademicProviderService_VerifyManagedCredential_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -148,6 +161,8 @@ func (c *academicProviderServiceClient) DeleteStudentSessions(ctx context.Contex
 // for forward compatibility.
 type AcademicProviderServiceServer interface {
 	VerifyCredential(context.Context, *VerifyCredentialRequest) (*VerifyCredentialResponse, error)
+	// VerifyManagedCredential 仅验证托管凭据，不建立长期会话。
+	VerifyManagedCredential(context.Context, *VerifyManagedCredentialRequest) (*VerifyManagedCredentialResponse, error)
 	ListCourses(context.Context, *ListCoursesRequest) (*ListCoursesResponse, error)
 	GetCourseSelectionSchedule(context.Context, *GetCourseSelectionScheduleRequest) (*GetCourseSelectionScheduleResponse, error)
 	ListGrades(context.Context, *ListGradesRequest) (*ListGradesResponse, error)
@@ -168,6 +183,9 @@ type UnimplementedAcademicProviderServiceServer struct{}
 
 func (UnimplementedAcademicProviderServiceServer) VerifyCredential(context.Context, *VerifyCredentialRequest) (*VerifyCredentialResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method VerifyCredential not implemented")
+}
+func (UnimplementedAcademicProviderServiceServer) VerifyManagedCredential(context.Context, *VerifyManagedCredentialRequest) (*VerifyManagedCredentialResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method VerifyManagedCredential not implemented")
 }
 func (UnimplementedAcademicProviderServiceServer) ListCourses(context.Context, *ListCoursesRequest) (*ListCoursesResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListCourses not implemented")
@@ -229,6 +247,24 @@ func _AcademicProviderService_VerifyCredential_Handler(srv interface{}, ctx cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AcademicProviderServiceServer).VerifyCredential(ctx, req.(*VerifyCredentialRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AcademicProviderService_VerifyManagedCredential_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VerifyManagedCredentialRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AcademicProviderServiceServer).VerifyManagedCredential(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AcademicProviderService_VerifyManagedCredential_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AcademicProviderServiceServer).VerifyManagedCredential(ctx, req.(*VerifyManagedCredentialRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -387,6 +423,10 @@ var AcademicProviderService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "VerifyCredential",
 			Handler:    _AcademicProviderService_VerifyCredential_Handler,
+		},
+		{
+			MethodName: "VerifyManagedCredential",
+			Handler:    _AcademicProviderService_VerifyManagedCredential_Handler,
 		},
 		{
 			MethodName: "ListCourses",

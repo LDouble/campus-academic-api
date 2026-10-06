@@ -11,6 +11,8 @@ import "google/protobuf/timestamp.proto";
 
 service AcademicProviderService {
   rpc VerifyCredential(VerifyCredentialRequest) returns (VerifyCredentialResponse);
+  // VerifyManagedCredential 仅验证托管凭据，不建立长期会话。
+  rpc VerifyManagedCredential(VerifyManagedCredentialRequest) returns (VerifyManagedCredentialResponse);
   rpc ListCourses(ListCoursesRequest) returns (ListCoursesResponse);
   rpc GetCourseSelectionSchedule(GetCourseSelectionScheduleRequest) returns (GetCourseSelectionScheduleResponse);
   rpc ListGrades(ListGradesRequest) returns (ListGradesResponse);
@@ -39,6 +41,17 @@ message VerifyCredentialRequest {
 }
 
 message VerifyCredentialResponse {
+  string real_name = 1;
+  string provider = 2;
+  string education_level = 3;
+}
+
+message VerifyManagedCredentialRequest {
+  Credential credential = 1;
+  string education_level = 2;
+}
+
+message VerifyManagedCredentialResponse {
   string real_name = 1;
   string provider = 2;
   string education_level = 3;
