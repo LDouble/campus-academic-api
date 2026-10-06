@@ -2069,6 +2069,425 @@ func (x *CourseCatalogEntry) GetNote() string {
 	return ""
 }
 
+// GetTrainingPlanRequest 查询已认证学生的培养方案，不按学期筛选。
+type GetTrainingPlanRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Student       *StudentReference      `protobuf:"bytes,1,opt,name=student,proto3" json:"student,omitempty"`
+	Credential    *Credential            `protobuf:"bytes,2,opt,name=credential,proto3" json:"credential,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetTrainingPlanRequest) Reset() {
+	*x = GetTrainingPlanRequest{}
+	mi := &file_academic_provider_v1_provider_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetTrainingPlanRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTrainingPlanRequest) ProtoMessage() {}
+
+func (x *GetTrainingPlanRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_provider_v1_provider_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTrainingPlanRequest.ProtoReflect.Descriptor instead.
+func (*GetTrainingPlanRequest) Descriptor() ([]byte, []int) {
+	return file_academic_provider_v1_provider_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *GetTrainingPlanRequest) GetStudent() *StudentReference {
+	if x != nil {
+		return x.Student
+	}
+	return nil
+}
+
+func (x *GetTrainingPlanRequest) GetCredential() *Credential {
+	if x != nil {
+		return x.Credential
+	}
+	return nil
+}
+
+type GetTrainingPlanResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Plan          *TrainingPlan          `protobuf:"bytes,1,opt,name=plan,proto3" json:"plan,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetTrainingPlanResponse) Reset() {
+	*x = GetTrainingPlanResponse{}
+	mi := &file_academic_provider_v1_provider_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetTrainingPlanResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTrainingPlanResponse) ProtoMessage() {}
+
+func (x *GetTrainingPlanResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_provider_v1_provider_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTrainingPlanResponse.ProtoReflect.Descriptor instead.
+func (*GetTrainingPlanResponse) Descriptor() ([]byte, []int) {
+	return file_academic_provider_v1_provider_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *GetTrainingPlanResponse) GetPlan() *TrainingPlan {
+	if x != nil {
+		return x.Plan
+	}
+	return nil
+}
+
+// TrainingPlan 的体系名称和数量随专业变化，不使用固定分类枚举。
+type TrainingPlan struct {
+	state               protoimpl.MessageState           `protogen:"open.v1"`
+	Title               string                           `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty"`
+	Objectives          string                           `protobuf:"bytes,2,opt,name=objectives,proto3" json:"objectives,omitempty"`
+	Description         string                           `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	CourseGroups        []*TrainingPlanCourseGroup       `protobuf:"bytes,4,rep,name=course_groups,json=courseGroups,proto3" json:"course_groups,omitempty"`
+	CreditRequirements  []*TrainingPlanCreditRequirement `protobuf:"bytes,5,rep,name=credit_requirements,json=creditRequirements,proto3" json:"credit_requirements,omitempty"`
+	TotalRequiredCredit float64                          `protobuf:"fixed64,6,opt,name=total_required_credit,json=totalRequiredCredit,proto3" json:"total_required_credit,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *TrainingPlan) Reset() {
+	*x = TrainingPlan{}
+	mi := &file_academic_provider_v1_provider_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TrainingPlan) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TrainingPlan) ProtoMessage() {}
+
+func (x *TrainingPlan) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_provider_v1_provider_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TrainingPlan.ProtoReflect.Descriptor instead.
+func (*TrainingPlan) Descriptor() ([]byte, []int) {
+	return file_academic_provider_v1_provider_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *TrainingPlan) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+func (x *TrainingPlan) GetObjectives() string {
+	if x != nil {
+		return x.Objectives
+	}
+	return ""
+}
+
+func (x *TrainingPlan) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *TrainingPlan) GetCourseGroups() []*TrainingPlanCourseGroup {
+	if x != nil {
+		return x.CourseGroups
+	}
+	return nil
+}
+
+func (x *TrainingPlan) GetCreditRequirements() []*TrainingPlanCreditRequirement {
+	if x != nil {
+		return x.CreditRequirements
+	}
+	return nil
+}
+
+func (x *TrainingPlan) GetTotalRequiredCredit() float64 {
+	if x != nil {
+		return x.TotalRequiredCredit
+	}
+	return 0
+}
+
+type TrainingPlanCourseGroup struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Name           string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	CoursesOmitted bool                   `protobuf:"varint,2,opt,name=courses_omitted,json=coursesOmitted,proto3" json:"courses_omitted,omitempty"`
+	Courses        []*TrainingPlanCourse  `protobuf:"bytes,3,rep,name=courses,proto3" json:"courses,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *TrainingPlanCourseGroup) Reset() {
+	*x = TrainingPlanCourseGroup{}
+	mi := &file_academic_provider_v1_provider_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TrainingPlanCourseGroup) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TrainingPlanCourseGroup) ProtoMessage() {}
+
+func (x *TrainingPlanCourseGroup) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_provider_v1_provider_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TrainingPlanCourseGroup.ProtoReflect.Descriptor instead.
+func (*TrainingPlanCourseGroup) Descriptor() ([]byte, []int) {
+	return file_academic_provider_v1_provider_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *TrainingPlanCourseGroup) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *TrainingPlanCourseGroup) GetCoursesOmitted() bool {
+	if x != nil {
+		return x.CoursesOmitted
+	}
+	return false
+}
+
+func (x *TrainingPlanCourseGroup) GetCourses() []*TrainingPlanCourse {
+	if x != nil {
+		return x.Courses
+	}
+	return nil
+}
+
+type TrainingPlanCourse struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	SelectionGroup  string                 `protobuf:"bytes,1,opt,name=selection_group,json=selectionGroup,proto3" json:"selection_group,omitempty"`
+	CourseCode      string                 `protobuf:"bytes,2,opt,name=course_code,json=courseCode,proto3" json:"course_code,omitempty"`
+	CourseName      string                 `protobuf:"bytes,3,opt,name=course_name,json=courseName,proto3" json:"course_name,omitempty"`
+	CourseNature    string                 `protobuf:"bytes,4,opt,name=course_nature,json=courseNature,proto3" json:"course_nature,omitempty"`
+	CourseAttribute string                 `protobuf:"bytes,5,opt,name=course_attribute,json=courseAttribute,proto3" json:"course_attribute,omitempty"`
+	Credit          float64                `protobuf:"fixed64,6,opt,name=credit,proto3" json:"credit,omitempty"`
+	LectureHours    float64                `protobuf:"fixed64,7,opt,name=lecture_hours,json=lectureHours,proto3" json:"lecture_hours,omitempty"`
+	PracticeHours   float64                `protobuf:"fixed64,8,opt,name=practice_hours,json=practiceHours,proto3" json:"practice_hours,omitempty"`
+	TotalHours      float64                `protobuf:"fixed64,9,opt,name=total_hours,json=totalHours,proto3" json:"total_hours,omitempty"`
+	// OfferedTerms 保留教务原始开设学期编号和顺序。
+	OfferedTerms  []string `protobuf:"bytes,10,rep,name=offered_terms,json=offeredTerms,proto3" json:"offered_terms,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TrainingPlanCourse) Reset() {
+	*x = TrainingPlanCourse{}
+	mi := &file_academic_provider_v1_provider_proto_msgTypes[31]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TrainingPlanCourse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TrainingPlanCourse) ProtoMessage() {}
+
+func (x *TrainingPlanCourse) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_provider_v1_provider_proto_msgTypes[31]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TrainingPlanCourse.ProtoReflect.Descriptor instead.
+func (*TrainingPlanCourse) Descriptor() ([]byte, []int) {
+	return file_academic_provider_v1_provider_proto_rawDescGZIP(), []int{31}
+}
+
+func (x *TrainingPlanCourse) GetSelectionGroup() string {
+	if x != nil {
+		return x.SelectionGroup
+	}
+	return ""
+}
+
+func (x *TrainingPlanCourse) GetCourseCode() string {
+	if x != nil {
+		return x.CourseCode
+	}
+	return ""
+}
+
+func (x *TrainingPlanCourse) GetCourseName() string {
+	if x != nil {
+		return x.CourseName
+	}
+	return ""
+}
+
+func (x *TrainingPlanCourse) GetCourseNature() string {
+	if x != nil {
+		return x.CourseNature
+	}
+	return ""
+}
+
+func (x *TrainingPlanCourse) GetCourseAttribute() string {
+	if x != nil {
+		return x.CourseAttribute
+	}
+	return ""
+}
+
+func (x *TrainingPlanCourse) GetCredit() float64 {
+	if x != nil {
+		return x.Credit
+	}
+	return 0
+}
+
+func (x *TrainingPlanCourse) GetLectureHours() float64 {
+	if x != nil {
+		return x.LectureHours
+	}
+	return 0
+}
+
+func (x *TrainingPlanCourse) GetPracticeHours() float64 {
+	if x != nil {
+		return x.PracticeHours
+	}
+	return 0
+}
+
+func (x *TrainingPlanCourse) GetTotalHours() float64 {
+	if x != nil {
+		return x.TotalHours
+	}
+	return 0
+}
+
+func (x *TrainingPlanCourse) GetOfferedTerms() []string {
+	if x != nil {
+		return x.OfferedTerms
+	}
+	return nil
+}
+
+type TrainingPlanCreditRequirement struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	GroupName       string                 `protobuf:"bytes,1,opt,name=group_name,json=groupName,proto3" json:"group_name,omitempty"`
+	CourseAttribute string                 `protobuf:"bytes,2,opt,name=course_attribute,json=courseAttribute,proto3" json:"course_attribute,omitempty"`
+	RequiredCredit  float64                `protobuf:"fixed64,3,opt,name=required_credit,json=requiredCredit,proto3" json:"required_credit,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *TrainingPlanCreditRequirement) Reset() {
+	*x = TrainingPlanCreditRequirement{}
+	mi := &file_academic_provider_v1_provider_proto_msgTypes[32]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TrainingPlanCreditRequirement) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TrainingPlanCreditRequirement) ProtoMessage() {}
+
+func (x *TrainingPlanCreditRequirement) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_provider_v1_provider_proto_msgTypes[32]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TrainingPlanCreditRequirement.ProtoReflect.Descriptor instead.
+func (*TrainingPlanCreditRequirement) Descriptor() ([]byte, []int) {
+	return file_academic_provider_v1_provider_proto_rawDescGZIP(), []int{32}
+}
+
+func (x *TrainingPlanCreditRequirement) GetGroupName() string {
+	if x != nil {
+		return x.GroupName
+	}
+	return ""
+}
+
+func (x *TrainingPlanCreditRequirement) GetCourseAttribute() string {
+	if x != nil {
+		return x.CourseAttribute
+	}
+	return ""
+}
+
+func (x *TrainingPlanCreditRequirement) GetRequiredCredit() float64 {
+	if x != nil {
+		return x.RequiredCredit
+	}
+	return 0
+}
+
 var File_academic_provider_v1_provider_proto protoreflect.FileDescriptor
 
 const file_academic_provider_v1_provider_proto_rawDesc = "" +
@@ -2291,7 +2710,47 @@ const file_academic_provider_v1_provider_proto_rawDesc = "" +
 	"\blanguage\x18\r \x01(\tR\blanguage\x12\x1a\n" +
 	"\bcapacity\x18\x0e \x01(\x05R\bcapacity\x12\x1a\n" +
 	"\benrolled\x18\x0f \x01(\x05R\benrolled\x12\x12\n" +
-	"\x04note\x18\x10 \x01(\tR\x04note2\xd5\b\n" +
+	"\x04note\x18\x10 \x01(\tR\x04note\"\x9c\x01\n" +
+	"\x16GetTrainingPlanRequest\x12@\n" +
+	"\astudent\x18\x01 \x01(\v2&.academic.provider.v1.StudentReferenceR\astudent\x12@\n" +
+	"\n" +
+	"credential\x18\x02 \x01(\v2 .academic.provider.v1.CredentialR\n" +
+	"credential\"Q\n" +
+	"\x17GetTrainingPlanResponse\x126\n" +
+	"\x04plan\x18\x01 \x01(\v2\".academic.provider.v1.TrainingPlanR\x04plan\"\xd4\x02\n" +
+	"\fTrainingPlan\x12\x14\n" +
+	"\x05title\x18\x01 \x01(\tR\x05title\x12\x1e\n" +
+	"\n" +
+	"objectives\x18\x02 \x01(\tR\n" +
+	"objectives\x12 \n" +
+	"\vdescription\x18\x03 \x01(\tR\vdescription\x12R\n" +
+	"\rcourse_groups\x18\x04 \x03(\v2-.academic.provider.v1.TrainingPlanCourseGroupR\fcourseGroups\x12d\n" +
+	"\x13credit_requirements\x18\x05 \x03(\v23.academic.provider.v1.TrainingPlanCreditRequirementR\x12creditRequirements\x122\n" +
+	"\x15total_required_credit\x18\x06 \x01(\x01R\x13totalRequiredCredit\"\x9a\x01\n" +
+	"\x17TrainingPlanCourseGroup\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12'\n" +
+	"\x0fcourses_omitted\x18\x02 \x01(\bR\x0ecoursesOmitted\x12B\n" +
+	"\acourses\x18\x03 \x03(\v2(.academic.provider.v1.TrainingPlanCourseR\acourses\"\xf9\x02\n" +
+	"\x12TrainingPlanCourse\x12'\n" +
+	"\x0fselection_group\x18\x01 \x01(\tR\x0eselectionGroup\x12\x1f\n" +
+	"\vcourse_code\x18\x02 \x01(\tR\n" +
+	"courseCode\x12\x1f\n" +
+	"\vcourse_name\x18\x03 \x01(\tR\n" +
+	"courseName\x12#\n" +
+	"\rcourse_nature\x18\x04 \x01(\tR\fcourseNature\x12)\n" +
+	"\x10course_attribute\x18\x05 \x01(\tR\x0fcourseAttribute\x12\x16\n" +
+	"\x06credit\x18\x06 \x01(\x01R\x06credit\x12#\n" +
+	"\rlecture_hours\x18\a \x01(\x01R\flectureHours\x12%\n" +
+	"\x0epractice_hours\x18\b \x01(\x01R\rpracticeHours\x12\x1f\n" +
+	"\vtotal_hours\x18\t \x01(\x01R\n" +
+	"totalHours\x12#\n" +
+	"\roffered_terms\x18\n" +
+	" \x03(\tR\fofferedTerms\"\x92\x01\n" +
+	"\x1dTrainingPlanCreditRequirement\x12\x1d\n" +
+	"\n" +
+	"group_name\x18\x01 \x01(\tR\tgroupName\x12)\n" +
+	"\x10course_attribute\x18\x02 \x01(\tR\x0fcourseAttribute\x12'\n" +
+	"\x0frequired_credit\x18\x03 \x01(\x01R\x0erequiredCredit2\xc5\t\n" +
 	"\x17AcademicProviderService\x12q\n" +
 	"\x10VerifyCredential\x12-.academic.provider.v1.VerifyCredentialRequest\x1a..academic.provider.v1.VerifyCredentialResponse\x12b\n" +
 	"\vListCourses\x12(.academic.provider.v1.ListCoursesRequest\x1a).academic.provider.v1.ListCoursesResponse\x12\x8f\x01\n" +
@@ -2301,7 +2760,8 @@ const file_academic_provider_v1_provider_proto_rawDesc = "" +
 	"\tListExams\x12&.academic.provider.v1.ListExamsRequest\x1a'.academic.provider.v1.ListExamsResponse\x12}\n" +
 	"\x14ListCourseSelections\x121.academic.provider.v1.ListCourseSelectionsRequest\x1a2.academic.provider.v1.ListCourseSelectionsResponse\x12\x8c\x01\n" +
 	"\x19ListCourseAdditionResults\x126.academic.provider.v1.ListCourseAdditionResultsRequest\x1a7.academic.provider.v1.ListCourseAdditionResultsResponse\x12\x80\x01\n" +
-	"\x15ListCourseCatalogPage\x122.academic.provider.v1.ListCourseCatalogPageRequest\x1a3.academic.provider.v1.ListCourseCatalogPageResponse\x12\x80\x01\n" +
+	"\x15ListCourseCatalogPage\x122.academic.provider.v1.ListCourseCatalogPageRequest\x1a3.academic.provider.v1.ListCourseCatalogPageResponse\x12n\n" +
+	"\x0fGetTrainingPlan\x12,.academic.provider.v1.GetTrainingPlanRequest\x1a-.academic.provider.v1.GetTrainingPlanResponse\x12\x80\x01\n" +
 	"\x15DeleteStudentSessions\x122.academic.provider.v1.DeleteStudentSessionsRequest\x1a3.academic.provider.v1.DeleteStudentSessionsResponseBTZRgithub.com/LDouble/campus-academic-api/pkg/academic/provider/v1;academicproviderv1b\x06proto3"
 
 var (
@@ -2316,7 +2776,7 @@ func file_academic_provider_v1_provider_proto_rawDescGZIP() []byte {
 	return file_academic_provider_v1_provider_proto_rawDescData
 }
 
-var file_academic_provider_v1_provider_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
+var file_academic_provider_v1_provider_proto_msgTypes = make([]protoimpl.MessageInfo, 33)
 var file_academic_provider_v1_provider_proto_goTypes = []any{
 	(*Credential)(nil),                         // 0: academic.provider.v1.Credential
 	(*StudentReference)(nil),                   // 1: academic.provider.v1.StudentReference
@@ -2345,7 +2805,13 @@ var file_academic_provider_v1_provider_proto_goTypes = []any{
 	(*ListCourseCatalogPageRequest)(nil),       // 24: academic.provider.v1.ListCourseCatalogPageRequest
 	(*ListCourseCatalogPageResponse)(nil),      // 25: academic.provider.v1.ListCourseCatalogPageResponse
 	(*CourseCatalogEntry)(nil),                 // 26: academic.provider.v1.CourseCatalogEntry
-	(*timestamppb.Timestamp)(nil),              // 27: google.protobuf.Timestamp
+	(*GetTrainingPlanRequest)(nil),             // 27: academic.provider.v1.GetTrainingPlanRequest
+	(*GetTrainingPlanResponse)(nil),            // 28: academic.provider.v1.GetTrainingPlanResponse
+	(*TrainingPlan)(nil),                       // 29: academic.provider.v1.TrainingPlan
+	(*TrainingPlanCourseGroup)(nil),            // 30: academic.provider.v1.TrainingPlanCourseGroup
+	(*TrainingPlanCourse)(nil),                 // 31: academic.provider.v1.TrainingPlanCourse
+	(*TrainingPlanCreditRequirement)(nil),      // 32: academic.provider.v1.TrainingPlanCreditRequirement
+	(*timestamppb.Timestamp)(nil),              // 33: google.protobuf.Timestamp
 }
 var file_academic_provider_v1_provider_proto_depIdxs = []int32{
 	0,  // 0: academic.provider.v1.VerifyCredentialRequest.credential:type_name -> academic.provider.v1.Credential
@@ -2353,8 +2819,8 @@ var file_academic_provider_v1_provider_proto_depIdxs = []int32{
 	0,  // 2: academic.provider.v1.ListCoursesRequest.credential:type_name -> academic.provider.v1.Credential
 	7,  // 3: academic.provider.v1.ListCoursesResponse.courses:type_name -> academic.provider.v1.Course
 	6,  // 4: academic.provider.v1.ListCoursesResponse.cache:type_name -> academic.provider.v1.CacheMetadata
-	27, // 5: academic.provider.v1.CacheMetadata.cached_at:type_name -> google.protobuf.Timestamp
-	27, // 6: academic.provider.v1.CacheMetadata.fresh_until:type_name -> google.protobuf.Timestamp
+	33, // 5: academic.provider.v1.CacheMetadata.cached_at:type_name -> google.protobuf.Timestamp
+	33, // 6: academic.provider.v1.CacheMetadata.fresh_until:type_name -> google.protobuf.Timestamp
 	1,  // 7: academic.provider.v1.GetCourseSelectionScheduleRequest.student:type_name -> academic.provider.v1.StudentReference
 	0,  // 8: academic.provider.v1.GetCourseSelectionScheduleRequest.credential:type_name -> academic.provider.v1.Credential
 	7,  // 9: academic.provider.v1.GetCourseSelectionScheduleResponse.courses:type_name -> academic.provider.v1.Course
@@ -2367,42 +2833,50 @@ var file_academic_provider_v1_provider_proto_depIdxs = []int32{
 	0,  // 16: academic.provider.v1.ListExamsRequest.credential:type_name -> academic.provider.v1.Credential
 	15, // 17: academic.provider.v1.ListExamsResponse.exams:type_name -> academic.provider.v1.Exam
 	6,  // 18: academic.provider.v1.ListExamsResponse.cache:type_name -> academic.provider.v1.CacheMetadata
-	27, // 19: academic.provider.v1.Exam.start_at:type_name -> google.protobuf.Timestamp
-	27, // 20: academic.provider.v1.Exam.end_at:type_name -> google.protobuf.Timestamp
+	33, // 19: academic.provider.v1.Exam.start_at:type_name -> google.protobuf.Timestamp
+	33, // 20: academic.provider.v1.Exam.end_at:type_name -> google.protobuf.Timestamp
 	1,  // 21: academic.provider.v1.ListCourseSelectionsRequest.student:type_name -> academic.provider.v1.StudentReference
 	0,  // 22: academic.provider.v1.ListCourseSelectionsRequest.credential:type_name -> academic.provider.v1.Credential
 	18, // 23: academic.provider.v1.ListCourseSelectionsResponse.selections:type_name -> academic.provider.v1.CourseSelection
 	6,  // 24: academic.provider.v1.ListCourseSelectionsResponse.cache:type_name -> academic.provider.v1.CacheMetadata
-	27, // 25: academic.provider.v1.CourseSelection.selected_at:type_name -> google.protobuf.Timestamp
+	33, // 25: academic.provider.v1.CourseSelection.selected_at:type_name -> google.protobuf.Timestamp
 	1,  // 26: academic.provider.v1.ListCourseAdditionResultsRequest.student:type_name -> academic.provider.v1.StudentReference
 	0,  // 27: academic.provider.v1.ListCourseAdditionResultsRequest.credential:type_name -> academic.provider.v1.Credential
 	21, // 28: academic.provider.v1.ListCourseAdditionResultsResponse.results:type_name -> academic.provider.v1.CourseAdditionResult
 	6,  // 29: academic.provider.v1.ListCourseAdditionResultsResponse.cache:type_name -> academic.provider.v1.CacheMetadata
 	0,  // 30: academic.provider.v1.ListCourseCatalogPageRequest.credential:type_name -> academic.provider.v1.Credential
 	26, // 31: academic.provider.v1.ListCourseCatalogPageResponse.entries:type_name -> academic.provider.v1.CourseCatalogEntry
-	2,  // 32: academic.provider.v1.AcademicProviderService.VerifyCredential:input_type -> academic.provider.v1.VerifyCredentialRequest
-	4,  // 33: academic.provider.v1.AcademicProviderService.ListCourses:input_type -> academic.provider.v1.ListCoursesRequest
-	8,  // 34: academic.provider.v1.AcademicProviderService.GetCourseSelectionSchedule:input_type -> academic.provider.v1.GetCourseSelectionScheduleRequest
-	10, // 35: academic.provider.v1.AcademicProviderService.ListGrades:input_type -> academic.provider.v1.ListGradesRequest
-	13, // 36: academic.provider.v1.AcademicProviderService.ListExams:input_type -> academic.provider.v1.ListExamsRequest
-	16, // 37: academic.provider.v1.AcademicProviderService.ListCourseSelections:input_type -> academic.provider.v1.ListCourseSelectionsRequest
-	19, // 38: academic.provider.v1.AcademicProviderService.ListCourseAdditionResults:input_type -> academic.provider.v1.ListCourseAdditionResultsRequest
-	24, // 39: academic.provider.v1.AcademicProviderService.ListCourseCatalogPage:input_type -> academic.provider.v1.ListCourseCatalogPageRequest
-	22, // 40: academic.provider.v1.AcademicProviderService.DeleteStudentSessions:input_type -> academic.provider.v1.DeleteStudentSessionsRequest
-	3,  // 41: academic.provider.v1.AcademicProviderService.VerifyCredential:output_type -> academic.provider.v1.VerifyCredentialResponse
-	5,  // 42: academic.provider.v1.AcademicProviderService.ListCourses:output_type -> academic.provider.v1.ListCoursesResponse
-	9,  // 43: academic.provider.v1.AcademicProviderService.GetCourseSelectionSchedule:output_type -> academic.provider.v1.GetCourseSelectionScheduleResponse
-	11, // 44: academic.provider.v1.AcademicProviderService.ListGrades:output_type -> academic.provider.v1.ListGradesResponse
-	14, // 45: academic.provider.v1.AcademicProviderService.ListExams:output_type -> academic.provider.v1.ListExamsResponse
-	17, // 46: academic.provider.v1.AcademicProviderService.ListCourseSelections:output_type -> academic.provider.v1.ListCourseSelectionsResponse
-	20, // 47: academic.provider.v1.AcademicProviderService.ListCourseAdditionResults:output_type -> academic.provider.v1.ListCourseAdditionResultsResponse
-	25, // 48: academic.provider.v1.AcademicProviderService.ListCourseCatalogPage:output_type -> academic.provider.v1.ListCourseCatalogPageResponse
-	23, // 49: academic.provider.v1.AcademicProviderService.DeleteStudentSessions:output_type -> academic.provider.v1.DeleteStudentSessionsResponse
-	41, // [41:50] is the sub-list for method output_type
-	32, // [32:41] is the sub-list for method input_type
-	32, // [32:32] is the sub-list for extension type_name
-	32, // [32:32] is the sub-list for extension extendee
-	0,  // [0:32] is the sub-list for field type_name
+	1,  // 32: academic.provider.v1.GetTrainingPlanRequest.student:type_name -> academic.provider.v1.StudentReference
+	0,  // 33: academic.provider.v1.GetTrainingPlanRequest.credential:type_name -> academic.provider.v1.Credential
+	29, // 34: academic.provider.v1.GetTrainingPlanResponse.plan:type_name -> academic.provider.v1.TrainingPlan
+	30, // 35: academic.provider.v1.TrainingPlan.course_groups:type_name -> academic.provider.v1.TrainingPlanCourseGroup
+	32, // 36: academic.provider.v1.TrainingPlan.credit_requirements:type_name -> academic.provider.v1.TrainingPlanCreditRequirement
+	31, // 37: academic.provider.v1.TrainingPlanCourseGroup.courses:type_name -> academic.provider.v1.TrainingPlanCourse
+	2,  // 38: academic.provider.v1.AcademicProviderService.VerifyCredential:input_type -> academic.provider.v1.VerifyCredentialRequest
+	4,  // 39: academic.provider.v1.AcademicProviderService.ListCourses:input_type -> academic.provider.v1.ListCoursesRequest
+	8,  // 40: academic.provider.v1.AcademicProviderService.GetCourseSelectionSchedule:input_type -> academic.provider.v1.GetCourseSelectionScheduleRequest
+	10, // 41: academic.provider.v1.AcademicProviderService.ListGrades:input_type -> academic.provider.v1.ListGradesRequest
+	13, // 42: academic.provider.v1.AcademicProviderService.ListExams:input_type -> academic.provider.v1.ListExamsRequest
+	16, // 43: academic.provider.v1.AcademicProviderService.ListCourseSelections:input_type -> academic.provider.v1.ListCourseSelectionsRequest
+	19, // 44: academic.provider.v1.AcademicProviderService.ListCourseAdditionResults:input_type -> academic.provider.v1.ListCourseAdditionResultsRequest
+	24, // 45: academic.provider.v1.AcademicProviderService.ListCourseCatalogPage:input_type -> academic.provider.v1.ListCourseCatalogPageRequest
+	27, // 46: academic.provider.v1.AcademicProviderService.GetTrainingPlan:input_type -> academic.provider.v1.GetTrainingPlanRequest
+	22, // 47: academic.provider.v1.AcademicProviderService.DeleteStudentSessions:input_type -> academic.provider.v1.DeleteStudentSessionsRequest
+	3,  // 48: academic.provider.v1.AcademicProviderService.VerifyCredential:output_type -> academic.provider.v1.VerifyCredentialResponse
+	5,  // 49: academic.provider.v1.AcademicProviderService.ListCourses:output_type -> academic.provider.v1.ListCoursesResponse
+	9,  // 50: academic.provider.v1.AcademicProviderService.GetCourseSelectionSchedule:output_type -> academic.provider.v1.GetCourseSelectionScheduleResponse
+	11, // 51: academic.provider.v1.AcademicProviderService.ListGrades:output_type -> academic.provider.v1.ListGradesResponse
+	14, // 52: academic.provider.v1.AcademicProviderService.ListExams:output_type -> academic.provider.v1.ListExamsResponse
+	17, // 53: academic.provider.v1.AcademicProviderService.ListCourseSelections:output_type -> academic.provider.v1.ListCourseSelectionsResponse
+	20, // 54: academic.provider.v1.AcademicProviderService.ListCourseAdditionResults:output_type -> academic.provider.v1.ListCourseAdditionResultsResponse
+	25, // 55: academic.provider.v1.AcademicProviderService.ListCourseCatalogPage:output_type -> academic.provider.v1.ListCourseCatalogPageResponse
+	28, // 56: academic.provider.v1.AcademicProviderService.GetTrainingPlan:output_type -> academic.provider.v1.GetTrainingPlanResponse
+	23, // 57: academic.provider.v1.AcademicProviderService.DeleteStudentSessions:output_type -> academic.provider.v1.DeleteStudentSessionsResponse
+	48, // [48:58] is the sub-list for method output_type
+	38, // [38:48] is the sub-list for method input_type
+	38, // [38:38] is the sub-list for extension type_name
+	38, // [38:38] is the sub-list for extension extendee
+	0,  // [0:38] is the sub-list for field type_name
 }
 
 func init() { file_academic_provider_v1_provider_proto_init() }
@@ -2418,7 +2892,7 @@ func file_academic_provider_v1_provider_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_academic_provider_v1_provider_proto_rawDesc), len(file_academic_provider_v1_provider_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   27,
+			NumMessages:   33,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
