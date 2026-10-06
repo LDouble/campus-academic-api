@@ -19,6 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
+	CredentialsService_GetCredentialMetadata_FullMethodName   = "/academic.credentials.v1.CredentialsService/GetCredentialMetadata"
+	CredentialsService_ListCredentialMetadata_FullMethodName  = "/academic.credentials.v1.CredentialsService/ListCredentialMetadata"
+	CredentialsService_ResolveCredential_FullMethodName       = "/academic.credentials.v1.CredentialsService/ResolveCredential"
+	CredentialsService_ValidateCredentialUse_FullMethodName   = "/academic.credentials.v1.CredentialsService/ValidateCredentialUse"
+	CredentialsService_ReportCredentialHealth_FullMethodName  = "/academic.credentials.v1.CredentialsService/ReportCredentialHealth"
 	CredentialsService_CreateBindingIntent_FullMethodName     = "/academic.credentials.v1.CredentialsService/CreateBindingIntent"
 	CredentialsService_GetHostingStatus_FullMethodName        = "/academic.credentials.v1.CredentialsService/GetHostingStatus"
 	CredentialsService_UpdateGrant_FullMethodName             = "/academic.credentials.v1.CredentialsService/UpdateGrant"
@@ -36,18 +41,33 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// CredentialsService 管理托管凭据、执行任务和准入；实现层必须执行内部 mTLS 身份策略。
+// CredentialsService 仅管理托管凭据及受控取用；实现层必须执行内部 mTLS 身份策略。
 type CredentialsServiceClient interface {
+	// 凭据元数据和受控取用不承担业务任务或调度状态。
+	GetCredentialMetadata(ctx context.Context, in *GetCredentialMetadataRequest, opts ...grpc.CallOption) (*GetCredentialMetadataResponse, error)
+	ListCredentialMetadata(ctx context.Context, in *ListCredentialMetadataRequest, opts ...grpc.CallOption) (*ListCredentialMetadataResponse, error)
+	ResolveCredential(ctx context.Context, in *ResolveCredentialRequest, opts ...grpc.CallOption) (*ResolveCredentialResponse, error)
+	ValidateCredentialUse(ctx context.Context, in *ValidateCredentialUseRequest, opts ...grpc.CallOption) (*ValidateCredentialUseResponse, error)
+	ReportCredentialHealth(ctx context.Context, in *ReportCredentialHealthRequest, opts ...grpc.CallOption) (*ReportCredentialHealthResponse, error)
 	CreateBindingIntent(ctx context.Context, in *CreateBindingIntentRequest, opts ...grpc.CallOption) (*CreateBindingIntentResponse, error)
 	GetHostingStatus(ctx context.Context, in *GetHostingStatusRequest, opts ...grpc.CallOption) (*GetHostingStatusResponse, error)
+	// Deprecated: Do not use.
+	// 已停用；仅保留 wire 兼容，服务端不提供实现或授权。
 	UpdateGrant(ctx context.Context, in *UpdateGrantRequest, opts ...grpc.CallOption) (*UpdateGrantResponse, error)
 	RevokeCredential(ctx context.Context, in *RevokeCredentialRequest, opts ...grpc.CallOption) (*RevokeCredentialResponse, error)
 	FenceSubject(ctx context.Context, in *FenceSubjectRequest, opts ...grpc.CallOption) (*FenceSubjectResponse, error)
+	// Deprecated: Do not use.
+	// 以下旧任务 RPC 已停用；仅保留 wire 兼容，服务端不提供实现或授权。
 	CreateTask(ctx context.Context, in *CreateTaskRequest, opts ...grpc.CallOption) (*CreateTaskResponse, error)
+	// Deprecated: Do not use.
 	GetTask(ctx context.Context, in *GetTaskRequest, opts ...grpc.CallOption) (*GetTaskResponse, error)
+	// Deprecated: Do not use.
 	LeaseTask(ctx context.Context, in *LeaseTaskRequest, opts ...grpc.CallOption) (*LeaseTaskResponse, error)
+	// Deprecated: Do not use.
 	ResolveTaskCredential(ctx context.Context, in *ResolveTaskCredentialRequest, opts ...grpc.CallOption) (*ResolveTaskCredentialResponse, error)
+	// Deprecated: Do not use.
 	CheckExecutionAdmission(ctx context.Context, in *CheckExecutionAdmissionRequest, opts ...grpc.CallOption) (*CheckExecutionAdmissionResponse, error)
+	// Deprecated: Do not use.
 	CompleteTask(ctx context.Context, in *CompleteTaskRequest, opts ...grpc.CallOption) (*CompleteTaskResponse, error)
 }
 
@@ -57,6 +77,56 @@ type credentialsServiceClient struct {
 
 func NewCredentialsServiceClient(cc grpc.ClientConnInterface) CredentialsServiceClient {
 	return &credentialsServiceClient{cc}
+}
+
+func (c *credentialsServiceClient) GetCredentialMetadata(ctx context.Context, in *GetCredentialMetadataRequest, opts ...grpc.CallOption) (*GetCredentialMetadataResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetCredentialMetadataResponse)
+	err := c.cc.Invoke(ctx, CredentialsService_GetCredentialMetadata_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *credentialsServiceClient) ListCredentialMetadata(ctx context.Context, in *ListCredentialMetadataRequest, opts ...grpc.CallOption) (*ListCredentialMetadataResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListCredentialMetadataResponse)
+	err := c.cc.Invoke(ctx, CredentialsService_ListCredentialMetadata_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *credentialsServiceClient) ResolveCredential(ctx context.Context, in *ResolveCredentialRequest, opts ...grpc.CallOption) (*ResolveCredentialResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ResolveCredentialResponse)
+	err := c.cc.Invoke(ctx, CredentialsService_ResolveCredential_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *credentialsServiceClient) ValidateCredentialUse(ctx context.Context, in *ValidateCredentialUseRequest, opts ...grpc.CallOption) (*ValidateCredentialUseResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ValidateCredentialUseResponse)
+	err := c.cc.Invoke(ctx, CredentialsService_ValidateCredentialUse_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *credentialsServiceClient) ReportCredentialHealth(ctx context.Context, in *ReportCredentialHealthRequest, opts ...grpc.CallOption) (*ReportCredentialHealthResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ReportCredentialHealthResponse)
+	err := c.cc.Invoke(ctx, CredentialsService_ReportCredentialHealth_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *credentialsServiceClient) CreateBindingIntent(ctx context.Context, in *CreateBindingIntentRequest, opts ...grpc.CallOption) (*CreateBindingIntentResponse, error) {
@@ -79,6 +149,7 @@ func (c *credentialsServiceClient) GetHostingStatus(ctx context.Context, in *Get
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *credentialsServiceClient) UpdateGrant(ctx context.Context, in *UpdateGrantRequest, opts ...grpc.CallOption) (*UpdateGrantResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UpdateGrantResponse)
@@ -109,6 +180,7 @@ func (c *credentialsServiceClient) FenceSubject(ctx context.Context, in *FenceSu
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *credentialsServiceClient) CreateTask(ctx context.Context, in *CreateTaskRequest, opts ...grpc.CallOption) (*CreateTaskResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CreateTaskResponse)
@@ -119,6 +191,7 @@ func (c *credentialsServiceClient) CreateTask(ctx context.Context, in *CreateTas
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *credentialsServiceClient) GetTask(ctx context.Context, in *GetTaskRequest, opts ...grpc.CallOption) (*GetTaskResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetTaskResponse)
@@ -129,6 +202,7 @@ func (c *credentialsServiceClient) GetTask(ctx context.Context, in *GetTaskReque
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *credentialsServiceClient) LeaseTask(ctx context.Context, in *LeaseTaskRequest, opts ...grpc.CallOption) (*LeaseTaskResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(LeaseTaskResponse)
@@ -139,6 +213,7 @@ func (c *credentialsServiceClient) LeaseTask(ctx context.Context, in *LeaseTaskR
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *credentialsServiceClient) ResolveTaskCredential(ctx context.Context, in *ResolveTaskCredentialRequest, opts ...grpc.CallOption) (*ResolveTaskCredentialResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ResolveTaskCredentialResponse)
@@ -149,6 +224,7 @@ func (c *credentialsServiceClient) ResolveTaskCredential(ctx context.Context, in
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *credentialsServiceClient) CheckExecutionAdmission(ctx context.Context, in *CheckExecutionAdmissionRequest, opts ...grpc.CallOption) (*CheckExecutionAdmissionResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CheckExecutionAdmissionResponse)
@@ -159,6 +235,7 @@ func (c *credentialsServiceClient) CheckExecutionAdmission(ctx context.Context, 
 	return out, nil
 }
 
+// Deprecated: Do not use.
 func (c *credentialsServiceClient) CompleteTask(ctx context.Context, in *CompleteTaskRequest, opts ...grpc.CallOption) (*CompleteTaskResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CompleteTaskResponse)
@@ -173,18 +250,33 @@ func (c *credentialsServiceClient) CompleteTask(ctx context.Context, in *Complet
 // All implementations must embed UnimplementedCredentialsServiceServer
 // for forward compatibility.
 //
-// CredentialsService 管理托管凭据、执行任务和准入；实现层必须执行内部 mTLS 身份策略。
+// CredentialsService 仅管理托管凭据及受控取用；实现层必须执行内部 mTLS 身份策略。
 type CredentialsServiceServer interface {
+	// 凭据元数据和受控取用不承担业务任务或调度状态。
+	GetCredentialMetadata(context.Context, *GetCredentialMetadataRequest) (*GetCredentialMetadataResponse, error)
+	ListCredentialMetadata(context.Context, *ListCredentialMetadataRequest) (*ListCredentialMetadataResponse, error)
+	ResolveCredential(context.Context, *ResolveCredentialRequest) (*ResolveCredentialResponse, error)
+	ValidateCredentialUse(context.Context, *ValidateCredentialUseRequest) (*ValidateCredentialUseResponse, error)
+	ReportCredentialHealth(context.Context, *ReportCredentialHealthRequest) (*ReportCredentialHealthResponse, error)
 	CreateBindingIntent(context.Context, *CreateBindingIntentRequest) (*CreateBindingIntentResponse, error)
 	GetHostingStatus(context.Context, *GetHostingStatusRequest) (*GetHostingStatusResponse, error)
+	// Deprecated: Do not use.
+	// 已停用；仅保留 wire 兼容，服务端不提供实现或授权。
 	UpdateGrant(context.Context, *UpdateGrantRequest) (*UpdateGrantResponse, error)
 	RevokeCredential(context.Context, *RevokeCredentialRequest) (*RevokeCredentialResponse, error)
 	FenceSubject(context.Context, *FenceSubjectRequest) (*FenceSubjectResponse, error)
+	// Deprecated: Do not use.
+	// 以下旧任务 RPC 已停用；仅保留 wire 兼容，服务端不提供实现或授权。
 	CreateTask(context.Context, *CreateTaskRequest) (*CreateTaskResponse, error)
+	// Deprecated: Do not use.
 	GetTask(context.Context, *GetTaskRequest) (*GetTaskResponse, error)
+	// Deprecated: Do not use.
 	LeaseTask(context.Context, *LeaseTaskRequest) (*LeaseTaskResponse, error)
+	// Deprecated: Do not use.
 	ResolveTaskCredential(context.Context, *ResolveTaskCredentialRequest) (*ResolveTaskCredentialResponse, error)
+	// Deprecated: Do not use.
 	CheckExecutionAdmission(context.Context, *CheckExecutionAdmissionRequest) (*CheckExecutionAdmissionResponse, error)
+	// Deprecated: Do not use.
 	CompleteTask(context.Context, *CompleteTaskRequest) (*CompleteTaskResponse, error)
 	mustEmbedUnimplementedCredentialsServiceServer()
 }
@@ -196,6 +288,21 @@ type CredentialsServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedCredentialsServiceServer struct{}
 
+func (UnimplementedCredentialsServiceServer) GetCredentialMetadata(context.Context, *GetCredentialMetadataRequest) (*GetCredentialMetadataResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetCredentialMetadata not implemented")
+}
+func (UnimplementedCredentialsServiceServer) ListCredentialMetadata(context.Context, *ListCredentialMetadataRequest) (*ListCredentialMetadataResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListCredentialMetadata not implemented")
+}
+func (UnimplementedCredentialsServiceServer) ResolveCredential(context.Context, *ResolveCredentialRequest) (*ResolveCredentialResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ResolveCredential not implemented")
+}
+func (UnimplementedCredentialsServiceServer) ValidateCredentialUse(context.Context, *ValidateCredentialUseRequest) (*ValidateCredentialUseResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ValidateCredentialUse not implemented")
+}
+func (UnimplementedCredentialsServiceServer) ReportCredentialHealth(context.Context, *ReportCredentialHealthRequest) (*ReportCredentialHealthResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ReportCredentialHealth not implemented")
+}
 func (UnimplementedCredentialsServiceServer) CreateBindingIntent(context.Context, *CreateBindingIntentRequest) (*CreateBindingIntentResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method CreateBindingIntent not implemented")
 }
@@ -248,6 +355,96 @@ func RegisterCredentialsServiceServer(s grpc.ServiceRegistrar, srv CredentialsSe
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&CredentialsService_ServiceDesc, srv)
+}
+
+func _CredentialsService_GetCredentialMetadata_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCredentialMetadataRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CredentialsServiceServer).GetCredentialMetadata(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CredentialsService_GetCredentialMetadata_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CredentialsServiceServer).GetCredentialMetadata(ctx, req.(*GetCredentialMetadataRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CredentialsService_ListCredentialMetadata_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCredentialMetadataRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CredentialsServiceServer).ListCredentialMetadata(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CredentialsService_ListCredentialMetadata_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CredentialsServiceServer).ListCredentialMetadata(ctx, req.(*ListCredentialMetadataRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CredentialsService_ResolveCredential_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResolveCredentialRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CredentialsServiceServer).ResolveCredential(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CredentialsService_ResolveCredential_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CredentialsServiceServer).ResolveCredential(ctx, req.(*ResolveCredentialRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CredentialsService_ValidateCredentialUse_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ValidateCredentialUseRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CredentialsServiceServer).ValidateCredentialUse(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CredentialsService_ValidateCredentialUse_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CredentialsServiceServer).ValidateCredentialUse(ctx, req.(*ValidateCredentialUseRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CredentialsService_ReportCredentialHealth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReportCredentialHealthRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CredentialsServiceServer).ReportCredentialHealth(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CredentialsService_ReportCredentialHealth_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CredentialsServiceServer).ReportCredentialHealth(ctx, req.(*ReportCredentialHealthRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _CredentialsService_CreateBindingIntent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -456,6 +653,26 @@ var CredentialsService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*CredentialsServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
+			MethodName: "GetCredentialMetadata",
+			Handler:    _CredentialsService_GetCredentialMetadata_Handler,
+		},
+		{
+			MethodName: "ListCredentialMetadata",
+			Handler:    _CredentialsService_ListCredentialMetadata_Handler,
+		},
+		{
+			MethodName: "ResolveCredential",
+			Handler:    _CredentialsService_ResolveCredential_Handler,
+		},
+		{
+			MethodName: "ValidateCredentialUse",
+			Handler:    _CredentialsService_ValidateCredentialUse_Handler,
+		},
+		{
+			MethodName: "ReportCredentialHealth",
+			Handler:    _CredentialsService_ReportCredentialHealth_Handler,
+		},
+		{
 			MethodName: "CreateBindingIntent",
 			Handler:    _CredentialsService_CreateBindingIntent_Handler,
 		},
@@ -505,8 +722,9 @@ var CredentialsService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	AcademicCredentialAuthorityService_GetEligibility_FullMethodName = "/academic.credentials.v1.AcademicCredentialAuthorityService/GetEligibility"
-	AcademicCredentialAuthorityService_ConfirmBinding_FullMethodName = "/academic.credentials.v1.AcademicCredentialAuthorityService/ConfirmBinding"
+	AcademicCredentialAuthorityService_GetEligibility_FullMethodName            = "/academic.credentials.v1.AcademicCredentialAuthorityService/GetEligibility"
+	AcademicCredentialAuthorityService_ConfirmBinding_FullMethodName            = "/academic.credentials.v1.AcademicCredentialAuthorityService/ConfirmBinding"
+	AcademicCredentialAuthorityService_AuthorizeCredentialAccess_FullMethodName = "/academic.credentials.v1.AcademicCredentialAuthorityService/AuthorizeCredentialAccess"
 )
 
 // AcademicCredentialAuthorityServiceClient is the client API for AcademicCredentialAuthorityService service.
@@ -517,6 +735,8 @@ const (
 type AcademicCredentialAuthorityServiceClient interface {
 	GetEligibility(ctx context.Context, in *GetEligibilityRequest, opts ...grpc.CallOption) (*GetEligibilityResponse, error)
 	ConfirmBinding(ctx context.Context, in *ConfirmBindingRequest, opts ...grpc.CallOption) (*ConfirmBindingResponse, error)
+	// 通用访问票据由平台签发；凭据服务只核对引用和访问权限。
+	AuthorizeCredentialAccess(ctx context.Context, in *AuthorizeCredentialAccessRequest, opts ...grpc.CallOption) (*AuthorizeCredentialAccessResponse, error)
 }
 
 type academicCredentialAuthorityServiceClient struct {
@@ -547,6 +767,16 @@ func (c *academicCredentialAuthorityServiceClient) ConfirmBinding(ctx context.Co
 	return out, nil
 }
 
+func (c *academicCredentialAuthorityServiceClient) AuthorizeCredentialAccess(ctx context.Context, in *AuthorizeCredentialAccessRequest, opts ...grpc.CallOption) (*AuthorizeCredentialAccessResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AuthorizeCredentialAccessResponse)
+	err := c.cc.Invoke(ctx, AcademicCredentialAuthorityService_AuthorizeCredentialAccess_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AcademicCredentialAuthorityServiceServer is the server API for AcademicCredentialAuthorityService service.
 // All implementations must embed UnimplementedAcademicCredentialAuthorityServiceServer
 // for forward compatibility.
@@ -555,6 +785,8 @@ func (c *academicCredentialAuthorityServiceClient) ConfirmBinding(ctx context.Co
 type AcademicCredentialAuthorityServiceServer interface {
 	GetEligibility(context.Context, *GetEligibilityRequest) (*GetEligibilityResponse, error)
 	ConfirmBinding(context.Context, *ConfirmBindingRequest) (*ConfirmBindingResponse, error)
+	// 通用访问票据由平台签发；凭据服务只核对引用和访问权限。
+	AuthorizeCredentialAccess(context.Context, *AuthorizeCredentialAccessRequest) (*AuthorizeCredentialAccessResponse, error)
 	mustEmbedUnimplementedAcademicCredentialAuthorityServiceServer()
 }
 
@@ -570,6 +802,9 @@ func (UnimplementedAcademicCredentialAuthorityServiceServer) GetEligibility(cont
 }
 func (UnimplementedAcademicCredentialAuthorityServiceServer) ConfirmBinding(context.Context, *ConfirmBindingRequest) (*ConfirmBindingResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ConfirmBinding not implemented")
+}
+func (UnimplementedAcademicCredentialAuthorityServiceServer) AuthorizeCredentialAccess(context.Context, *AuthorizeCredentialAccessRequest) (*AuthorizeCredentialAccessResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method AuthorizeCredentialAccess not implemented")
 }
 func (UnimplementedAcademicCredentialAuthorityServiceServer) mustEmbedUnimplementedAcademicCredentialAuthorityServiceServer() {
 }
@@ -629,6 +864,24 @@ func _AcademicCredentialAuthorityService_ConfirmBinding_Handler(srv interface{},
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AcademicCredentialAuthorityService_AuthorizeCredentialAccess_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AuthorizeCredentialAccessRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AcademicCredentialAuthorityServiceServer).AuthorizeCredentialAccess(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AcademicCredentialAuthorityService_AuthorizeCredentialAccess_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AcademicCredentialAuthorityServiceServer).AuthorizeCredentialAccess(ctx, req.(*AuthorizeCredentialAccessRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AcademicCredentialAuthorityService_ServiceDesc is the grpc.ServiceDesc for AcademicCredentialAuthorityService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -643,6 +896,10 @@ var AcademicCredentialAuthorityService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ConfirmBinding",
 			Handler:    _AcademicCredentialAuthorityService_ConfirmBinding_Handler,
+		},
+		{
+			MethodName: "AuthorizeCredentialAccess",
+			Handler:    _AcademicCredentialAuthorityService_AuthorizeCredentialAccess_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

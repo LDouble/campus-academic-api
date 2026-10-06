@@ -23,6 +23,843 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// CredentialReference 精确引用某个用户的凭据与身份代际，不包含秘密。
+type CredentialReference struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	UserId             uint64                 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	CredentialId       string                 `protobuf:"bytes,2,opt,name=credential_id,json=credentialId,proto3" json:"credential_id,omitempty"`
+	CredentialRevision uint64                 `protobuf:"varint,3,opt,name=credential_revision,json=credentialRevision,proto3" json:"credential_revision,omitempty"`
+	GrantEpoch         uint64                 `protobuf:"varint,4,opt,name=grant_epoch,json=grantEpoch,proto3" json:"grant_epoch,omitempty"`
+	IdentityVersion    uint64                 `protobuf:"varint,5,opt,name=identity_version,json=identityVersion,proto3" json:"identity_version,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *CredentialReference) Reset() {
+	*x = CredentialReference{}
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[0]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CredentialReference) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CredentialReference) ProtoMessage() {}
+
+func (x *CredentialReference) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[0]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CredentialReference.ProtoReflect.Descriptor instead.
+func (*CredentialReference) Descriptor() ([]byte, []int) {
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *CredentialReference) GetUserId() uint64 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *CredentialReference) GetCredentialId() string {
+	if x != nil {
+		return x.CredentialId
+	}
+	return ""
+}
+
+func (x *CredentialReference) GetCredentialRevision() uint64 {
+	if x != nil {
+		return x.CredentialRevision
+	}
+	return 0
+}
+
+func (x *CredentialReference) GetGrantEpoch() uint64 {
+	if x != nil {
+		return x.GrantEpoch
+	}
+	return 0
+}
+
+func (x *CredentialReference) GetIdentityVersion() uint64 {
+	if x != nil {
+		return x.IdentityVersion
+	}
+	return 0
+}
+
+type CredentialMetadata struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Reference      *CredentialReference   `protobuf:"bytes,1,opt,name=reference,proto3" json:"reference,omitempty"`
+	Provider       string                 `protobuf:"bytes,2,opt,name=provider,proto3" json:"provider,omitempty"`
+	EducationLevel string                 `protobuf:"bytes,3,opt,name=education_level,json=educationLevel,proto3" json:"education_level,omitempty"`
+	State          string                 `protobuf:"bytes,4,opt,name=state,proto3" json:"state,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *CredentialMetadata) Reset() {
+	*x = CredentialMetadata{}
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CredentialMetadata) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CredentialMetadata) ProtoMessage() {}
+
+func (x *CredentialMetadata) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CredentialMetadata.ProtoReflect.Descriptor instead.
+func (*CredentialMetadata) Descriptor() ([]byte, []int) {
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *CredentialMetadata) GetReference() *CredentialReference {
+	if x != nil {
+		return x.Reference
+	}
+	return nil
+}
+
+func (x *CredentialMetadata) GetProvider() string {
+	if x != nil {
+		return x.Provider
+	}
+	return ""
+}
+
+func (x *CredentialMetadata) GetEducationLevel() string {
+	if x != nil {
+		return x.EducationLevel
+	}
+	return ""
+}
+
+func (x *CredentialMetadata) GetState() string {
+	if x != nil {
+		return x.State
+	}
+	return ""
+}
+
+type GetCredentialMetadataRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        uint64                 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetCredentialMetadataRequest) Reset() {
+	*x = GetCredentialMetadataRequest{}
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetCredentialMetadataRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetCredentialMetadataRequest) ProtoMessage() {}
+
+func (x *GetCredentialMetadataRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetCredentialMetadataRequest.ProtoReflect.Descriptor instead.
+func (*GetCredentialMetadataRequest) Descriptor() ([]byte, []int) {
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *GetCredentialMetadataRequest) GetUserId() uint64 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+type GetCredentialMetadataResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Credential    *CredentialMetadata    `protobuf:"bytes,1,opt,name=credential,proto3" json:"credential,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetCredentialMetadataResponse) Reset() {
+	*x = GetCredentialMetadataResponse{}
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetCredentialMetadataResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetCredentialMetadataResponse) ProtoMessage() {}
+
+func (x *GetCredentialMetadataResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetCredentialMetadataResponse.ProtoReflect.Descriptor instead.
+func (*GetCredentialMetadataResponse) Descriptor() ([]byte, []int) {
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *GetCredentialMetadataResponse) GetCredential() *CredentialMetadata {
+	if x != nil {
+		return x.Credential
+	}
+	return nil
+}
+
+type ListCredentialMetadataRequest struct {
+	state       protoimpl.MessageState `protogen:"open.v1"`
+	AfterUserId uint64                 `protobuf:"varint,1,opt,name=after_user_id,json=afterUserId,proto3" json:"after_user_id,omitempty"`
+	// 首次为零；后续使用首个响应的上界，不纳入更大的用户 ID。
+	MaxUserId      uint64 `protobuf:"varint,2,opt,name=max_user_id,json=maxUserId,proto3" json:"max_user_id,omitempty"`
+	PageSize       uint32 `protobuf:"varint,3,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	Provider       string `protobuf:"bytes,4,opt,name=provider,proto3" json:"provider,omitempty"`
+	EducationLevel string `protobuf:"bytes,5,opt,name=education_level,json=educationLevel,proto3" json:"education_level,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ListCredentialMetadataRequest) Reset() {
+	*x = ListCredentialMetadataRequest{}
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListCredentialMetadataRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListCredentialMetadataRequest) ProtoMessage() {}
+
+func (x *ListCredentialMetadataRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListCredentialMetadataRequest.ProtoReflect.Descriptor instead.
+func (*ListCredentialMetadataRequest) Descriptor() ([]byte, []int) {
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *ListCredentialMetadataRequest) GetAfterUserId() uint64 {
+	if x != nil {
+		return x.AfterUserId
+	}
+	return 0
+}
+
+func (x *ListCredentialMetadataRequest) GetMaxUserId() uint64 {
+	if x != nil {
+		return x.MaxUserId
+	}
+	return 0
+}
+
+func (x *ListCredentialMetadataRequest) GetPageSize() uint32 {
+	if x != nil {
+		return x.PageSize
+	}
+	return 0
+}
+
+func (x *ListCredentialMetadataRequest) GetProvider() string {
+	if x != nil {
+		return x.Provider
+	}
+	return ""
+}
+
+func (x *ListCredentialMetadataRequest) GetEducationLevel() string {
+	if x != nil {
+		return x.EducationLevel
+	}
+	return ""
+}
+
+type ListCredentialMetadataResponse struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Credentials     []*CredentialMetadata  `protobuf:"bytes,1,rep,name=credentials,proto3" json:"credentials,omitempty"`
+	MaxUserId       uint64                 `protobuf:"varint,2,opt,name=max_user_id,json=maxUserId,proto3" json:"max_user_id,omitempty"`
+	NextAfterUserId uint64                 `protobuf:"varint,3,opt,name=next_after_user_id,json=nextAfterUserId,proto3" json:"next_after_user_id,omitempty"`
+	HasMore         bool                   `protobuf:"varint,4,opt,name=has_more,json=hasMore,proto3" json:"has_more,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *ListCredentialMetadataResponse) Reset() {
+	*x = ListCredentialMetadataResponse{}
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListCredentialMetadataResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListCredentialMetadataResponse) ProtoMessage() {}
+
+func (x *ListCredentialMetadataResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListCredentialMetadataResponse.ProtoReflect.Descriptor instead.
+func (*ListCredentialMetadataResponse) Descriptor() ([]byte, []int) {
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *ListCredentialMetadataResponse) GetCredentials() []*CredentialMetadata {
+	if x != nil {
+		return x.Credentials
+	}
+	return nil
+}
+
+func (x *ListCredentialMetadataResponse) GetMaxUserId() uint64 {
+	if x != nil {
+		return x.MaxUserId
+	}
+	return 0
+}
+
+func (x *ListCredentialMetadataResponse) GetNextAfterUserId() uint64 {
+	if x != nil {
+		return x.NextAfterUserId
+	}
+	return 0
+}
+
+func (x *ListCredentialMetadataResponse) GetHasMore() bool {
+	if x != nil {
+		return x.HasMore
+	}
+	return false
+}
+
+type ResolveCredentialRequest struct {
+	state     protoimpl.MessageState `protogen:"open.v1"`
+	Reference *CredentialReference   `protobuf:"bytes,1,opt,name=reference,proto3" json:"reference,omitempty"`
+	// 短期一次性票据不得写入日志或队列。
+	AccessToken   string `protobuf:"bytes,2,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ResolveCredentialRequest) Reset() {
+	*x = ResolveCredentialRequest{}
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ResolveCredentialRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ResolveCredentialRequest) ProtoMessage() {}
+
+func (x *ResolveCredentialRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ResolveCredentialRequest.ProtoReflect.Descriptor instead.
+func (*ResolveCredentialRequest) Descriptor() ([]byte, []int) {
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *ResolveCredentialRequest) GetReference() *CredentialReference {
+	if x != nil {
+		return x.Reference
+	}
+	return nil
+}
+
+func (x *ResolveCredentialRequest) GetAccessToken() string {
+	if x != nil {
+		return x.AccessToken
+	}
+	return ""
+}
+
+type ResolveCredentialResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Reference     *CredentialReference   `protobuf:"bytes,1,opt,name=reference,proto3" json:"reference,omitempty"`
+	Subject       *Subject               `protobuf:"bytes,2,opt,name=subject,proto3" json:"subject,omitempty"`
+	Credential    *v1.Credential         `protobuf:"bytes,3,opt,name=credential,proto3" json:"credential,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ResolveCredentialResponse) Reset() {
+	*x = ResolveCredentialResponse{}
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ResolveCredentialResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ResolveCredentialResponse) ProtoMessage() {}
+
+func (x *ResolveCredentialResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ResolveCredentialResponse.ProtoReflect.Descriptor instead.
+func (*ResolveCredentialResponse) Descriptor() ([]byte, []int) {
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *ResolveCredentialResponse) GetReference() *CredentialReference {
+	if x != nil {
+		return x.Reference
+	}
+	return nil
+}
+
+func (x *ResolveCredentialResponse) GetSubject() *Subject {
+	if x != nil {
+		return x.Subject
+	}
+	return nil
+}
+
+func (x *ResolveCredentialResponse) GetCredential() *v1.Credential {
+	if x != nil {
+		return x.Credential
+	}
+	return nil
+}
+
+type ValidateCredentialUseRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Reference     *CredentialReference   `protobuf:"bytes,1,opt,name=reference,proto3" json:"reference,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ValidateCredentialUseRequest) Reset() {
+	*x = ValidateCredentialUseRequest{}
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ValidateCredentialUseRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ValidateCredentialUseRequest) ProtoMessage() {}
+
+func (x *ValidateCredentialUseRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ValidateCredentialUseRequest.ProtoReflect.Descriptor instead.
+func (*ValidateCredentialUseRequest) Descriptor() ([]byte, []int) {
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *ValidateCredentialUseRequest) GetReference() *CredentialReference {
+	if x != nil {
+		return x.Reference
+	}
+	return nil
+}
+
+type ValidateCredentialUseResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Allowed       bool                   `protobuf:"varint,1,opt,name=allowed,proto3" json:"allowed,omitempty"`
+	ErrorCode     string                 `protobuf:"bytes,2,opt,name=error_code,json=errorCode,proto3" json:"error_code,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ValidateCredentialUseResponse) Reset() {
+	*x = ValidateCredentialUseResponse{}
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ValidateCredentialUseResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ValidateCredentialUseResponse) ProtoMessage() {}
+
+func (x *ValidateCredentialUseResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ValidateCredentialUseResponse.ProtoReflect.Descriptor instead.
+func (*ValidateCredentialUseResponse) Descriptor() ([]byte, []int) {
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *ValidateCredentialUseResponse) GetAllowed() bool {
+	if x != nil {
+		return x.Allowed
+	}
+	return false
+}
+
+func (x *ValidateCredentialUseResponse) GetErrorCode() string {
+	if x != nil {
+		return x.ErrorCode
+	}
+	return ""
+}
+
+type ReportCredentialHealthRequest struct {
+	state     protoimpl.MessageState `protogen:"open.v1"`
+	Reference *CredentialReference   `protobuf:"bytes,1,opt,name=reference,proto3" json:"reference,omitempty"`
+	// 仅接受凭据失效或需要人工处理，不接受网络及业务错误。
+	State         string `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ReportCredentialHealthRequest) Reset() {
+	*x = ReportCredentialHealthRequest{}
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ReportCredentialHealthRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReportCredentialHealthRequest) ProtoMessage() {}
+
+func (x *ReportCredentialHealthRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReportCredentialHealthRequest.ProtoReflect.Descriptor instead.
+func (*ReportCredentialHealthRequest) Descriptor() ([]byte, []int) {
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *ReportCredentialHealthRequest) GetReference() *CredentialReference {
+	if x != nil {
+		return x.Reference
+	}
+	return nil
+}
+
+func (x *ReportCredentialHealthRequest) GetState() string {
+	if x != nil {
+		return x.State
+	}
+	return ""
+}
+
+type ReportCredentialHealthResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Acknowledged  bool                   `protobuf:"varint,1,opt,name=acknowledged,proto3" json:"acknowledged,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ReportCredentialHealthResponse) Reset() {
+	*x = ReportCredentialHealthResponse{}
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ReportCredentialHealthResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ReportCredentialHealthResponse) ProtoMessage() {}
+
+func (x *ReportCredentialHealthResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ReportCredentialHealthResponse.ProtoReflect.Descriptor instead.
+func (*ReportCredentialHealthResponse) Descriptor() ([]byte, []int) {
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *ReportCredentialHealthResponse) GetAcknowledged() bool {
+	if x != nil {
+		return x.Acknowledged
+	}
+	return false
+}
+
+type AuthorizeCredentialAccessRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Reference     *CredentialReference   `protobuf:"bytes,1,opt,name=reference,proto3" json:"reference,omitempty"`
+	AccessToken   string                 `protobuf:"bytes,2,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
+	CallerUri     string                 `protobuf:"bytes,3,opt,name=caller_uri,json=callerUri,proto3" json:"caller_uri,omitempty"`
+	OperationId   string                 `protobuf:"bytes,4,opt,name=operation_id,json=operationId,proto3" json:"operation_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AuthorizeCredentialAccessRequest) Reset() {
+	*x = AuthorizeCredentialAccessRequest{}
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AuthorizeCredentialAccessRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AuthorizeCredentialAccessRequest) ProtoMessage() {}
+
+func (x *AuthorizeCredentialAccessRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AuthorizeCredentialAccessRequest.ProtoReflect.Descriptor instead.
+func (*AuthorizeCredentialAccessRequest) Descriptor() ([]byte, []int) {
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *AuthorizeCredentialAccessRequest) GetReference() *CredentialReference {
+	if x != nil {
+		return x.Reference
+	}
+	return nil
+}
+
+func (x *AuthorizeCredentialAccessRequest) GetAccessToken() string {
+	if x != nil {
+		return x.AccessToken
+	}
+	return ""
+}
+
+func (x *AuthorizeCredentialAccessRequest) GetCallerUri() string {
+	if x != nil {
+		return x.CallerUri
+	}
+	return ""
+}
+
+func (x *AuthorizeCredentialAccessRequest) GetOperationId() string {
+	if x != nil {
+		return x.OperationId
+	}
+	return ""
+}
+
+type AuthorizeCredentialAccessResponse struct {
+	state   protoimpl.MessageState `protogen:"open.v1"`
+	Allowed bool                   `protobuf:"varint,1,opt,name=allowed,proto3" json:"allowed,omitempty"`
+	Subject *Subject               `protobuf:"bytes,2,opt,name=subject,proto3" json:"subject,omitempty"`
+	// AccessId 是可用于通用防重放的稳定不透明标识。
+	AccessId      string                 `protobuf:"bytes,3,opt,name=access_id,json=accessId,proto3" json:"access_id,omitempty"`
+	ExpiresAt     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
+	OperationId   string                 `protobuf:"bytes,5,opt,name=operation_id,json=operationId,proto3" json:"operation_id,omitempty"`
+	ErrorCode     string                 `protobuf:"bytes,6,opt,name=error_code,json=errorCode,proto3" json:"error_code,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AuthorizeCredentialAccessResponse) Reset() {
+	*x = AuthorizeCredentialAccessResponse{}
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AuthorizeCredentialAccessResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AuthorizeCredentialAccessResponse) ProtoMessage() {}
+
+func (x *AuthorizeCredentialAccessResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AuthorizeCredentialAccessResponse.ProtoReflect.Descriptor instead.
+func (*AuthorizeCredentialAccessResponse) Descriptor() ([]byte, []int) {
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *AuthorizeCredentialAccessResponse) GetAllowed() bool {
+	if x != nil {
+		return x.Allowed
+	}
+	return false
+}
+
+func (x *AuthorizeCredentialAccessResponse) GetSubject() *Subject {
+	if x != nil {
+		return x.Subject
+	}
+	return nil
+}
+
+func (x *AuthorizeCredentialAccessResponse) GetAccessId() string {
+	if x != nil {
+		return x.AccessId
+	}
+	return ""
+}
+
+func (x *AuthorizeCredentialAccessResponse) GetExpiresAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ExpiresAt
+	}
+	return nil
+}
+
+func (x *AuthorizeCredentialAccessResponse) GetOperationId() string {
+	if x != nil {
+		return x.OperationId
+	}
+	return ""
+}
+
+func (x *AuthorizeCredentialAccessResponse) GetErrorCode() string {
+	if x != nil {
+		return x.ErrorCode
+	}
+	return ""
+}
+
 type Subject struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	UserId          uint64                 `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
@@ -36,7 +873,7 @@ type Subject struct {
 
 func (x *Subject) Reset() {
 	*x = Subject{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[0]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -48,7 +885,7 @@ func (x *Subject) String() string {
 func (*Subject) ProtoMessage() {}
 
 func (x *Subject) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[0]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -61,7 +898,7 @@ func (x *Subject) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Subject.ProtoReflect.Descriptor instead.
 func (*Subject) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{0}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *Subject) GetUserId() uint64 {
@@ -119,7 +956,7 @@ type HostingStatus struct {
 
 func (x *HostingStatus) Reset() {
 	*x = HostingStatus{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[1]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -131,7 +968,7 @@ func (x *HostingStatus) String() string {
 func (*HostingStatus) ProtoMessage() {}
 
 func (x *HostingStatus) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[1]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -144,7 +981,7 @@ func (x *HostingStatus) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HostingStatus.ProtoReflect.Descriptor instead.
 func (*HostingStatus) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{1}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *HostingStatus) GetEnabled() bool {
@@ -221,7 +1058,7 @@ type CreateBindingIntentRequest struct {
 
 func (x *CreateBindingIntentRequest) Reset() {
 	*x = CreateBindingIntentRequest{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[2]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -233,7 +1070,7 @@ func (x *CreateBindingIntentRequest) String() string {
 func (*CreateBindingIntentRequest) ProtoMessage() {}
 
 func (x *CreateBindingIntentRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[2]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -246,7 +1083,7 @@ func (x *CreateBindingIntentRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateBindingIntentRequest.ProtoReflect.Descriptor instead.
 func (*CreateBindingIntentRequest) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{2}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *CreateBindingIntentRequest) GetUserId() uint64 {
@@ -282,7 +1119,7 @@ type CreateBindingIntentResponse struct {
 
 func (x *CreateBindingIntentResponse) Reset() {
 	*x = CreateBindingIntentResponse{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[3]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -294,7 +1131,7 @@ func (x *CreateBindingIntentResponse) String() string {
 func (*CreateBindingIntentResponse) ProtoMessage() {}
 
 func (x *CreateBindingIntentResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[3]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -307,7 +1144,7 @@ func (x *CreateBindingIntentResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateBindingIntentResponse.ProtoReflect.Descriptor instead.
 func (*CreateBindingIntentResponse) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{3}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *CreateBindingIntentResponse) GetIntentId() string {
@@ -347,7 +1184,7 @@ type GetHostingStatusRequest struct {
 
 func (x *GetHostingStatusRequest) Reset() {
 	*x = GetHostingStatusRequest{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[4]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -359,7 +1196,7 @@ func (x *GetHostingStatusRequest) String() string {
 func (*GetHostingStatusRequest) ProtoMessage() {}
 
 func (x *GetHostingStatusRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[4]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -372,7 +1209,7 @@ func (x *GetHostingStatusRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetHostingStatusRequest.ProtoReflect.Descriptor instead.
 func (*GetHostingStatusRequest) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{4}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *GetHostingStatusRequest) GetUserId() uint64 {
@@ -391,7 +1228,7 @@ type GetHostingStatusResponse struct {
 
 func (x *GetHostingStatusResponse) Reset() {
 	*x = GetHostingStatusResponse{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[5]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -403,7 +1240,7 @@ func (x *GetHostingStatusResponse) String() string {
 func (*GetHostingStatusResponse) ProtoMessage() {}
 
 func (x *GetHostingStatusResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[5]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -416,7 +1253,7 @@ func (x *GetHostingStatusResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetHostingStatusResponse.ProtoReflect.Descriptor instead.
 func (*GetHostingStatusResponse) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{5}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *GetHostingStatusResponse) GetStatus() *HostingStatus {
@@ -437,7 +1274,7 @@ type UpdateGrantRequest struct {
 
 func (x *UpdateGrantRequest) Reset() {
 	*x = UpdateGrantRequest{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[6]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -449,7 +1286,7 @@ func (x *UpdateGrantRequest) String() string {
 func (*UpdateGrantRequest) ProtoMessage() {}
 
 func (x *UpdateGrantRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[6]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -462,7 +1299,7 @@ func (x *UpdateGrantRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateGrantRequest.ProtoReflect.Descriptor instead.
 func (*UpdateGrantRequest) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{6}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *UpdateGrantRequest) GetUserId() uint64 {
@@ -495,7 +1332,7 @@ type UpdateGrantResponse struct {
 
 func (x *UpdateGrantResponse) Reset() {
 	*x = UpdateGrantResponse{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[7]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -507,7 +1344,7 @@ func (x *UpdateGrantResponse) String() string {
 func (*UpdateGrantResponse) ProtoMessage() {}
 
 func (x *UpdateGrantResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[7]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -520,7 +1357,7 @@ func (x *UpdateGrantResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateGrantResponse.ProtoReflect.Descriptor instead.
 func (*UpdateGrantResponse) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{7}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *UpdateGrantResponse) GetStatus() *HostingStatus {
@@ -540,7 +1377,7 @@ type RevokeCredentialRequest struct {
 
 func (x *RevokeCredentialRequest) Reset() {
 	*x = RevokeCredentialRequest{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[8]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -552,7 +1389,7 @@ func (x *RevokeCredentialRequest) String() string {
 func (*RevokeCredentialRequest) ProtoMessage() {}
 
 func (x *RevokeCredentialRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[8]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -565,7 +1402,7 @@ func (x *RevokeCredentialRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeCredentialRequest.ProtoReflect.Descriptor instead.
 func (*RevokeCredentialRequest) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{8}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *RevokeCredentialRequest) GetUserId() uint64 {
@@ -591,7 +1428,7 @@ type RevokeCredentialResponse struct {
 
 func (x *RevokeCredentialResponse) Reset() {
 	*x = RevokeCredentialResponse{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[9]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -603,7 +1440,7 @@ func (x *RevokeCredentialResponse) String() string {
 func (*RevokeCredentialResponse) ProtoMessage() {}
 
 func (x *RevokeCredentialResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[9]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -616,7 +1453,7 @@ func (x *RevokeCredentialResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeCredentialResponse.ProtoReflect.Descriptor instead.
 func (*RevokeCredentialResponse) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{9}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *RevokeCredentialResponse) GetStatus() *HostingStatus {
@@ -636,7 +1473,7 @@ type FenceSubjectRequest struct {
 
 func (x *FenceSubjectRequest) Reset() {
 	*x = FenceSubjectRequest{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[10]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -648,7 +1485,7 @@ func (x *FenceSubjectRequest) String() string {
 func (*FenceSubjectRequest) ProtoMessage() {}
 
 func (x *FenceSubjectRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[10]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -661,7 +1498,7 @@ func (x *FenceSubjectRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FenceSubjectRequest.ProtoReflect.Descriptor instead.
 func (*FenceSubjectRequest) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{10}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *FenceSubjectRequest) GetUserId() uint64 {
@@ -687,7 +1524,7 @@ type FenceSubjectResponse struct {
 
 func (x *FenceSubjectResponse) Reset() {
 	*x = FenceSubjectResponse{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[11]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -699,7 +1536,7 @@ func (x *FenceSubjectResponse) String() string {
 func (*FenceSubjectResponse) ProtoMessage() {}
 
 func (x *FenceSubjectResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[11]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -712,7 +1549,7 @@ func (x *FenceSubjectResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FenceSubjectResponse.ProtoReflect.Descriptor instead.
 func (*FenceSubjectResponse) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{11}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *FenceSubjectResponse) GetAcknowledged() bool {
@@ -735,7 +1572,7 @@ type CreateTaskRequest struct {
 
 func (x *CreateTaskRequest) Reset() {
 	*x = CreateTaskRequest{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[12]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -747,7 +1584,7 @@ func (x *CreateTaskRequest) String() string {
 func (*CreateTaskRequest) ProtoMessage() {}
 
 func (x *CreateTaskRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[12]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -760,7 +1597,7 @@ func (x *CreateTaskRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateTaskRequest.ProtoReflect.Descriptor instead.
 func (*CreateTaskRequest) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{12}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *CreateTaskRequest) GetUserId() uint64 {
@@ -800,7 +1637,7 @@ type CreateTaskResponse struct {
 
 func (x *CreateTaskResponse) Reset() {
 	*x = CreateTaskResponse{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[13]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -812,7 +1649,7 @@ func (x *CreateTaskResponse) String() string {
 func (*CreateTaskResponse) ProtoMessage() {}
 
 func (x *CreateTaskResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[13]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -825,7 +1662,7 @@ func (x *CreateTaskResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateTaskResponse.ProtoReflect.Descriptor instead.
 func (*CreateTaskResponse) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{13}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *CreateTaskResponse) GetTask() *Task {
@@ -845,7 +1682,7 @@ type GetTaskRequest struct {
 
 func (x *GetTaskRequest) Reset() {
 	*x = GetTaskRequest{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[14]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -857,7 +1694,7 @@ func (x *GetTaskRequest) String() string {
 func (*GetTaskRequest) ProtoMessage() {}
 
 func (x *GetTaskRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[14]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -870,7 +1707,7 @@ func (x *GetTaskRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetTaskRequest.ProtoReflect.Descriptor instead.
 func (*GetTaskRequest) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{14}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *GetTaskRequest) GetUserId() uint64 {
@@ -896,7 +1733,7 @@ type GetTaskResponse struct {
 
 func (x *GetTaskResponse) Reset() {
 	*x = GetTaskResponse{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[15]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -908,7 +1745,7 @@ func (x *GetTaskResponse) String() string {
 func (*GetTaskResponse) ProtoMessage() {}
 
 func (x *GetTaskResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[15]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -921,7 +1758,7 @@ func (x *GetTaskResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetTaskResponse.ProtoReflect.Descriptor instead.
 func (*GetTaskResponse) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{15}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *GetTaskResponse) GetTask() *Task {
@@ -949,7 +1786,7 @@ type Task struct {
 
 func (x *Task) Reset() {
 	*x = Task{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[16]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -961,7 +1798,7 @@ func (x *Task) String() string {
 func (*Task) ProtoMessage() {}
 
 func (x *Task) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[16]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -974,7 +1811,7 @@ func (x *Task) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Task.ProtoReflect.Descriptor instead.
 func (*Task) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{16}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *Task) GetTaskId() string {
@@ -1066,7 +1903,7 @@ type TaskResult struct {
 
 func (x *TaskResult) Reset() {
 	*x = TaskResult{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[17]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1078,7 +1915,7 @@ func (x *TaskResult) String() string {
 func (*TaskResult) ProtoMessage() {}
 
 func (x *TaskResult) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[17]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1091,7 +1928,7 @@ func (x *TaskResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TaskResult.ProtoReflect.Descriptor instead.
 func (*TaskResult) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{17}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *TaskResult) GetResult() isTaskResult_Result {
@@ -1204,7 +2041,7 @@ type LeaseTaskRequest struct {
 
 func (x *LeaseTaskRequest) Reset() {
 	*x = LeaseTaskRequest{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[18]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1216,7 +2053,7 @@ func (x *LeaseTaskRequest) String() string {
 func (*LeaseTaskRequest) ProtoMessage() {}
 
 func (x *LeaseTaskRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[18]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1229,7 +2066,7 @@ func (x *LeaseTaskRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LeaseTaskRequest.ProtoReflect.Descriptor instead.
 func (*LeaseTaskRequest) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{18}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{32}
 }
 
 type LeaseTaskResponse struct {
@@ -1245,7 +2082,7 @@ type LeaseTaskResponse struct {
 
 func (x *LeaseTaskResponse) Reset() {
 	*x = LeaseTaskResponse{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[19]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1257,7 +2094,7 @@ func (x *LeaseTaskResponse) String() string {
 func (*LeaseTaskResponse) ProtoMessage() {}
 
 func (x *LeaseTaskResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[19]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1270,7 +2107,7 @@ func (x *LeaseTaskResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LeaseTaskResponse.ProtoReflect.Descriptor instead.
 func (*LeaseTaskResponse) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{19}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *LeaseTaskResponse) GetTask() *Task {
@@ -1312,7 +2149,7 @@ type ResolveTaskCredentialRequest struct {
 
 func (x *ResolveTaskCredentialRequest) Reset() {
 	*x = ResolveTaskCredentialRequest{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[20]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1324,7 +2161,7 @@ func (x *ResolveTaskCredentialRequest) String() string {
 func (*ResolveTaskCredentialRequest) ProtoMessage() {}
 
 func (x *ResolveTaskCredentialRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[20]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1337,7 +2174,7 @@ func (x *ResolveTaskCredentialRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResolveTaskCredentialRequest.ProtoReflect.Descriptor instead.
 func (*ResolveTaskCredentialRequest) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{20}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *ResolveTaskCredentialRequest) GetTaskId() string {
@@ -1374,7 +2211,7 @@ type ResolveTaskCredentialResponse struct {
 
 func (x *ResolveTaskCredentialResponse) Reset() {
 	*x = ResolveTaskCredentialResponse{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[21]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1386,7 +2223,7 @@ func (x *ResolveTaskCredentialResponse) String() string {
 func (*ResolveTaskCredentialResponse) ProtoMessage() {}
 
 func (x *ResolveTaskCredentialResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[21]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1399,7 +2236,7 @@ func (x *ResolveTaskCredentialResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResolveTaskCredentialResponse.ProtoReflect.Descriptor instead.
 func (*ResolveTaskCredentialResponse) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{21}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *ResolveTaskCredentialResponse) GetSubject() *Subject {
@@ -1450,7 +2287,7 @@ type CheckExecutionAdmissionRequest struct {
 
 func (x *CheckExecutionAdmissionRequest) Reset() {
 	*x = CheckExecutionAdmissionRequest{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[22]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1462,7 +2299,7 @@ func (x *CheckExecutionAdmissionRequest) String() string {
 func (*CheckExecutionAdmissionRequest) ProtoMessage() {}
 
 func (x *CheckExecutionAdmissionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[22]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1475,7 +2312,7 @@ func (x *CheckExecutionAdmissionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CheckExecutionAdmissionRequest.ProtoReflect.Descriptor instead.
 func (*CheckExecutionAdmissionRequest) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{22}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *CheckExecutionAdmissionRequest) GetTaskId() string {
@@ -1515,7 +2352,7 @@ type CheckExecutionAdmissionResponse struct {
 
 func (x *CheckExecutionAdmissionResponse) Reset() {
 	*x = CheckExecutionAdmissionResponse{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[23]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1527,7 +2364,7 @@ func (x *CheckExecutionAdmissionResponse) String() string {
 func (*CheckExecutionAdmissionResponse) ProtoMessage() {}
 
 func (x *CheckExecutionAdmissionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[23]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1540,7 +2377,7 @@ func (x *CheckExecutionAdmissionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CheckExecutionAdmissionResponse.ProtoReflect.Descriptor instead.
 func (*CheckExecutionAdmissionResponse) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{23}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *CheckExecutionAdmissionResponse) GetAllowed() bool {
@@ -1563,7 +2400,7 @@ type CompleteTaskRequest struct {
 
 func (x *CompleteTaskRequest) Reset() {
 	*x = CompleteTaskRequest{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[24]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1575,7 +2412,7 @@ func (x *CompleteTaskRequest) String() string {
 func (*CompleteTaskRequest) ProtoMessage() {}
 
 func (x *CompleteTaskRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[24]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1588,7 +2425,7 @@ func (x *CompleteTaskRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CompleteTaskRequest.ProtoReflect.Descriptor instead.
 func (*CompleteTaskRequest) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{24}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *CompleteTaskRequest) GetTaskId() string {
@@ -1635,7 +2472,7 @@ type CompleteTaskResponse struct {
 
 func (x *CompleteTaskResponse) Reset() {
 	*x = CompleteTaskResponse{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[25]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1647,7 +2484,7 @@ func (x *CompleteTaskResponse) String() string {
 func (*CompleteTaskResponse) ProtoMessage() {}
 
 func (x *CompleteTaskResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[25]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1660,7 +2497,7 @@ func (x *CompleteTaskResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CompleteTaskResponse.ProtoReflect.Descriptor instead.
 func (*CompleteTaskResponse) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{25}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *CompleteTaskResponse) GetTask() *Task {
@@ -1682,7 +2519,7 @@ type GetEligibilityRequest struct {
 
 func (x *GetEligibilityRequest) Reset() {
 	*x = GetEligibilityRequest{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[26]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1694,7 +2531,7 @@ func (x *GetEligibilityRequest) String() string {
 func (*GetEligibilityRequest) ProtoMessage() {}
 
 func (x *GetEligibilityRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[26]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1707,7 +2544,7 @@ func (x *GetEligibilityRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetEligibilityRequest.ProtoReflect.Descriptor instead.
 func (*GetEligibilityRequest) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{26}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *GetEligibilityRequest) GetUserId() uint64 {
@@ -1743,7 +2580,7 @@ type GetEligibilityResponse struct {
 
 func (x *GetEligibilityResponse) Reset() {
 	*x = GetEligibilityResponse{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[27]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[41]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1755,7 +2592,7 @@ func (x *GetEligibilityResponse) String() string {
 func (*GetEligibilityResponse) ProtoMessage() {}
 
 func (x *GetEligibilityResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[27]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[41]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1768,7 +2605,7 @@ func (x *GetEligibilityResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetEligibilityResponse.ProtoReflect.Descriptor instead.
 func (*GetEligibilityResponse) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{27}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *GetEligibilityResponse) GetEligible() bool {
@@ -1815,7 +2652,7 @@ type ConfirmBindingRequest struct {
 
 func (x *ConfirmBindingRequest) Reset() {
 	*x = ConfirmBindingRequest{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[28]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[42]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1827,7 +2664,7 @@ func (x *ConfirmBindingRequest) String() string {
 func (*ConfirmBindingRequest) ProtoMessage() {}
 
 func (x *ConfirmBindingRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[28]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[42]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1840,7 +2677,7 @@ func (x *ConfirmBindingRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConfirmBindingRequest.ProtoReflect.Descriptor instead.
 func (*ConfirmBindingRequest) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{28}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *ConfirmBindingRequest) GetUserId() uint64 {
@@ -1896,7 +2733,7 @@ type ConfirmBindingResponse struct {
 
 func (x *ConfirmBindingResponse) Reset() {
 	*x = ConfirmBindingResponse{}
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[29]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[43]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1908,7 +2745,7 @@ func (x *ConfirmBindingResponse) String() string {
 func (*ConfirmBindingResponse) ProtoMessage() {}
 
 func (x *ConfirmBindingResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[29]
+	mi := &file_academic_credentials_v1_credentials_proto_msgTypes[43]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1921,7 +2758,7 @@ func (x *ConfirmBindingResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConfirmBindingResponse.ProtoReflect.Descriptor instead.
 func (*ConfirmBindingResponse) Descriptor() ([]byte, []int) {
-	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{29}
+	return file_academic_credentials_v1_credentials_proto_rawDescGZIP(), []int{43}
 }
 
 func (x *ConfirmBindingResponse) GetEligible() bool {
@@ -1949,7 +2786,71 @@ var File_academic_credentials_v1_credentials_proto protoreflect.FileDescriptor
 
 const file_academic_credentials_v1_credentials_proto_rawDesc = "" +
 	"\n" +
-	")academic/credentials/v1/credentials.proto\x12\x17academic.credentials.v1\x1a#academic/provider/v1/provider.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xb1\x01\n" +
+	")academic/credentials/v1/credentials.proto\x12\x17academic.credentials.v1\x1a#academic/provider/v1/provider.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xd0\x01\n" +
+	"\x13CredentialReference\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\x04R\x06userId\x12#\n" +
+	"\rcredential_id\x18\x02 \x01(\tR\fcredentialId\x12/\n" +
+	"\x13credential_revision\x18\x03 \x01(\x04R\x12credentialRevision\x12\x1f\n" +
+	"\vgrant_epoch\x18\x04 \x01(\x04R\n" +
+	"grantEpoch\x12)\n" +
+	"\x10identity_version\x18\x05 \x01(\x04R\x0fidentityVersion\"\xbb\x01\n" +
+	"\x12CredentialMetadata\x12J\n" +
+	"\treference\x18\x01 \x01(\v2,.academic.credentials.v1.CredentialReferenceR\treference\x12\x1a\n" +
+	"\bprovider\x18\x02 \x01(\tR\bprovider\x12'\n" +
+	"\x0feducation_level\x18\x03 \x01(\tR\x0eeducationLevel\x12\x14\n" +
+	"\x05state\x18\x04 \x01(\tR\x05state\"7\n" +
+	"\x1cGetCredentialMetadataRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\x04R\x06userId\"l\n" +
+	"\x1dGetCredentialMetadataResponse\x12K\n" +
+	"\n" +
+	"credential\x18\x01 \x01(\v2+.academic.credentials.v1.CredentialMetadataR\n" +
+	"credential\"\xc5\x01\n" +
+	"\x1dListCredentialMetadataRequest\x12\"\n" +
+	"\rafter_user_id\x18\x01 \x01(\x04R\vafterUserId\x12\x1e\n" +
+	"\vmax_user_id\x18\x02 \x01(\x04R\tmaxUserId\x12\x1b\n" +
+	"\tpage_size\x18\x03 \x01(\rR\bpageSize\x12\x1a\n" +
+	"\bprovider\x18\x04 \x01(\tR\bprovider\x12'\n" +
+	"\x0feducation_level\x18\x05 \x01(\tR\x0eeducationLevel\"\xd7\x01\n" +
+	"\x1eListCredentialMetadataResponse\x12M\n" +
+	"\vcredentials\x18\x01 \x03(\v2+.academic.credentials.v1.CredentialMetadataR\vcredentials\x12\x1e\n" +
+	"\vmax_user_id\x18\x02 \x01(\x04R\tmaxUserId\x12+\n" +
+	"\x12next_after_user_id\x18\x03 \x01(\x04R\x0fnextAfterUserId\x12\x19\n" +
+	"\bhas_more\x18\x04 \x01(\bR\ahasMore\"\x89\x01\n" +
+	"\x18ResolveCredentialRequest\x12J\n" +
+	"\treference\x18\x01 \x01(\v2,.academic.credentials.v1.CredentialReferenceR\treference\x12!\n" +
+	"\faccess_token\x18\x02 \x01(\tR\vaccessToken\"\xe5\x01\n" +
+	"\x19ResolveCredentialResponse\x12J\n" +
+	"\treference\x18\x01 \x01(\v2,.academic.credentials.v1.CredentialReferenceR\treference\x12:\n" +
+	"\asubject\x18\x02 \x01(\v2 .academic.credentials.v1.SubjectR\asubject\x12@\n" +
+	"\n" +
+	"credential\x18\x03 \x01(\v2 .academic.provider.v1.CredentialR\n" +
+	"credential\"j\n" +
+	"\x1cValidateCredentialUseRequest\x12J\n" +
+	"\treference\x18\x01 \x01(\v2,.academic.credentials.v1.CredentialReferenceR\treference\"X\n" +
+	"\x1dValidateCredentialUseResponse\x12\x18\n" +
+	"\aallowed\x18\x01 \x01(\bR\aallowed\x12\x1d\n" +
+	"\n" +
+	"error_code\x18\x02 \x01(\tR\terrorCode\"\x81\x01\n" +
+	"\x1dReportCredentialHealthRequest\x12J\n" +
+	"\treference\x18\x01 \x01(\v2,.academic.credentials.v1.CredentialReferenceR\treference\x12\x14\n" +
+	"\x05state\x18\x02 \x01(\tR\x05state\"D\n" +
+	"\x1eReportCredentialHealthResponse\x12\"\n" +
+	"\facknowledged\x18\x01 \x01(\bR\facknowledged\"\xd3\x01\n" +
+	" AuthorizeCredentialAccessRequest\x12J\n" +
+	"\treference\x18\x01 \x01(\v2,.academic.credentials.v1.CredentialReferenceR\treference\x12!\n" +
+	"\faccess_token\x18\x02 \x01(\tR\vaccessToken\x12\x1d\n" +
+	"\n" +
+	"caller_uri\x18\x03 \x01(\tR\tcallerUri\x12!\n" +
+	"\foperation_id\x18\x04 \x01(\tR\voperationId\"\x93\x02\n" +
+	"!AuthorizeCredentialAccessResponse\x12\x18\n" +
+	"\aallowed\x18\x01 \x01(\bR\aallowed\x12:\n" +
+	"\asubject\x18\x02 \x01(\v2 .academic.credentials.v1.SubjectR\asubject\x12\x1b\n" +
+	"\taccess_id\x18\x03 \x01(\tR\baccessId\x129\n" +
+	"\n" +
+	"expires_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\x12!\n" +
+	"\foperation_id\x18\x05 \x01(\tR\voperationId\x12\x1d\n" +
+	"\n" +
+	"error_code\x18\x06 \x01(\tR\terrorCode\"\xb1\x01\n" +
 	"\aSubject\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x04R\x06userId\x12\x1d\n" +
 	"\n" +
@@ -2097,24 +2998,29 @@ const file_academic_credentials_v1_credentials_proto_rawDesc = "" +
 	"\beligible\x18\x01 \x01(\bR\beligible\x12:\n" +
 	"\asubject\x18\x02 \x01(\v2 .academic.credentials.v1.SubjectR\asubject\x12\x1f\n" +
 	"\vreason_code\x18\x03 \x01(\tR\n" +
-	"reasonCode2\x8e\n" +
-	"\n" +
-	"\x12CredentialsService\x12\x80\x01\n" +
+	"reasonCode2\xd7\x0f\n" +
+	"\x12CredentialsService\x12\x86\x01\n" +
+	"\x15GetCredentialMetadata\x125.academic.credentials.v1.GetCredentialMetadataRequest\x1a6.academic.credentials.v1.GetCredentialMetadataResponse\x12\x89\x01\n" +
+	"\x16ListCredentialMetadata\x126.academic.credentials.v1.ListCredentialMetadataRequest\x1a7.academic.credentials.v1.ListCredentialMetadataResponse\x12z\n" +
+	"\x11ResolveCredential\x121.academic.credentials.v1.ResolveCredentialRequest\x1a2.academic.credentials.v1.ResolveCredentialResponse\x12\x86\x01\n" +
+	"\x15ValidateCredentialUse\x125.academic.credentials.v1.ValidateCredentialUseRequest\x1a6.academic.credentials.v1.ValidateCredentialUseResponse\x12\x89\x01\n" +
+	"\x16ReportCredentialHealth\x126.academic.credentials.v1.ReportCredentialHealthRequest\x1a7.academic.credentials.v1.ReportCredentialHealthResponse\x12\x80\x01\n" +
 	"\x13CreateBindingIntent\x123.academic.credentials.v1.CreateBindingIntentRequest\x1a4.academic.credentials.v1.CreateBindingIntentResponse\x12w\n" +
-	"\x10GetHostingStatus\x120.academic.credentials.v1.GetHostingStatusRequest\x1a1.academic.credentials.v1.GetHostingStatusResponse\x12h\n" +
-	"\vUpdateGrant\x12+.academic.credentials.v1.UpdateGrantRequest\x1a,.academic.credentials.v1.UpdateGrantResponse\x12w\n" +
+	"\x10GetHostingStatus\x120.academic.credentials.v1.GetHostingStatusRequest\x1a1.academic.credentials.v1.GetHostingStatusResponse\x12m\n" +
+	"\vUpdateGrant\x12+.academic.credentials.v1.UpdateGrantRequest\x1a,.academic.credentials.v1.UpdateGrantResponse\"\x03\x88\x02\x01\x12w\n" +
 	"\x10RevokeCredential\x120.academic.credentials.v1.RevokeCredentialRequest\x1a1.academic.credentials.v1.RevokeCredentialResponse\x12k\n" +
-	"\fFenceSubject\x12,.academic.credentials.v1.FenceSubjectRequest\x1a-.academic.credentials.v1.FenceSubjectResponse\x12e\n" +
+	"\fFenceSubject\x12,.academic.credentials.v1.FenceSubjectRequest\x1a-.academic.credentials.v1.FenceSubjectResponse\x12j\n" +
 	"\n" +
-	"CreateTask\x12*.academic.credentials.v1.CreateTaskRequest\x1a+.academic.credentials.v1.CreateTaskResponse\x12\\\n" +
-	"\aGetTask\x12'.academic.credentials.v1.GetTaskRequest\x1a(.academic.credentials.v1.GetTaskResponse\x12b\n" +
-	"\tLeaseTask\x12).academic.credentials.v1.LeaseTaskRequest\x1a*.academic.credentials.v1.LeaseTaskResponse\x12\x86\x01\n" +
-	"\x15ResolveTaskCredential\x125.academic.credentials.v1.ResolveTaskCredentialRequest\x1a6.academic.credentials.v1.ResolveTaskCredentialResponse\x12\x8c\x01\n" +
-	"\x17CheckExecutionAdmission\x127.academic.credentials.v1.CheckExecutionAdmissionRequest\x1a8.academic.credentials.v1.CheckExecutionAdmissionResponse\x12k\n" +
-	"\fCompleteTask\x12,.academic.credentials.v1.CompleteTaskRequest\x1a-.academic.credentials.v1.CompleteTaskResponse2\x8a\x02\n" +
+	"CreateTask\x12*.academic.credentials.v1.CreateTaskRequest\x1a+.academic.credentials.v1.CreateTaskResponse\"\x03\x88\x02\x01\x12a\n" +
+	"\aGetTask\x12'.academic.credentials.v1.GetTaskRequest\x1a(.academic.credentials.v1.GetTaskResponse\"\x03\x88\x02\x01\x12g\n" +
+	"\tLeaseTask\x12).academic.credentials.v1.LeaseTaskRequest\x1a*.academic.credentials.v1.LeaseTaskResponse\"\x03\x88\x02\x01\x12\x8b\x01\n" +
+	"\x15ResolveTaskCredential\x125.academic.credentials.v1.ResolveTaskCredentialRequest\x1a6.academic.credentials.v1.ResolveTaskCredentialResponse\"\x03\x88\x02\x01\x12\x91\x01\n" +
+	"\x17CheckExecutionAdmission\x127.academic.credentials.v1.CheckExecutionAdmissionRequest\x1a8.academic.credentials.v1.CheckExecutionAdmissionResponse\"\x03\x88\x02\x01\x12p\n" +
+	"\fCompleteTask\x12,.academic.credentials.v1.CompleteTaskRequest\x1a-.academic.credentials.v1.CompleteTaskResponse\"\x03\x88\x02\x012\x9f\x03\n" +
 	"\"AcademicCredentialAuthorityService\x12q\n" +
 	"\x0eGetEligibility\x12..academic.credentials.v1.GetEligibilityRequest\x1a/.academic.credentials.v1.GetEligibilityResponse\x12q\n" +
-	"\x0eConfirmBinding\x12..academic.credentials.v1.ConfirmBindingRequest\x1a/.academic.credentials.v1.ConfirmBindingResponseBZZXgithub.com/LDouble/campus-academic-api/pkg/academic/credentials/v1;academiccredentialsv1b\x06proto3"
+	"\x0eConfirmBinding\x12..academic.credentials.v1.ConfirmBindingRequest\x1a/.academic.credentials.v1.ConfirmBindingResponse\x12\x92\x01\n" +
+	"\x19AuthorizeCredentialAccess\x129.academic.credentials.v1.AuthorizeCredentialAccessRequest\x1a:.academic.credentials.v1.AuthorizeCredentialAccessResponseBZZXgithub.com/LDouble/campus-academic-api/pkg/academic/credentials/v1;academiccredentialsv1b\x06proto3"
 
 var (
 	file_academic_credentials_v1_credentials_proto_rawDescOnce sync.Once
@@ -2128,103 +3034,141 @@ func file_academic_credentials_v1_credentials_proto_rawDescGZIP() []byte {
 	return file_academic_credentials_v1_credentials_proto_rawDescData
 }
 
-var file_academic_credentials_v1_credentials_proto_msgTypes = make([]protoimpl.MessageInfo, 30)
+var file_academic_credentials_v1_credentials_proto_msgTypes = make([]protoimpl.MessageInfo, 44)
 var file_academic_credentials_v1_credentials_proto_goTypes = []any{
-	(*Subject)(nil),                               // 0: academic.credentials.v1.Subject
-	(*HostingStatus)(nil),                         // 1: academic.credentials.v1.HostingStatus
-	(*CreateBindingIntentRequest)(nil),            // 2: academic.credentials.v1.CreateBindingIntentRequest
-	(*CreateBindingIntentResponse)(nil),           // 3: academic.credentials.v1.CreateBindingIntentResponse
-	(*GetHostingStatusRequest)(nil),               // 4: academic.credentials.v1.GetHostingStatusRequest
-	(*GetHostingStatusResponse)(nil),              // 5: academic.credentials.v1.GetHostingStatusResponse
-	(*UpdateGrantRequest)(nil),                    // 6: academic.credentials.v1.UpdateGrantRequest
-	(*UpdateGrantResponse)(nil),                   // 7: academic.credentials.v1.UpdateGrantResponse
-	(*RevokeCredentialRequest)(nil),               // 8: academic.credentials.v1.RevokeCredentialRequest
-	(*RevokeCredentialResponse)(nil),              // 9: academic.credentials.v1.RevokeCredentialResponse
-	(*FenceSubjectRequest)(nil),                   // 10: academic.credentials.v1.FenceSubjectRequest
-	(*FenceSubjectResponse)(nil),                  // 11: academic.credentials.v1.FenceSubjectResponse
-	(*CreateTaskRequest)(nil),                     // 12: academic.credentials.v1.CreateTaskRequest
-	(*CreateTaskResponse)(nil),                    // 13: academic.credentials.v1.CreateTaskResponse
-	(*GetTaskRequest)(nil),                        // 14: academic.credentials.v1.GetTaskRequest
-	(*GetTaskResponse)(nil),                       // 15: academic.credentials.v1.GetTaskResponse
-	(*Task)(nil),                                  // 16: academic.credentials.v1.Task
-	(*TaskResult)(nil),                            // 17: academic.credentials.v1.TaskResult
-	(*LeaseTaskRequest)(nil),                      // 18: academic.credentials.v1.LeaseTaskRequest
-	(*LeaseTaskResponse)(nil),                     // 19: academic.credentials.v1.LeaseTaskResponse
-	(*ResolveTaskCredentialRequest)(nil),          // 20: academic.credentials.v1.ResolveTaskCredentialRequest
-	(*ResolveTaskCredentialResponse)(nil),         // 21: academic.credentials.v1.ResolveTaskCredentialResponse
-	(*CheckExecutionAdmissionRequest)(nil),        // 22: academic.credentials.v1.CheckExecutionAdmissionRequest
-	(*CheckExecutionAdmissionResponse)(nil),       // 23: academic.credentials.v1.CheckExecutionAdmissionResponse
-	(*CompleteTaskRequest)(nil),                   // 24: academic.credentials.v1.CompleteTaskRequest
-	(*CompleteTaskResponse)(nil),                  // 25: academic.credentials.v1.CompleteTaskResponse
-	(*GetEligibilityRequest)(nil),                 // 26: academic.credentials.v1.GetEligibilityRequest
-	(*GetEligibilityResponse)(nil),                // 27: academic.credentials.v1.GetEligibilityResponse
-	(*ConfirmBindingRequest)(nil),                 // 28: academic.credentials.v1.ConfirmBindingRequest
-	(*ConfirmBindingResponse)(nil),                // 29: academic.credentials.v1.ConfirmBindingResponse
-	(*timestamppb.Timestamp)(nil),                 // 30: google.protobuf.Timestamp
-	(*v1.ListCoursesResponse)(nil),                // 31: academic.provider.v1.ListCoursesResponse
-	(*v1.ListExamsResponse)(nil),                  // 32: academic.provider.v1.ListExamsResponse
-	(*v1.ListGradesResponse)(nil),                 // 33: academic.provider.v1.ListGradesResponse
-	(*v1.ListCourseSelectionsResponse)(nil),       // 34: academic.provider.v1.ListCourseSelectionsResponse
-	(*v1.GetCourseSelectionScheduleResponse)(nil), // 35: academic.provider.v1.GetCourseSelectionScheduleResponse
-	(*v1.ListCourseAdditionResultsResponse)(nil),  // 36: academic.provider.v1.ListCourseAdditionResultsResponse
-	(*v1.Credential)(nil),                         // 37: academic.provider.v1.Credential
+	(*CredentialReference)(nil),                   // 0: academic.credentials.v1.CredentialReference
+	(*CredentialMetadata)(nil),                    // 1: academic.credentials.v1.CredentialMetadata
+	(*GetCredentialMetadataRequest)(nil),          // 2: academic.credentials.v1.GetCredentialMetadataRequest
+	(*GetCredentialMetadataResponse)(nil),         // 3: academic.credentials.v1.GetCredentialMetadataResponse
+	(*ListCredentialMetadataRequest)(nil),         // 4: academic.credentials.v1.ListCredentialMetadataRequest
+	(*ListCredentialMetadataResponse)(nil),        // 5: academic.credentials.v1.ListCredentialMetadataResponse
+	(*ResolveCredentialRequest)(nil),              // 6: academic.credentials.v1.ResolveCredentialRequest
+	(*ResolveCredentialResponse)(nil),             // 7: academic.credentials.v1.ResolveCredentialResponse
+	(*ValidateCredentialUseRequest)(nil),          // 8: academic.credentials.v1.ValidateCredentialUseRequest
+	(*ValidateCredentialUseResponse)(nil),         // 9: academic.credentials.v1.ValidateCredentialUseResponse
+	(*ReportCredentialHealthRequest)(nil),         // 10: academic.credentials.v1.ReportCredentialHealthRequest
+	(*ReportCredentialHealthResponse)(nil),        // 11: academic.credentials.v1.ReportCredentialHealthResponse
+	(*AuthorizeCredentialAccessRequest)(nil),      // 12: academic.credentials.v1.AuthorizeCredentialAccessRequest
+	(*AuthorizeCredentialAccessResponse)(nil),     // 13: academic.credentials.v1.AuthorizeCredentialAccessResponse
+	(*Subject)(nil),                               // 14: academic.credentials.v1.Subject
+	(*HostingStatus)(nil),                         // 15: academic.credentials.v1.HostingStatus
+	(*CreateBindingIntentRequest)(nil),            // 16: academic.credentials.v1.CreateBindingIntentRequest
+	(*CreateBindingIntentResponse)(nil),           // 17: academic.credentials.v1.CreateBindingIntentResponse
+	(*GetHostingStatusRequest)(nil),               // 18: academic.credentials.v1.GetHostingStatusRequest
+	(*GetHostingStatusResponse)(nil),              // 19: academic.credentials.v1.GetHostingStatusResponse
+	(*UpdateGrantRequest)(nil),                    // 20: academic.credentials.v1.UpdateGrantRequest
+	(*UpdateGrantResponse)(nil),                   // 21: academic.credentials.v1.UpdateGrantResponse
+	(*RevokeCredentialRequest)(nil),               // 22: academic.credentials.v1.RevokeCredentialRequest
+	(*RevokeCredentialResponse)(nil),              // 23: academic.credentials.v1.RevokeCredentialResponse
+	(*FenceSubjectRequest)(nil),                   // 24: academic.credentials.v1.FenceSubjectRequest
+	(*FenceSubjectResponse)(nil),                  // 25: academic.credentials.v1.FenceSubjectResponse
+	(*CreateTaskRequest)(nil),                     // 26: academic.credentials.v1.CreateTaskRequest
+	(*CreateTaskResponse)(nil),                    // 27: academic.credentials.v1.CreateTaskResponse
+	(*GetTaskRequest)(nil),                        // 28: academic.credentials.v1.GetTaskRequest
+	(*GetTaskResponse)(nil),                       // 29: academic.credentials.v1.GetTaskResponse
+	(*Task)(nil),                                  // 30: academic.credentials.v1.Task
+	(*TaskResult)(nil),                            // 31: academic.credentials.v1.TaskResult
+	(*LeaseTaskRequest)(nil),                      // 32: academic.credentials.v1.LeaseTaskRequest
+	(*LeaseTaskResponse)(nil),                     // 33: academic.credentials.v1.LeaseTaskResponse
+	(*ResolveTaskCredentialRequest)(nil),          // 34: academic.credentials.v1.ResolveTaskCredentialRequest
+	(*ResolveTaskCredentialResponse)(nil),         // 35: academic.credentials.v1.ResolveTaskCredentialResponse
+	(*CheckExecutionAdmissionRequest)(nil),        // 36: academic.credentials.v1.CheckExecutionAdmissionRequest
+	(*CheckExecutionAdmissionResponse)(nil),       // 37: academic.credentials.v1.CheckExecutionAdmissionResponse
+	(*CompleteTaskRequest)(nil),                   // 38: academic.credentials.v1.CompleteTaskRequest
+	(*CompleteTaskResponse)(nil),                  // 39: academic.credentials.v1.CompleteTaskResponse
+	(*GetEligibilityRequest)(nil),                 // 40: academic.credentials.v1.GetEligibilityRequest
+	(*GetEligibilityResponse)(nil),                // 41: academic.credentials.v1.GetEligibilityResponse
+	(*ConfirmBindingRequest)(nil),                 // 42: academic.credentials.v1.ConfirmBindingRequest
+	(*ConfirmBindingResponse)(nil),                // 43: academic.credentials.v1.ConfirmBindingResponse
+	(*v1.Credential)(nil),                         // 44: academic.provider.v1.Credential
+	(*timestamppb.Timestamp)(nil),                 // 45: google.protobuf.Timestamp
+	(*v1.ListCoursesResponse)(nil),                // 46: academic.provider.v1.ListCoursesResponse
+	(*v1.ListExamsResponse)(nil),                  // 47: academic.provider.v1.ListExamsResponse
+	(*v1.ListGradesResponse)(nil),                 // 48: academic.provider.v1.ListGradesResponse
+	(*v1.ListCourseSelectionsResponse)(nil),       // 49: academic.provider.v1.ListCourseSelectionsResponse
+	(*v1.GetCourseSelectionScheduleResponse)(nil), // 50: academic.provider.v1.GetCourseSelectionScheduleResponse
+	(*v1.ListCourseAdditionResultsResponse)(nil),  // 51: academic.provider.v1.ListCourseAdditionResultsResponse
 }
 var file_academic_credentials_v1_credentials_proto_depIdxs = []int32{
-	30, // 0: academic.credentials.v1.HostingStatus.last_sync_at:type_name -> google.protobuf.Timestamp
-	30, // 1: academic.credentials.v1.CreateBindingIntentResponse.expires_at:type_name -> google.protobuf.Timestamp
-	1,  // 2: academic.credentials.v1.GetHostingStatusResponse.status:type_name -> academic.credentials.v1.HostingStatus
-	1,  // 3: academic.credentials.v1.UpdateGrantResponse.status:type_name -> academic.credentials.v1.HostingStatus
-	1,  // 4: academic.credentials.v1.RevokeCredentialResponse.status:type_name -> academic.credentials.v1.HostingStatus
-	16, // 5: academic.credentials.v1.CreateTaskResponse.task:type_name -> academic.credentials.v1.Task
-	16, // 6: academic.credentials.v1.GetTaskResponse.task:type_name -> academic.credentials.v1.Task
-	30, // 7: academic.credentials.v1.Task.created_at:type_name -> google.protobuf.Timestamp
-	30, // 8: academic.credentials.v1.Task.completed_at:type_name -> google.protobuf.Timestamp
-	17, // 9: academic.credentials.v1.Task.result:type_name -> academic.credentials.v1.TaskResult
-	31, // 10: academic.credentials.v1.TaskResult.courses:type_name -> academic.provider.v1.ListCoursesResponse
-	32, // 11: academic.credentials.v1.TaskResult.exams:type_name -> academic.provider.v1.ListExamsResponse
-	33, // 12: academic.credentials.v1.TaskResult.grades:type_name -> academic.provider.v1.ListGradesResponse
-	34, // 13: academic.credentials.v1.TaskResult.course_selections:type_name -> academic.provider.v1.ListCourseSelectionsResponse
-	35, // 14: academic.credentials.v1.TaskResult.course_selection_schedule:type_name -> academic.provider.v1.GetCourseSelectionScheduleResponse
-	36, // 15: academic.credentials.v1.TaskResult.course_addition_results:type_name -> academic.provider.v1.ListCourseAdditionResultsResponse
-	16, // 16: academic.credentials.v1.LeaseTaskResponse.task:type_name -> academic.credentials.v1.Task
-	30, // 17: academic.credentials.v1.LeaseTaskResponse.expires_at:type_name -> google.protobuf.Timestamp
-	0,  // 18: academic.credentials.v1.ResolveTaskCredentialResponse.subject:type_name -> academic.credentials.v1.Subject
-	37, // 19: academic.credentials.v1.ResolveTaskCredentialResponse.credential:type_name -> academic.provider.v1.Credential
-	17, // 20: academic.credentials.v1.CompleteTaskRequest.result:type_name -> academic.credentials.v1.TaskResult
-	16, // 21: academic.credentials.v1.CompleteTaskResponse.task:type_name -> academic.credentials.v1.Task
-	0,  // 22: academic.credentials.v1.GetEligibilityResponse.subject:type_name -> academic.credentials.v1.Subject
-	0,  // 23: academic.credentials.v1.ConfirmBindingResponse.subject:type_name -> academic.credentials.v1.Subject
-	2,  // 24: academic.credentials.v1.CredentialsService.CreateBindingIntent:input_type -> academic.credentials.v1.CreateBindingIntentRequest
-	4,  // 25: academic.credentials.v1.CredentialsService.GetHostingStatus:input_type -> academic.credentials.v1.GetHostingStatusRequest
-	6,  // 26: academic.credentials.v1.CredentialsService.UpdateGrant:input_type -> academic.credentials.v1.UpdateGrantRequest
-	8,  // 27: academic.credentials.v1.CredentialsService.RevokeCredential:input_type -> academic.credentials.v1.RevokeCredentialRequest
-	10, // 28: academic.credentials.v1.CredentialsService.FenceSubject:input_type -> academic.credentials.v1.FenceSubjectRequest
-	12, // 29: academic.credentials.v1.CredentialsService.CreateTask:input_type -> academic.credentials.v1.CreateTaskRequest
-	14, // 30: academic.credentials.v1.CredentialsService.GetTask:input_type -> academic.credentials.v1.GetTaskRequest
-	18, // 31: academic.credentials.v1.CredentialsService.LeaseTask:input_type -> academic.credentials.v1.LeaseTaskRequest
-	20, // 32: academic.credentials.v1.CredentialsService.ResolveTaskCredential:input_type -> academic.credentials.v1.ResolveTaskCredentialRequest
-	22, // 33: academic.credentials.v1.CredentialsService.CheckExecutionAdmission:input_type -> academic.credentials.v1.CheckExecutionAdmissionRequest
-	24, // 34: academic.credentials.v1.CredentialsService.CompleteTask:input_type -> academic.credentials.v1.CompleteTaskRequest
-	26, // 35: academic.credentials.v1.AcademicCredentialAuthorityService.GetEligibility:input_type -> academic.credentials.v1.GetEligibilityRequest
-	28, // 36: academic.credentials.v1.AcademicCredentialAuthorityService.ConfirmBinding:input_type -> academic.credentials.v1.ConfirmBindingRequest
-	3,  // 37: academic.credentials.v1.CredentialsService.CreateBindingIntent:output_type -> academic.credentials.v1.CreateBindingIntentResponse
-	5,  // 38: academic.credentials.v1.CredentialsService.GetHostingStatus:output_type -> academic.credentials.v1.GetHostingStatusResponse
-	7,  // 39: academic.credentials.v1.CredentialsService.UpdateGrant:output_type -> academic.credentials.v1.UpdateGrantResponse
-	9,  // 40: academic.credentials.v1.CredentialsService.RevokeCredential:output_type -> academic.credentials.v1.RevokeCredentialResponse
-	11, // 41: academic.credentials.v1.CredentialsService.FenceSubject:output_type -> academic.credentials.v1.FenceSubjectResponse
-	13, // 42: academic.credentials.v1.CredentialsService.CreateTask:output_type -> academic.credentials.v1.CreateTaskResponse
-	15, // 43: academic.credentials.v1.CredentialsService.GetTask:output_type -> academic.credentials.v1.GetTaskResponse
-	19, // 44: academic.credentials.v1.CredentialsService.LeaseTask:output_type -> academic.credentials.v1.LeaseTaskResponse
-	21, // 45: academic.credentials.v1.CredentialsService.ResolveTaskCredential:output_type -> academic.credentials.v1.ResolveTaskCredentialResponse
-	23, // 46: academic.credentials.v1.CredentialsService.CheckExecutionAdmission:output_type -> academic.credentials.v1.CheckExecutionAdmissionResponse
-	25, // 47: academic.credentials.v1.CredentialsService.CompleteTask:output_type -> academic.credentials.v1.CompleteTaskResponse
-	27, // 48: academic.credentials.v1.AcademicCredentialAuthorityService.GetEligibility:output_type -> academic.credentials.v1.GetEligibilityResponse
-	29, // 49: academic.credentials.v1.AcademicCredentialAuthorityService.ConfirmBinding:output_type -> academic.credentials.v1.ConfirmBindingResponse
-	37, // [37:50] is the sub-list for method output_type
-	24, // [24:37] is the sub-list for method input_type
-	24, // [24:24] is the sub-list for extension type_name
-	24, // [24:24] is the sub-list for extension extendee
-	0,  // [0:24] is the sub-list for field type_name
+	0,  // 0: academic.credentials.v1.CredentialMetadata.reference:type_name -> academic.credentials.v1.CredentialReference
+	1,  // 1: academic.credentials.v1.GetCredentialMetadataResponse.credential:type_name -> academic.credentials.v1.CredentialMetadata
+	1,  // 2: academic.credentials.v1.ListCredentialMetadataResponse.credentials:type_name -> academic.credentials.v1.CredentialMetadata
+	0,  // 3: academic.credentials.v1.ResolveCredentialRequest.reference:type_name -> academic.credentials.v1.CredentialReference
+	0,  // 4: academic.credentials.v1.ResolveCredentialResponse.reference:type_name -> academic.credentials.v1.CredentialReference
+	14, // 5: academic.credentials.v1.ResolveCredentialResponse.subject:type_name -> academic.credentials.v1.Subject
+	44, // 6: academic.credentials.v1.ResolveCredentialResponse.credential:type_name -> academic.provider.v1.Credential
+	0,  // 7: academic.credentials.v1.ValidateCredentialUseRequest.reference:type_name -> academic.credentials.v1.CredentialReference
+	0,  // 8: academic.credentials.v1.ReportCredentialHealthRequest.reference:type_name -> academic.credentials.v1.CredentialReference
+	0,  // 9: academic.credentials.v1.AuthorizeCredentialAccessRequest.reference:type_name -> academic.credentials.v1.CredentialReference
+	14, // 10: academic.credentials.v1.AuthorizeCredentialAccessResponse.subject:type_name -> academic.credentials.v1.Subject
+	45, // 11: academic.credentials.v1.AuthorizeCredentialAccessResponse.expires_at:type_name -> google.protobuf.Timestamp
+	45, // 12: academic.credentials.v1.HostingStatus.last_sync_at:type_name -> google.protobuf.Timestamp
+	45, // 13: academic.credentials.v1.CreateBindingIntentResponse.expires_at:type_name -> google.protobuf.Timestamp
+	15, // 14: academic.credentials.v1.GetHostingStatusResponse.status:type_name -> academic.credentials.v1.HostingStatus
+	15, // 15: academic.credentials.v1.UpdateGrantResponse.status:type_name -> academic.credentials.v1.HostingStatus
+	15, // 16: academic.credentials.v1.RevokeCredentialResponse.status:type_name -> academic.credentials.v1.HostingStatus
+	30, // 17: academic.credentials.v1.CreateTaskResponse.task:type_name -> academic.credentials.v1.Task
+	30, // 18: academic.credentials.v1.GetTaskResponse.task:type_name -> academic.credentials.v1.Task
+	45, // 19: academic.credentials.v1.Task.created_at:type_name -> google.protobuf.Timestamp
+	45, // 20: academic.credentials.v1.Task.completed_at:type_name -> google.protobuf.Timestamp
+	31, // 21: academic.credentials.v1.Task.result:type_name -> academic.credentials.v1.TaskResult
+	46, // 22: academic.credentials.v1.TaskResult.courses:type_name -> academic.provider.v1.ListCoursesResponse
+	47, // 23: academic.credentials.v1.TaskResult.exams:type_name -> academic.provider.v1.ListExamsResponse
+	48, // 24: academic.credentials.v1.TaskResult.grades:type_name -> academic.provider.v1.ListGradesResponse
+	49, // 25: academic.credentials.v1.TaskResult.course_selections:type_name -> academic.provider.v1.ListCourseSelectionsResponse
+	50, // 26: academic.credentials.v1.TaskResult.course_selection_schedule:type_name -> academic.provider.v1.GetCourseSelectionScheduleResponse
+	51, // 27: academic.credentials.v1.TaskResult.course_addition_results:type_name -> academic.provider.v1.ListCourseAdditionResultsResponse
+	30, // 28: academic.credentials.v1.LeaseTaskResponse.task:type_name -> academic.credentials.v1.Task
+	45, // 29: academic.credentials.v1.LeaseTaskResponse.expires_at:type_name -> google.protobuf.Timestamp
+	14, // 30: academic.credentials.v1.ResolveTaskCredentialResponse.subject:type_name -> academic.credentials.v1.Subject
+	44, // 31: academic.credentials.v1.ResolveTaskCredentialResponse.credential:type_name -> academic.provider.v1.Credential
+	31, // 32: academic.credentials.v1.CompleteTaskRequest.result:type_name -> academic.credentials.v1.TaskResult
+	30, // 33: academic.credentials.v1.CompleteTaskResponse.task:type_name -> academic.credentials.v1.Task
+	14, // 34: academic.credentials.v1.GetEligibilityResponse.subject:type_name -> academic.credentials.v1.Subject
+	14, // 35: academic.credentials.v1.ConfirmBindingResponse.subject:type_name -> academic.credentials.v1.Subject
+	2,  // 36: academic.credentials.v1.CredentialsService.GetCredentialMetadata:input_type -> academic.credentials.v1.GetCredentialMetadataRequest
+	4,  // 37: academic.credentials.v1.CredentialsService.ListCredentialMetadata:input_type -> academic.credentials.v1.ListCredentialMetadataRequest
+	6,  // 38: academic.credentials.v1.CredentialsService.ResolveCredential:input_type -> academic.credentials.v1.ResolveCredentialRequest
+	8,  // 39: academic.credentials.v1.CredentialsService.ValidateCredentialUse:input_type -> academic.credentials.v1.ValidateCredentialUseRequest
+	10, // 40: academic.credentials.v1.CredentialsService.ReportCredentialHealth:input_type -> academic.credentials.v1.ReportCredentialHealthRequest
+	16, // 41: academic.credentials.v1.CredentialsService.CreateBindingIntent:input_type -> academic.credentials.v1.CreateBindingIntentRequest
+	18, // 42: academic.credentials.v1.CredentialsService.GetHostingStatus:input_type -> academic.credentials.v1.GetHostingStatusRequest
+	20, // 43: academic.credentials.v1.CredentialsService.UpdateGrant:input_type -> academic.credentials.v1.UpdateGrantRequest
+	22, // 44: academic.credentials.v1.CredentialsService.RevokeCredential:input_type -> academic.credentials.v1.RevokeCredentialRequest
+	24, // 45: academic.credentials.v1.CredentialsService.FenceSubject:input_type -> academic.credentials.v1.FenceSubjectRequest
+	26, // 46: academic.credentials.v1.CredentialsService.CreateTask:input_type -> academic.credentials.v1.CreateTaskRequest
+	28, // 47: academic.credentials.v1.CredentialsService.GetTask:input_type -> academic.credentials.v1.GetTaskRequest
+	32, // 48: academic.credentials.v1.CredentialsService.LeaseTask:input_type -> academic.credentials.v1.LeaseTaskRequest
+	34, // 49: academic.credentials.v1.CredentialsService.ResolveTaskCredential:input_type -> academic.credentials.v1.ResolveTaskCredentialRequest
+	36, // 50: academic.credentials.v1.CredentialsService.CheckExecutionAdmission:input_type -> academic.credentials.v1.CheckExecutionAdmissionRequest
+	38, // 51: academic.credentials.v1.CredentialsService.CompleteTask:input_type -> academic.credentials.v1.CompleteTaskRequest
+	40, // 52: academic.credentials.v1.AcademicCredentialAuthorityService.GetEligibility:input_type -> academic.credentials.v1.GetEligibilityRequest
+	42, // 53: academic.credentials.v1.AcademicCredentialAuthorityService.ConfirmBinding:input_type -> academic.credentials.v1.ConfirmBindingRequest
+	12, // 54: academic.credentials.v1.AcademicCredentialAuthorityService.AuthorizeCredentialAccess:input_type -> academic.credentials.v1.AuthorizeCredentialAccessRequest
+	3,  // 55: academic.credentials.v1.CredentialsService.GetCredentialMetadata:output_type -> academic.credentials.v1.GetCredentialMetadataResponse
+	5,  // 56: academic.credentials.v1.CredentialsService.ListCredentialMetadata:output_type -> academic.credentials.v1.ListCredentialMetadataResponse
+	7,  // 57: academic.credentials.v1.CredentialsService.ResolveCredential:output_type -> academic.credentials.v1.ResolveCredentialResponse
+	9,  // 58: academic.credentials.v1.CredentialsService.ValidateCredentialUse:output_type -> academic.credentials.v1.ValidateCredentialUseResponse
+	11, // 59: academic.credentials.v1.CredentialsService.ReportCredentialHealth:output_type -> academic.credentials.v1.ReportCredentialHealthResponse
+	17, // 60: academic.credentials.v1.CredentialsService.CreateBindingIntent:output_type -> academic.credentials.v1.CreateBindingIntentResponse
+	19, // 61: academic.credentials.v1.CredentialsService.GetHostingStatus:output_type -> academic.credentials.v1.GetHostingStatusResponse
+	21, // 62: academic.credentials.v1.CredentialsService.UpdateGrant:output_type -> academic.credentials.v1.UpdateGrantResponse
+	23, // 63: academic.credentials.v1.CredentialsService.RevokeCredential:output_type -> academic.credentials.v1.RevokeCredentialResponse
+	25, // 64: academic.credentials.v1.CredentialsService.FenceSubject:output_type -> academic.credentials.v1.FenceSubjectResponse
+	27, // 65: academic.credentials.v1.CredentialsService.CreateTask:output_type -> academic.credentials.v1.CreateTaskResponse
+	29, // 66: academic.credentials.v1.CredentialsService.GetTask:output_type -> academic.credentials.v1.GetTaskResponse
+	33, // 67: academic.credentials.v1.CredentialsService.LeaseTask:output_type -> academic.credentials.v1.LeaseTaskResponse
+	35, // 68: academic.credentials.v1.CredentialsService.ResolveTaskCredential:output_type -> academic.credentials.v1.ResolveTaskCredentialResponse
+	37, // 69: academic.credentials.v1.CredentialsService.CheckExecutionAdmission:output_type -> academic.credentials.v1.CheckExecutionAdmissionResponse
+	39, // 70: academic.credentials.v1.CredentialsService.CompleteTask:output_type -> academic.credentials.v1.CompleteTaskResponse
+	41, // 71: academic.credentials.v1.AcademicCredentialAuthorityService.GetEligibility:output_type -> academic.credentials.v1.GetEligibilityResponse
+	43, // 72: academic.credentials.v1.AcademicCredentialAuthorityService.ConfirmBinding:output_type -> academic.credentials.v1.ConfirmBindingResponse
+	13, // 73: academic.credentials.v1.AcademicCredentialAuthorityService.AuthorizeCredentialAccess:output_type -> academic.credentials.v1.AuthorizeCredentialAccessResponse
+	55, // [55:74] is the sub-list for method output_type
+	36, // [36:55] is the sub-list for method input_type
+	36, // [36:36] is the sub-list for extension type_name
+	36, // [36:36] is the sub-list for extension extendee
+	0,  // [0:36] is the sub-list for field type_name
 }
 
 func init() { file_academic_credentials_v1_credentials_proto_init() }
@@ -2232,7 +3176,7 @@ func file_academic_credentials_v1_credentials_proto_init() {
 	if File_academic_credentials_v1_credentials_proto != nil {
 		return
 	}
-	file_academic_credentials_v1_credentials_proto_msgTypes[17].OneofWrappers = []any{
+	file_academic_credentials_v1_credentials_proto_msgTypes[31].OneofWrappers = []any{
 		(*TaskResult_Courses)(nil),
 		(*TaskResult_Exams)(nil),
 		(*TaskResult_Grades)(nil),
@@ -2246,7 +3190,7 @@ func file_academic_credentials_v1_credentials_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_academic_credentials_v1_credentials_proto_rawDesc), len(file_academic_credentials_v1_credentials_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   30,
+			NumMessages:   44,
 			NumExtensions: 0,
 			NumServices:   2,
 		},
