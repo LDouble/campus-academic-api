@@ -28,6 +28,7 @@ const (
 	AcademicProviderService_ListCourseSelections_FullMethodName       = "/academic.provider.v1.AcademicProviderService/ListCourseSelections"
 	AcademicProviderService_ListCourseAdditionResults_FullMethodName  = "/academic.provider.v1.AcademicProviderService/ListCourseAdditionResults"
 	AcademicProviderService_ListCourseCatalogPage_FullMethodName      = "/academic.provider.v1.AcademicProviderService/ListCourseCatalogPage"
+	AcademicProviderService_GetTrainingPlan_FullMethodName            = "/academic.provider.v1.AcademicProviderService/GetTrainingPlan"
 	AcademicProviderService_DeleteStudentSessions_FullMethodName      = "/academic.provider.v1.AcademicProviderService/DeleteStudentSessions"
 )
 
@@ -45,6 +46,7 @@ type AcademicProviderServiceClient interface {
 	ListCourseSelections(ctx context.Context, in *ListCourseSelectionsRequest, opts ...grpc.CallOption) (*ListCourseSelectionsResponse, error)
 	ListCourseAdditionResults(ctx context.Context, in *ListCourseAdditionResultsRequest, opts ...grpc.CallOption) (*ListCourseAdditionResultsResponse, error)
 	ListCourseCatalogPage(ctx context.Context, in *ListCourseCatalogPageRequest, opts ...grpc.CallOption) (*ListCourseCatalogPageResponse, error)
+	GetTrainingPlan(ctx context.Context, in *GetTrainingPlanRequest, opts ...grpc.CallOption) (*GetTrainingPlanResponse, error)
 	DeleteStudentSessions(ctx context.Context, in *DeleteStudentSessionsRequest, opts ...grpc.CallOption) (*DeleteStudentSessionsResponse, error)
 }
 
@@ -146,6 +148,16 @@ func (c *academicProviderServiceClient) ListCourseCatalogPage(ctx context.Contex
 	return out, nil
 }
 
+func (c *academicProviderServiceClient) GetTrainingPlan(ctx context.Context, in *GetTrainingPlanRequest, opts ...grpc.CallOption) (*GetTrainingPlanResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetTrainingPlanResponse)
+	err := c.cc.Invoke(ctx, AcademicProviderService_GetTrainingPlan_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *academicProviderServiceClient) DeleteStudentSessions(ctx context.Context, in *DeleteStudentSessionsRequest, opts ...grpc.CallOption) (*DeleteStudentSessionsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(DeleteStudentSessionsResponse)
@@ -170,6 +182,7 @@ type AcademicProviderServiceServer interface {
 	ListCourseSelections(context.Context, *ListCourseSelectionsRequest) (*ListCourseSelectionsResponse, error)
 	ListCourseAdditionResults(context.Context, *ListCourseAdditionResultsRequest) (*ListCourseAdditionResultsResponse, error)
 	ListCourseCatalogPage(context.Context, *ListCourseCatalogPageRequest) (*ListCourseCatalogPageResponse, error)
+	GetTrainingPlan(context.Context, *GetTrainingPlanRequest) (*GetTrainingPlanResponse, error)
 	DeleteStudentSessions(context.Context, *DeleteStudentSessionsRequest) (*DeleteStudentSessionsResponse, error)
 	mustEmbedUnimplementedAcademicProviderServiceServer()
 }
@@ -207,6 +220,9 @@ func (UnimplementedAcademicProviderServiceServer) ListCourseAdditionResults(cont
 }
 func (UnimplementedAcademicProviderServiceServer) ListCourseCatalogPage(context.Context, *ListCourseCatalogPageRequest) (*ListCourseCatalogPageResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListCourseCatalogPage not implemented")
+}
+func (UnimplementedAcademicProviderServiceServer) GetTrainingPlan(context.Context, *GetTrainingPlanRequest) (*GetTrainingPlanResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetTrainingPlan not implemented")
 }
 func (UnimplementedAcademicProviderServiceServer) DeleteStudentSessions(context.Context, *DeleteStudentSessionsRequest) (*DeleteStudentSessionsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteStudentSessions not implemented")
@@ -395,6 +411,24 @@ func _AcademicProviderService_ListCourseCatalogPage_Handler(srv interface{}, ctx
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AcademicProviderService_GetTrainingPlan_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTrainingPlanRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AcademicProviderServiceServer).GetTrainingPlan(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AcademicProviderService_GetTrainingPlan_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AcademicProviderServiceServer).GetTrainingPlan(ctx, req.(*GetTrainingPlanRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AcademicProviderService_DeleteStudentSessions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteStudentSessionsRequest)
 	if err := dec(in); err != nil {
@@ -455,6 +489,10 @@ var AcademicProviderService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListCourseCatalogPage",
 			Handler:    _AcademicProviderService_ListCourseCatalogPage_Handler,
+		},
+		{
+			MethodName: "GetTrainingPlan",
+			Handler:    _AcademicProviderService_GetTrainingPlan_Handler,
 		},
 		{
 			MethodName: "DeleteStudentSessions",

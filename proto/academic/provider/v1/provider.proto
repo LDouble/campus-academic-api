@@ -20,6 +20,7 @@ service AcademicProviderService {
   rpc ListCourseSelections(ListCourseSelectionsRequest) returns (ListCourseSelectionsResponse);
   rpc ListCourseAdditionResults(ListCourseAdditionResultsRequest) returns (ListCourseAdditionResultsResponse);
   rpc ListCourseCatalogPage(ListCourseCatalogPageRequest) returns (ListCourseCatalogPageResponse);
+  rpc GetTrainingPlan(GetTrainingPlanRequest) returns (GetTrainingPlanResponse);
   rpc DeleteStudentSessions(DeleteStudentSessionsRequest) returns (DeleteStudentSessionsResponse);
 }
 
@@ -258,4 +259,52 @@ message CourseCatalogEntry {
   int32 capacity = 14;
   int32 enrolled = 15;
   string note = 16;
+}
+
+// GetTrainingPlanRequest 查询已认证学生的培养方案，不按学期筛选。
+message GetTrainingPlanRequest {
+  StudentReference student = 1;
+  Credential credential = 2;
+}
+
+message GetTrainingPlanResponse {
+  TrainingPlan plan = 1;
+}
+
+// TrainingPlan 的体系名称和数量随专业变化，不使用固定分类枚举。
+message TrainingPlan {
+  string title = 1;
+  string objectives = 2;
+  string description = 3;
+  repeated TrainingPlanCourseGroup course_groups = 4;
+  repeated TrainingPlanCreditRequirement credit_requirements = 5;
+  double total_required_credit = 6;
+  optional string major_name = 7;
+  optional int32 cohort_year = 8;
+}
+
+message TrainingPlanCourseGroup {
+  string name = 1;
+  bool courses_omitted = 2;
+  repeated TrainingPlanCourse courses = 3;
+}
+
+message TrainingPlanCourse {
+  string selection_group = 1;
+  string course_code = 2;
+  string course_name = 3;
+  string course_nature = 4;
+  string course_attribute = 5;
+  double credit = 6;
+  double lecture_hours = 7;
+  double practice_hours = 8;
+  double total_hours = 9;
+  // OfferedTerms 保留教务原始开设学期编号和顺序。
+  repeated string offered_terms = 10;
+}
+
+message TrainingPlanCreditRequirement {
+  string group_name = 1;
+  string course_attribute = 2;
+  double required_credit = 3;
 }
