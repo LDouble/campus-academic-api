@@ -880,10 +880,12 @@ func (x *ResolveCredentialRequest) GetAccessToken() string {
 }
 
 type ResolveCredentialResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Reference     *CredentialReference   `protobuf:"bytes,1,opt,name=reference,proto3" json:"reference,omitempty"`
-	Subject       *Subject               `protobuf:"bytes,2,opt,name=subject,proto3" json:"subject,omitempty"`
-	Credential    *v1.Credential         `protobuf:"bytes,3,opt,name=credential,proto3" json:"credential,omitempty"`
+	state      protoimpl.MessageState `protogen:"open.v1"`
+	Reference  *CredentialReference   `protobuf:"bytes,1,opt,name=reference,proto3" json:"reference,omitempty"`
+	Subject    *Subject               `protobuf:"bytes,2,opt,name=subject,proto3" json:"subject,omitempty"`
+	Credential *v1.Credential         `protobuf:"bytes,3,opt,name=credential,proto3" json:"credential,omitempty"`
+	// HealthVersion 是本次取密快照对应的成功验证代次；0 是合法初值，不属于凭据引用版本或取密授权版本。
+	HealthVersion uint64 `protobuf:"varint,4,opt,name=health_version,json=healthVersion,proto3" json:"health_version,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -937,6 +939,13 @@ func (x *ResolveCredentialResponse) GetCredential() *v1.Credential {
 		return x.Credential
 	}
 	return nil
+}
+
+func (x *ResolveCredentialResponse) GetHealthVersion() uint64 {
+	if x != nil {
+		return x.HealthVersion
+	}
+	return 0
 }
 
 type ValidateCredentialUseRequest struct {
@@ -1039,9 +1048,12 @@ type ReportCredentialHealthRequest struct {
 	state     protoimpl.MessageState `protogen:"open.v1"`
 	Reference *CredentialReference   `protobuf:"bytes,1,opt,name=reference,proto3" json:"reference,omitempty"`
 	// 仅接受凭据失效或需要人工处理，不接受网络及业务错误。
-	State         string `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	State string `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
+	// 账号模式必须携带本次 ResolveCredential 返回的代次（包括合法的 0），服务端按代次比较后更新健康状态。
+	// 使用 optional 保留字段缺省与显式 0 的区别；旧客户端省略该字段时，服务端不改变账号状态，旧 user 路径可继续省略。
+	ExpectedHealthVersion *uint64 `protobuf:"varint,3,opt,name=expected_health_version,json=expectedHealthVersion,proto3,oneof" json:"expected_health_version,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
 }
 
 func (x *ReportCredentialHealthRequest) Reset() {
@@ -1086,6 +1098,13 @@ func (x *ReportCredentialHealthRequest) GetState() string {
 		return x.State
 	}
 	return ""
+}
+
+func (x *ReportCredentialHealthRequest) GetExpectedHealthVersion() uint64 {
+	if x != nil && x.ExpectedHealthVersion != nil {
+		return *x.ExpectedHealthVersion
+	}
+	return 0
 }
 
 type ReportCredentialHealthResponse struct {
@@ -3291,22 +3310,25 @@ const file_academic_credentials_v1_credentials_proto_rawDesc = "" +
 	"\foperation_id\x18\x04 \x01(\tR\voperationId\"\x89\x01\n" +
 	"\x18ResolveCredentialRequest\x12J\n" +
 	"\treference\x18\x01 \x01(\v2,.academic.credentials.v1.CredentialReferenceR\treference\x12!\n" +
-	"\faccess_token\x18\x02 \x01(\tR\vaccessToken\"\xe5\x01\n" +
+	"\faccess_token\x18\x02 \x01(\tR\vaccessToken\"\x8c\x02\n" +
 	"\x19ResolveCredentialResponse\x12J\n" +
 	"\treference\x18\x01 \x01(\v2,.academic.credentials.v1.CredentialReferenceR\treference\x12:\n" +
 	"\asubject\x18\x02 \x01(\v2 .academic.credentials.v1.SubjectR\asubject\x12@\n" +
 	"\n" +
 	"credential\x18\x03 \x01(\v2 .academic.provider.v1.CredentialR\n" +
-	"credential\"j\n" +
+	"credential\x12%\n" +
+	"\x0ehealth_version\x18\x04 \x01(\x04R\rhealthVersion\"j\n" +
 	"\x1cValidateCredentialUseRequest\x12J\n" +
 	"\treference\x18\x01 \x01(\v2,.academic.credentials.v1.CredentialReferenceR\treference\"X\n" +
 	"\x1dValidateCredentialUseResponse\x12\x18\n" +
 	"\aallowed\x18\x01 \x01(\bR\aallowed\x12\x1d\n" +
 	"\n" +
-	"error_code\x18\x02 \x01(\tR\terrorCode\"\x81\x01\n" +
+	"error_code\x18\x02 \x01(\tR\terrorCode\"\xda\x01\n" +
 	"\x1dReportCredentialHealthRequest\x12J\n" +
 	"\treference\x18\x01 \x01(\v2,.academic.credentials.v1.CredentialReferenceR\treference\x12\x14\n" +
-	"\x05state\x18\x02 \x01(\tR\x05state\"D\n" +
+	"\x05state\x18\x02 \x01(\tR\x05state\x12;\n" +
+	"\x17expected_health_version\x18\x03 \x01(\x04H\x00R\x15expectedHealthVersion\x88\x01\x01B\x1a\n" +
+	"\x18_expected_health_version\"D\n" +
 	"\x1eReportCredentialHealthResponse\x12\"\n" +
 	"\facknowledged\x18\x01 \x01(\bR\facknowledged\"\xd3\x01\n" +
 	" AuthorizeCredentialAccessRequest\x12J\n" +
@@ -3675,6 +3697,7 @@ func file_academic_credentials_v1_credentials_proto_init() {
 	if File_academic_credentials_v1_credentials_proto != nil {
 		return
 	}
+	file_academic_credentials_v1_credentials_proto_msgTypes[16].OneofWrappers = []any{}
 	file_academic_credentials_v1_credentials_proto_msgTypes[37].OneofWrappers = []any{
 		(*TaskResult_Courses)(nil),
 		(*TaskResult_Exams)(nil),
