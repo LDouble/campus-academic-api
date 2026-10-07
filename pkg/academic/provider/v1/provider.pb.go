@@ -80,8 +80,10 @@ type StudentReference struct {
 	StudentNo      string                 `protobuf:"bytes,2,opt,name=student_no,json=studentNo,proto3" json:"student_no,omitempty"`
 	Provider       string                 `protobuf:"bytes,3,opt,name=provider,proto3" json:"provider,omitempty"`
 	EducationLevel string                 `protobuf:"bytes,4,opt,name=education_level,json=educationLevel,proto3" json:"education_level,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	// 托管账号执行使用 account_id 且 user_id 为零；普通查询允许二者均为零，禁止二者同时非零。
+	AccountId     uint64 `protobuf:"varint,5,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *StudentReference) Reset() {
@@ -140,6 +142,13 @@ func (x *StudentReference) GetEducationLevel() string {
 		return x.EducationLevel
 	}
 	return ""
+}
+
+func (x *StudentReference) GetAccountId() uint64 {
+	if x != nil {
+		return x.AccountId
+	}
+	return 0
 }
 
 type VerifyCredentialRequest struct {
@@ -2190,13 +2199,15 @@ const file_academic_provider_v1_provider_proto_rawDesc = "" +
 	"Credential\x12\x1d\n" +
 	"\n" +
 	"student_no\x18\x01 \x01(\tR\tstudentNo\x12\x1a\n" +
-	"\bpassword\x18\x02 \x01(\tR\bpassword\"\x8f\x01\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\"\xae\x01\n" +
 	"\x10StudentReference\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x04R\x06userId\x12\x1d\n" +
 	"\n" +
 	"student_no\x18\x02 \x01(\tR\tstudentNo\x12\x1a\n" +
 	"\bprovider\x18\x03 \x01(\tR\bprovider\x12'\n" +
-	"\x0feducation_level\x18\x04 \x01(\tR\x0eeducationLevel\"\x84\x01\n" +
+	"\x0feducation_level\x18\x04 \x01(\tR\x0eeducationLevel\x12\x1d\n" +
+	"\n" +
+	"account_id\x18\x05 \x01(\x04R\taccountId\"\x84\x01\n" +
 	"\x17VerifyCredentialRequest\x12@\n" +
 	"\n" +
 	"credential\x18\x01 \x01(\v2 .academic.provider.v1.CredentialR\n" +

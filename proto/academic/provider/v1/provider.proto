@@ -33,6 +33,8 @@ message StudentReference {
   string student_no = 2;
   string provider = 3;
   string education_level = 4;
+  // 托管账号执行使用 account_id 且 user_id 为零；普通查询允许二者均为零，禁止二者同时非零。
+  uint64 account_id = 5;
 }
 
 message VerifyCredentialRequest {
