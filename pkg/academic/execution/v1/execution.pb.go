@@ -677,8 +677,10 @@ type FenceExecutionRequest struct {
 	CredentialId       string `protobuf:"bytes,3,opt,name=credential_id,json=credentialId,proto3" json:"credential_id,omitempty"`
 	CredentialRevision uint64 `protobuf:"varint,4,opt,name=credential_revision,json=credentialRevision,proto3" json:"credential_revision,omitempty"`
 	GrantEpoch         uint64 `protobuf:"varint,5,opt,name=grant_epoch,json=grantEpoch,proto3" json:"grant_epoch,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
+	// 账号模式使用 account_id，且 user_id 和 identity_version 必须为零；不改变旧用户字段语义。
+	AccountId     uint64 `protobuf:"varint,6,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *FenceExecutionRequest) Reset() {
@@ -742,6 +744,13 @@ func (x *FenceExecutionRequest) GetCredentialRevision() uint64 {
 func (x *FenceExecutionRequest) GetGrantEpoch() uint64 {
 	if x != nil {
 		return x.GrantEpoch
+	}
+	return 0
+}
+
+func (x *FenceExecutionRequest) GetAccountId() uint64 {
+	if x != nil {
+		return x.AccountId
 	}
 	return 0
 }
@@ -850,14 +859,16 @@ const file_academic_execution_v1_execution_proto_rawDesc = "" +
 	"\vobservation\x18\x02 \x01(\v2).academic.archive.v1.ObservationReferenceR\vobservation\"\x84\x01\n" +
 	"\x1bRegisterObservationResponse\x12\x18\n" +
 	"\aallowed\x18\x01 \x01(\bR\aallowed\x12K\n" +
-	"\vobservation\x18\x02 \x01(\v2).academic.archive.v1.ObservationReferenceR\vobservation\"\xd2\x01\n" +
+	"\vobservation\x18\x02 \x01(\v2).academic.archive.v1.ObservationReferenceR\vobservation\"\xf1\x01\n" +
 	"\x15FenceExecutionRequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\x04R\x06userId\x12)\n" +
 	"\x10identity_version\x18\x02 \x01(\x04R\x0fidentityVersion\x12#\n" +
 	"\rcredential_id\x18\x03 \x01(\tR\fcredentialId\x12/\n" +
 	"\x13credential_revision\x18\x04 \x01(\x04R\x12credentialRevision\x12\x1f\n" +
 	"\vgrant_epoch\x18\x05 \x01(\x04R\n" +
-	"grantEpoch\"<\n" +
+	"grantEpoch\x12\x1d\n" +
+	"\n" +
+	"account_id\x18\x06 \x01(\x04R\taccountId\"<\n" +
 	"\x16FenceExecutionResponse\x12\"\n" +
 	"\facknowledged\x18\x01 \x01(\bR\facknowledged2\x87\x02\n" +
 	"\x18AcademicExecutionService\x12|\n" +

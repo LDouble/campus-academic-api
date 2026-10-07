@@ -93,5 +93,7 @@ message FenceExecutionRequest {
   string credential_id = 3;
   uint64 credential_revision = 4;
   uint64 grant_epoch = 5;
+  // 账号模式使用 account_id，且 user_id 和 identity_version 必须为零；不改变旧用户字段语义。
+  uint64 account_id = 6;
 }
 message FenceExecutionResponse { bool acknowledged = 1; }

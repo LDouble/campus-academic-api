@@ -19,22 +19,26 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	CredentialsService_GetCredentialMetadata_FullMethodName   = "/academic.credentials.v1.CredentialsService/GetCredentialMetadata"
-	CredentialsService_ListCredentialMetadata_FullMethodName  = "/academic.credentials.v1.CredentialsService/ListCredentialMetadata"
-	CredentialsService_ResolveCredential_FullMethodName       = "/academic.credentials.v1.CredentialsService/ResolveCredential"
-	CredentialsService_ValidateCredentialUse_FullMethodName   = "/academic.credentials.v1.CredentialsService/ValidateCredentialUse"
-	CredentialsService_ReportCredentialHealth_FullMethodName  = "/academic.credentials.v1.CredentialsService/ReportCredentialHealth"
-	CredentialsService_CreateBindingIntent_FullMethodName     = "/academic.credentials.v1.CredentialsService/CreateBindingIntent"
-	CredentialsService_GetHostingStatus_FullMethodName        = "/academic.credentials.v1.CredentialsService/GetHostingStatus"
-	CredentialsService_UpdateGrant_FullMethodName             = "/academic.credentials.v1.CredentialsService/UpdateGrant"
-	CredentialsService_RevokeCredential_FullMethodName        = "/academic.credentials.v1.CredentialsService/RevokeCredential"
-	CredentialsService_FenceSubject_FullMethodName            = "/academic.credentials.v1.CredentialsService/FenceSubject"
-	CredentialsService_CreateTask_FullMethodName              = "/academic.credentials.v1.CredentialsService/CreateTask"
-	CredentialsService_GetTask_FullMethodName                 = "/academic.credentials.v1.CredentialsService/GetTask"
-	CredentialsService_LeaseTask_FullMethodName               = "/academic.credentials.v1.CredentialsService/LeaseTask"
-	CredentialsService_ResolveTaskCredential_FullMethodName   = "/academic.credentials.v1.CredentialsService/ResolveTaskCredential"
-	CredentialsService_CheckExecutionAdmission_FullMethodName = "/academic.credentials.v1.CredentialsService/CheckExecutionAdmission"
-	CredentialsService_CompleteTask_FullMethodName            = "/academic.credentials.v1.CredentialsService/CompleteTask"
+	CredentialsService_GetCredentialMetadata_FullMethodName     = "/academic.credentials.v1.CredentialsService/GetCredentialMetadata"
+	CredentialsService_ListCredentialMetadata_FullMethodName    = "/academic.credentials.v1.CredentialsService/ListCredentialMetadata"
+	CredentialsService_GetAccountCredential_FullMethodName      = "/academic.credentials.v1.CredentialsService/GetAccountCredential"
+	CredentialsService_ListAccountCredentials_FullMethodName    = "/academic.credentials.v1.CredentialsService/ListAccountCredentials"
+	CredentialsService_CaptureVerifiedCredential_FullMethodName = "/academic.credentials.v1.CredentialsService/CaptureVerifiedCredential"
+	CredentialsService_SetAccountCredentialState_FullMethodName = "/academic.credentials.v1.CredentialsService/SetAccountCredentialState"
+	CredentialsService_ResolveCredential_FullMethodName         = "/academic.credentials.v1.CredentialsService/ResolveCredential"
+	CredentialsService_ValidateCredentialUse_FullMethodName     = "/academic.credentials.v1.CredentialsService/ValidateCredentialUse"
+	CredentialsService_ReportCredentialHealth_FullMethodName    = "/academic.credentials.v1.CredentialsService/ReportCredentialHealth"
+	CredentialsService_CreateBindingIntent_FullMethodName       = "/academic.credentials.v1.CredentialsService/CreateBindingIntent"
+	CredentialsService_GetHostingStatus_FullMethodName          = "/academic.credentials.v1.CredentialsService/GetHostingStatus"
+	CredentialsService_UpdateGrant_FullMethodName               = "/academic.credentials.v1.CredentialsService/UpdateGrant"
+	CredentialsService_RevokeCredential_FullMethodName          = "/academic.credentials.v1.CredentialsService/RevokeCredential"
+	CredentialsService_FenceSubject_FullMethodName              = "/academic.credentials.v1.CredentialsService/FenceSubject"
+	CredentialsService_CreateTask_FullMethodName                = "/academic.credentials.v1.CredentialsService/CreateTask"
+	CredentialsService_GetTask_FullMethodName                   = "/academic.credentials.v1.CredentialsService/GetTask"
+	CredentialsService_LeaseTask_FullMethodName                 = "/academic.credentials.v1.CredentialsService/LeaseTask"
+	CredentialsService_ResolveTaskCredential_FullMethodName     = "/academic.credentials.v1.CredentialsService/ResolveTaskCredential"
+	CredentialsService_CheckExecutionAdmission_FullMethodName   = "/academic.credentials.v1.CredentialsService/CheckExecutionAdmission"
+	CredentialsService_CompleteTask_FullMethodName              = "/academic.credentials.v1.CredentialsService/CompleteTask"
 )
 
 // CredentialsServiceClient is the client API for CredentialsService service.
@@ -44,8 +48,24 @@ const (
 // CredentialsService 仅管理托管凭据及受控取用；实现层必须执行内部 mTLS 身份策略。
 type CredentialsServiceClient interface {
 	// 凭据元数据和受控取用不承担业务任务或调度状态。
+	// GetCredentialMetadata 与账号级读取、录制及状态变更共用相同的元数据响应结构。
+	// buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
 	GetCredentialMetadata(ctx context.Context, in *GetCredentialMetadataRequest, opts ...grpc.CallOption) (*GetCredentialMetadataResponse, error)
 	ListCredentialMetadata(ctx context.Context, in *ListCredentialMetadataRequest, opts ...grpc.CallOption) (*ListCredentialMetadataResponse, error)
+	// 按教务账号读取托管凭据元数据；服务端要求 account 与 account_id 恰有一个。
+	// buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
+	// buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
+	GetAccountCredential(ctx context.Context, in *GetAccountCredentialRequest, opts ...grpc.CallOption) (*GetCredentialMetadataResponse, error)
+	// 按账号 ID 分页列出托管凭据元数据，不返回凭据明文。
+	ListAccountCredentials(ctx context.Context, in *ListAccountCredentialsRequest, opts ...grpc.CallOption) (*ListAccountCredentialsResponse, error)
+	// 仅受信 Provider mTLS 身份可调用，且只可录制其本次实际验证成功的候选凭据；服务端执行版本比较和幂等校验。
+	// buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
+	// buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
+	CaptureVerifiedCredential(ctx context.Context, in *CaptureVerifiedCredentialRequest, opts ...grpc.CallOption) (*GetCredentialMetadataResponse, error)
+	// 仅接受经 Backend 管理权限授权转发的账号状态变更；服务端按 operation_id 对请求内容幂等。
+	// buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
+	// buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
+	SetAccountCredentialState(ctx context.Context, in *SetAccountCredentialStateRequest, opts ...grpc.CallOption) (*GetCredentialMetadataResponse, error)
 	ResolveCredential(ctx context.Context, in *ResolveCredentialRequest, opts ...grpc.CallOption) (*ResolveCredentialResponse, error)
 	ValidateCredentialUse(ctx context.Context, in *ValidateCredentialUseRequest, opts ...grpc.CallOption) (*ValidateCredentialUseResponse, error)
 	ReportCredentialHealth(ctx context.Context, in *ReportCredentialHealthRequest, opts ...grpc.CallOption) (*ReportCredentialHealthResponse, error)
@@ -93,6 +113,46 @@ func (c *credentialsServiceClient) ListCredentialMetadata(ctx context.Context, i
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListCredentialMetadataResponse)
 	err := c.cc.Invoke(ctx, CredentialsService_ListCredentialMetadata_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *credentialsServiceClient) GetAccountCredential(ctx context.Context, in *GetAccountCredentialRequest, opts ...grpc.CallOption) (*GetCredentialMetadataResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetCredentialMetadataResponse)
+	err := c.cc.Invoke(ctx, CredentialsService_GetAccountCredential_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *credentialsServiceClient) ListAccountCredentials(ctx context.Context, in *ListAccountCredentialsRequest, opts ...grpc.CallOption) (*ListAccountCredentialsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListAccountCredentialsResponse)
+	err := c.cc.Invoke(ctx, CredentialsService_ListAccountCredentials_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *credentialsServiceClient) CaptureVerifiedCredential(ctx context.Context, in *CaptureVerifiedCredentialRequest, opts ...grpc.CallOption) (*GetCredentialMetadataResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetCredentialMetadataResponse)
+	err := c.cc.Invoke(ctx, CredentialsService_CaptureVerifiedCredential_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *credentialsServiceClient) SetAccountCredentialState(ctx context.Context, in *SetAccountCredentialStateRequest, opts ...grpc.CallOption) (*GetCredentialMetadataResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetCredentialMetadataResponse)
+	err := c.cc.Invoke(ctx, CredentialsService_SetAccountCredentialState_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -253,8 +313,24 @@ func (c *credentialsServiceClient) CompleteTask(ctx context.Context, in *Complet
 // CredentialsService 仅管理托管凭据及受控取用；实现层必须执行内部 mTLS 身份策略。
 type CredentialsServiceServer interface {
 	// 凭据元数据和受控取用不承担业务任务或调度状态。
+	// GetCredentialMetadata 与账号级读取、录制及状态变更共用相同的元数据响应结构。
+	// buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
 	GetCredentialMetadata(context.Context, *GetCredentialMetadataRequest) (*GetCredentialMetadataResponse, error)
 	ListCredentialMetadata(context.Context, *ListCredentialMetadataRequest) (*ListCredentialMetadataResponse, error)
+	// 按教务账号读取托管凭据元数据；服务端要求 account 与 account_id 恰有一个。
+	// buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
+	// buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
+	GetAccountCredential(context.Context, *GetAccountCredentialRequest) (*GetCredentialMetadataResponse, error)
+	// 按账号 ID 分页列出托管凭据元数据，不返回凭据明文。
+	ListAccountCredentials(context.Context, *ListAccountCredentialsRequest) (*ListAccountCredentialsResponse, error)
+	// 仅受信 Provider mTLS 身份可调用，且只可录制其本次实际验证成功的候选凭据；服务端执行版本比较和幂等校验。
+	// buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
+	// buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
+	CaptureVerifiedCredential(context.Context, *CaptureVerifiedCredentialRequest) (*GetCredentialMetadataResponse, error)
+	// 仅接受经 Backend 管理权限授权转发的账号状态变更；服务端按 operation_id 对请求内容幂等。
+	// buf:lint:ignore RPC_REQUEST_RESPONSE_UNIQUE
+	// buf:lint:ignore RPC_RESPONSE_STANDARD_NAME
+	SetAccountCredentialState(context.Context, *SetAccountCredentialStateRequest) (*GetCredentialMetadataResponse, error)
 	ResolveCredential(context.Context, *ResolveCredentialRequest) (*ResolveCredentialResponse, error)
 	ValidateCredentialUse(context.Context, *ValidateCredentialUseRequest) (*ValidateCredentialUseResponse, error)
 	ReportCredentialHealth(context.Context, *ReportCredentialHealthRequest) (*ReportCredentialHealthResponse, error)
@@ -293,6 +369,18 @@ func (UnimplementedCredentialsServiceServer) GetCredentialMetadata(context.Conte
 }
 func (UnimplementedCredentialsServiceServer) ListCredentialMetadata(context.Context, *ListCredentialMetadataRequest) (*ListCredentialMetadataResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListCredentialMetadata not implemented")
+}
+func (UnimplementedCredentialsServiceServer) GetAccountCredential(context.Context, *GetAccountCredentialRequest) (*GetCredentialMetadataResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetAccountCredential not implemented")
+}
+func (UnimplementedCredentialsServiceServer) ListAccountCredentials(context.Context, *ListAccountCredentialsRequest) (*ListAccountCredentialsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListAccountCredentials not implemented")
+}
+func (UnimplementedCredentialsServiceServer) CaptureVerifiedCredential(context.Context, *CaptureVerifiedCredentialRequest) (*GetCredentialMetadataResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CaptureVerifiedCredential not implemented")
+}
+func (UnimplementedCredentialsServiceServer) SetAccountCredentialState(context.Context, *SetAccountCredentialStateRequest) (*GetCredentialMetadataResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method SetAccountCredentialState not implemented")
 }
 func (UnimplementedCredentialsServiceServer) ResolveCredential(context.Context, *ResolveCredentialRequest) (*ResolveCredentialResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ResolveCredential not implemented")
@@ -389,6 +477,78 @@ func _CredentialsService_ListCredentialMetadata_Handler(srv interface{}, ctx con
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(CredentialsServiceServer).ListCredentialMetadata(ctx, req.(*ListCredentialMetadataRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CredentialsService_GetAccountCredential_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAccountCredentialRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CredentialsServiceServer).GetAccountCredential(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CredentialsService_GetAccountCredential_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CredentialsServiceServer).GetAccountCredential(ctx, req.(*GetAccountCredentialRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CredentialsService_ListAccountCredentials_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListAccountCredentialsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CredentialsServiceServer).ListAccountCredentials(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CredentialsService_ListAccountCredentials_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CredentialsServiceServer).ListAccountCredentials(ctx, req.(*ListAccountCredentialsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CredentialsService_CaptureVerifiedCredential_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CaptureVerifiedCredentialRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CredentialsServiceServer).CaptureVerifiedCredential(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CredentialsService_CaptureVerifiedCredential_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CredentialsServiceServer).CaptureVerifiedCredential(ctx, req.(*CaptureVerifiedCredentialRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CredentialsService_SetAccountCredentialState_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetAccountCredentialStateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CredentialsServiceServer).SetAccountCredentialState(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CredentialsService_SetAccountCredentialState_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CredentialsServiceServer).SetAccountCredentialState(ctx, req.(*SetAccountCredentialStateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -659,6 +819,22 @@ var CredentialsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListCredentialMetadata",
 			Handler:    _CredentialsService_ListCredentialMetadata_Handler,
+		},
+		{
+			MethodName: "GetAccountCredential",
+			Handler:    _CredentialsService_GetAccountCredential_Handler,
+		},
+		{
+			MethodName: "ListAccountCredentials",
+			Handler:    _CredentialsService_ListAccountCredentials_Handler,
+		},
+		{
+			MethodName: "CaptureVerifiedCredential",
+			Handler:    _CredentialsService_CaptureVerifiedCredential_Handler,
+		},
+		{
+			MethodName: "SetAccountCredentialState",
+			Handler:    _CredentialsService_SetAccountCredentialState_Handler,
 		},
 		{
 			MethodName: "ResolveCredential",
