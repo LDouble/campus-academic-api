@@ -1,0 +1,99 @@
+syntax = "proto3";
+
+package academic.execution.v1;
+
+option go_package = "github.com/LDouble/campus-academic-api/pkg/academic/execution/v1;academicexecutionv1";
+
+import "academic/archive/v1/archive.proto";
+import "academic/credentials/v1/credentials.proto";
+import "academic/provider/v1/provider.proto";
+import "google/protobuf/timestamp.proto";
+
+// AcademicExecutionService 在 Provider 内执行一次平台已授权的查询，不持有任务队列。
+service AcademicExecutionService {
+  rpc ExecuteManagedQuery(ExecuteManagedQueryRequest) returns (ExecuteManagedQueryResponse);
+  rpc FenceExecution(FenceExecutionRequest) returns (FenceExecutionResponse);
+}
+
+// AcademicExecutionAuthorityService 由平台任务模块提供任务租约和用途的权威准入。
+service AcademicExecutionAuthorityService {
+  rpc CheckExecutionAdmission(CheckExecutionAdmissionRequest) returns (CheckExecutionAdmissionResponse);
+  rpc RegisterObservation(RegisterObservationRequest) returns (RegisterObservationResponse);
+}
+
+// ExecutionLease 仅通过受保护 RPC 传递，租约票据不得写入队列或日志。
+message ExecutionLease {
+  string task_id = 1;
+  string attempt_id = 2;
+  string lease_token = 3;
+  uint64 fence = 4;
+}
+
+message ExecuteManagedQueryRequest {
+  ExecutionLease lease = 1;
+  academic.credentials.v1.CredentialReference credential = 2;
+  string credential_access_token = 3;
+  string purpose = 4;
+  string period_id = 5;
+  bool force_refresh = 6;
+  bool omit_result = 7;
+  google.protobuf.Timestamp expires_at = 8;
+}
+message ExecuteManagedQueryResponse {
+  QueryResult result = 1;
+  academic.archive.v1.ObservationReference observation = 2;
+  // CacheSource 取值为 upstream、fresh 或 stale。
+  string cache_source = 3;
+}
+
+message QueryResult {
+  oneof result {
+    academic.provider.v1.ListCoursesResponse courses = 1;
+    academic.provider.v1.ListExamsResponse exams = 2;
+    academic.provider.v1.ListGradesResponse grades = 3;
+    academic.provider.v1.ListCourseSelectionsResponse course_selections = 4;
+    academic.provider.v1.GetCourseSelectionScheduleResponse course_selection_schedule = 5;
+    academic.provider.v1.ListCourseAdditionResultsResponse course_addition_results = 6;
+  }
+}
+
+message CheckExecutionAdmissionRequest {
+  ExecutionLease lease = 1;
+  // Phase 取值为 begin、external、session 或 result；begin 只可获准一次。
+  string phase = 2;
+}
+message CheckExecutionAdmissionResponse {
+  bool allowed = 1;
+  academic.credentials.v1.Subject subject = 2;
+  academic.credentials.v1.CredentialReference credential = 3;
+  string purpose = 4;
+  string period_id = 5;
+  bool force_refresh = 6;
+  bool omit_result = 7;
+  google.protobuf.Timestamp expires_at = 8;
+  string error_code = 9;
+}
+
+message RegisterObservationRequest {
+  ExecutionLease lease = 1;
+  academic.archive.v1.ObservationReference observation = 2;
+}
+message RegisterObservationResponse {
+  bool allowed = 1;
+  // 同一尝试只能绑定相同观察；成功后取消不得改写该固定观察。
+  academic.archive.v1.ObservationReference observation = 2;
+}
+
+// FenceExecutionRequest 隔离旧身份或指定凭据版本；两种水位不可互相替代。
+message FenceExecutionRequest {
+  uint64 user_id = 1;
+  // 非零时拒绝该用户所有不高于此值的身份版本。
+  uint64 identity_version = 2;
+  // 凭据级隔离必须同时给出这三个字段，且不阻止其他凭据引用。
+  string credential_id = 3;
+  uint64 credential_revision = 4;
+  uint64 grant_epoch = 5;
+  // 账号模式使用 account_id，且 user_id 和 identity_version 必须为零；不改变旧用户字段语义。
+  uint64 account_id = 6;
+}
+message FenceExecutionResponse { bool acknowledged = 1; }

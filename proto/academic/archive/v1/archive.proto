@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package academic.archive.v1;
+
+option go_package = "github.com/LDouble/campus-academic-api/pkg/academic/archive/v1;academicarchivev1";
+
+import "google/protobuf/timestamp.proto";
+
+// AcademicArchiveService 只提供可信平台调用方需要的归档元数据回执。
+service AcademicArchiveService {
+  rpc GetObservationReceipts(GetObservationReceiptsRequest) returns (GetObservationReceiptsResponse);
+}
+
+// ObservationReference 绑定不可变观察内容和精确作用域，不包含学生数据正文。
+message ObservationReference {
+  string observation_id = 1;
+  string content_sha256 = 2;
+  string provider = 3;
+  string education_level = 4;
+  string kind = 5;
+  string period_id = 6;
+  google.protobuf.Timestamp observed_at = 7;
+}
+
+message GetObservationReceiptsRequest {
+  // 服务端限制单次最多一百条，只允许内部平台身份调用。
+  repeated ObservationReference observations = 1;
+}
+message GetObservationReceiptsResponse { repeated ObservationReceipt receipts = 1; }
+message ObservationReceipt {
+  ObservationReference observation = 1;
+  // State 取值为 not_found、committed 或 rejected，不以队列接收冒充落库。
+  string state = 2;
+  // ResultCode 使用 applied、unchanged 或固定拒绝类别。
+  string result_code = 3;
+  uint64 record_count = 4;
+  google.protobuf.Timestamp completed_at = 5;
+}
