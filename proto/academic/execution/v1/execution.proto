@@ -19,6 +19,7 @@ service AcademicExecutionService {
 service AcademicExecutionAuthorityService {
   rpc CheckExecutionAdmission(CheckExecutionAdmissionRequest) returns (CheckExecutionAdmissionResponse);
   rpc RegisterObservation(RegisterObservationRequest) returns (RegisterObservationResponse);
+  rpc RecordAcademicLogin(RecordAcademicLoginRequest) returns (RecordAcademicLoginResponse);
 }
 
 // ExecutionLease 仅通过受保护 RPC 传递，租约票据不得写入队列或日志。
@@ -54,7 +55,21 @@ message QueryResult {
     academic.provider.v1.ListCourseSelectionsResponse course_selections = 4;
     academic.provider.v1.GetCourseSelectionScheduleResponse course_selection_schedule = 5;
     academic.provider.v1.ListCourseAdditionResultsResponse course_addition_results = 6;
+    StudentProfile student_profile = 7;
   }
+}
+
+// StudentProfile 是受控托管采集得到的学生当前专业资料快照。
+message StudentProfile {
+  string provider = 1;
+  string education_level = 2;
+  string student_no = 3;
+  string student_origin = 4;
+  string college = 5;
+  string major = 6;
+  string class_name = 7;
+  string education_type = 8;
+  string grade = 9;
 }
 
 message CheckExecutionAdmissionRequest {
@@ -97,3 +112,17 @@ message FenceExecutionRequest {
   uint64 account_id = 6;
 }
 message FenceExecutionResponse { bool acknowledged = 1; }
+
+
+// RecordAcademicLoginRequest identifies a successful non-managed academic login.
+message RecordAcademicLoginRequest {
+  string event_id = 1;
+  string provider = 2;
+  string education_level = 3;
+  string student_no = 4;
+  google.protobuf.Timestamp occurred_at = 5;
+}
+
+message RecordAcademicLoginResponse {
+  bool acknowledged = 1;
+}

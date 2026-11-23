@@ -536,3 +536,110 @@ var AcademicTimetableService_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "academic/analytics/v1/analytics.proto",
 }
+
+const (
+	AcademicStudentProfileService_GetStudentProfile_FullMethodName = "/academic.analytics.v1.AcademicStudentProfileService/GetStudentProfile"
+)
+
+// AcademicStudentProfileServiceClient is the client API for AcademicStudentProfileService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// AcademicStudentProfileService 是受限的学生专业资料内部读取边界。
+type AcademicStudentProfileServiceClient interface {
+	GetStudentProfile(ctx context.Context, in *GetStudentProfileRequest, opts ...grpc.CallOption) (*GetStudentProfileResponse, error)
+}
+
+type academicStudentProfileServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewAcademicStudentProfileServiceClient(cc grpc.ClientConnInterface) AcademicStudentProfileServiceClient {
+	return &academicStudentProfileServiceClient{cc}
+}
+
+func (c *academicStudentProfileServiceClient) GetStudentProfile(ctx context.Context, in *GetStudentProfileRequest, opts ...grpc.CallOption) (*GetStudentProfileResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetStudentProfileResponse)
+	err := c.cc.Invoke(ctx, AcademicStudentProfileService_GetStudentProfile_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// AcademicStudentProfileServiceServer is the server API for AcademicStudentProfileService service.
+// All implementations must embed UnimplementedAcademicStudentProfileServiceServer
+// for forward compatibility.
+//
+// AcademicStudentProfileService 是受限的学生专业资料内部读取边界。
+type AcademicStudentProfileServiceServer interface {
+	GetStudentProfile(context.Context, *GetStudentProfileRequest) (*GetStudentProfileResponse, error)
+	mustEmbedUnimplementedAcademicStudentProfileServiceServer()
+}
+
+// UnimplementedAcademicStudentProfileServiceServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedAcademicStudentProfileServiceServer struct{}
+
+func (UnimplementedAcademicStudentProfileServiceServer) GetStudentProfile(context.Context, *GetStudentProfileRequest) (*GetStudentProfileResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetStudentProfile not implemented")
+}
+func (UnimplementedAcademicStudentProfileServiceServer) mustEmbedUnimplementedAcademicStudentProfileServiceServer() {
+}
+func (UnimplementedAcademicStudentProfileServiceServer) testEmbeddedByValue() {}
+
+// UnsafeAcademicStudentProfileServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AcademicStudentProfileServiceServer will
+// result in compilation errors.
+type UnsafeAcademicStudentProfileServiceServer interface {
+	mustEmbedUnimplementedAcademicStudentProfileServiceServer()
+}
+
+func RegisterAcademicStudentProfileServiceServer(s grpc.ServiceRegistrar, srv AcademicStudentProfileServiceServer) {
+	// If the following call panics, it indicates UnimplementedAcademicStudentProfileServiceServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&AcademicStudentProfileService_ServiceDesc, srv)
+}
+
+func _AcademicStudentProfileService_GetStudentProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetStudentProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AcademicStudentProfileServiceServer).GetStudentProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AcademicStudentProfileService_GetStudentProfile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AcademicStudentProfileServiceServer).GetStudentProfile(ctx, req.(*GetStudentProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// AcademicStudentProfileService_ServiceDesc is the grpc.ServiceDesc for AcademicStudentProfileService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var AcademicStudentProfileService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "academic.analytics.v1.AcademicStudentProfileService",
+	HandlerType: (*AcademicStudentProfileServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetStudentProfile",
+			Handler:    _AcademicStudentProfileService_GetStudentProfile_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "academic/analytics/v1/analytics.proto",
+}

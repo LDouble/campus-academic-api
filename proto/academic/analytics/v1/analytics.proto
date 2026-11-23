@@ -36,6 +36,11 @@ service AcademicTimetableService {
   rpc GetStudentTimetable(GetStudentTimetableRequest) returns (GetStudentTimetableResponse);
 }
 
+// AcademicStudentProfileService 是受限的学生专业资料内部读取边界。
+service AcademicStudentProfileService {
+  rpc GetStudentProfile(GetStudentProfileRequest) returns (GetStudentProfileResponse);
+}
+
 message PublicationMetadata {
   uint64 batch_id = 1;
   google.protobuf.Timestamp source_cutoff_at = 2;
@@ -248,4 +253,20 @@ message GetStudentTimetableResponse {
   google.protobuf.Timestamp observed_at = 3;
   google.protobuf.Timestamp complete_observed_at = 4;
   repeated TimetableCourse courses = 5;
+}
+
+message GetStudentProfileRequest {
+  string provider = 1;
+  string education_level = 2;
+  string student_no = 3;
+}
+message GetStudentProfileResponse {
+  bool available = 1;
+  google.protobuf.Timestamp observed_at = 2;
+  string student_origin = 3;
+  string college = 4;
+  string major = 5;
+  string class_name = 6;
+  string education_type = 7;
+  string grade = 8;
 }
