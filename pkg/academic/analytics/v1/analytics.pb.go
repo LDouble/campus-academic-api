@@ -2050,6 +2050,166 @@ func (x *GetStudentTimetableResponse) GetCourses() []*TimetableCourse {
 	return nil
 }
 
+type GetStudentProfileRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Provider       string                 `protobuf:"bytes,1,opt,name=provider,proto3" json:"provider,omitempty"`
+	EducationLevel string                 `protobuf:"bytes,2,opt,name=education_level,json=educationLevel,proto3" json:"education_level,omitempty"`
+	StudentNo      string                 `protobuf:"bytes,3,opt,name=student_no,json=studentNo,proto3" json:"student_no,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *GetStudentProfileRequest) Reset() {
+	*x = GetStudentProfileRequest{}
+	mi := &file_academic_analytics_v1_analytics_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetStudentProfileRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetStudentProfileRequest) ProtoMessage() {}
+
+func (x *GetStudentProfileRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_analytics_v1_analytics_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetStudentProfileRequest.ProtoReflect.Descriptor instead.
+func (*GetStudentProfileRequest) Descriptor() ([]byte, []int) {
+	return file_academic_analytics_v1_analytics_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *GetStudentProfileRequest) GetProvider() string {
+	if x != nil {
+		return x.Provider
+	}
+	return ""
+}
+
+func (x *GetStudentProfileRequest) GetEducationLevel() string {
+	if x != nil {
+		return x.EducationLevel
+	}
+	return ""
+}
+
+func (x *GetStudentProfileRequest) GetStudentNo() string {
+	if x != nil {
+		return x.StudentNo
+	}
+	return ""
+}
+
+type GetStudentProfileResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Available     bool                   `protobuf:"varint,1,opt,name=available,proto3" json:"available,omitempty"`
+	ObservedAt    *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=observed_at,json=observedAt,proto3" json:"observed_at,omitempty"`
+	StudentOrigin string                 `protobuf:"bytes,3,opt,name=student_origin,json=studentOrigin,proto3" json:"student_origin,omitempty"`
+	College       string                 `protobuf:"bytes,4,opt,name=college,proto3" json:"college,omitempty"`
+	Major         string                 `protobuf:"bytes,5,opt,name=major,proto3" json:"major,omitempty"`
+	ClassName     string                 `protobuf:"bytes,6,opt,name=class_name,json=className,proto3" json:"class_name,omitempty"`
+	EducationType string                 `protobuf:"bytes,7,opt,name=education_type,json=educationType,proto3" json:"education_type,omitempty"`
+	Grade         string                 `protobuf:"bytes,8,opt,name=grade,proto3" json:"grade,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetStudentProfileResponse) Reset() {
+	*x = GetStudentProfileResponse{}
+	mi := &file_academic_analytics_v1_analytics_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetStudentProfileResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetStudentProfileResponse) ProtoMessage() {}
+
+func (x *GetStudentProfileResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_analytics_v1_analytics_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetStudentProfileResponse.ProtoReflect.Descriptor instead.
+func (*GetStudentProfileResponse) Descriptor() ([]byte, []int) {
+	return file_academic_analytics_v1_analytics_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *GetStudentProfileResponse) GetAvailable() bool {
+	if x != nil {
+		return x.Available
+	}
+	return false
+}
+
+func (x *GetStudentProfileResponse) GetObservedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ObservedAt
+	}
+	return nil
+}
+
+func (x *GetStudentProfileResponse) GetStudentOrigin() string {
+	if x != nil {
+		return x.StudentOrigin
+	}
+	return ""
+}
+
+func (x *GetStudentProfileResponse) GetCollege() string {
+	if x != nil {
+		return x.College
+	}
+	return ""
+}
+
+func (x *GetStudentProfileResponse) GetMajor() string {
+	if x != nil {
+		return x.Major
+	}
+	return ""
+}
+
+func (x *GetStudentProfileResponse) GetClassName() string {
+	if x != nil {
+		return x.ClassName
+	}
+	return ""
+}
+
+func (x *GetStudentProfileResponse) GetEducationType() string {
+	if x != nil {
+		return x.EducationType
+	}
+	return ""
+}
+
+func (x *GetStudentProfileResponse) GetGrade() string {
+	if x != nil {
+		return x.Grade
+	}
+	return ""
+}
+
 var File_academic_analytics_v1_analytics_proto protoreflect.FileDescriptor
 
 const file_academic_analytics_v1_analytics_proto_rawDesc = "" +
@@ -2270,7 +2430,23 @@ const file_academic_analytics_v1_analytics_proto_rawDesc = "" +
 	"\vobserved_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"observedAt\x12L\n" +
 	"\x14complete_observed_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\x12completeObservedAt\x12@\n" +
-	"\acourses\x18\x05 \x03(\v2&.academic.analytics.v1.TimetableCourseR\acourses2\x9a\x06\n" +
+	"\acourses\x18\x05 \x03(\v2&.academic.analytics.v1.TimetableCourseR\acourses\"~\n" +
+	"\x18GetStudentProfileRequest\x12\x1a\n" +
+	"\bprovider\x18\x01 \x01(\tR\bprovider\x12'\n" +
+	"\x0feducation_level\x18\x02 \x01(\tR\x0eeducationLevel\x12\x1d\n" +
+	"\n" +
+	"student_no\x18\x03 \x01(\tR\tstudentNo\"\xa9\x02\n" +
+	"\x19GetStudentProfileResponse\x12\x1c\n" +
+	"\tavailable\x18\x01 \x01(\bR\tavailable\x12;\n" +
+	"\vobserved_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"observedAt\x12%\n" +
+	"\x0estudent_origin\x18\x03 \x01(\tR\rstudentOrigin\x12\x18\n" +
+	"\acollege\x18\x04 \x01(\tR\acollege\x12\x14\n" +
+	"\x05major\x18\x05 \x01(\tR\x05major\x12\x1d\n" +
+	"\n" +
+	"class_name\x18\x06 \x01(\tR\tclassName\x12%\n" +
+	"\x0eeducation_type\x18\a \x01(\tR\reducationType\x12\x14\n" +
+	"\x05grade\x18\b \x01(\tR\x05grade2\x9a\x06\n" +
 	"\x18AcademicAnalyticsService\x12|\n" +
 	"\x13ListCoursePassRates\x121.academic.analytics.v1.ListCoursePassRatesRequest\x1a2.academic.analytics.v1.ListCoursePassRatesResponse\x12\x88\x01\n" +
 	"\x17ListInstructorPassRates\x125.academic.analytics.v1.ListInstructorPassRatesRequest\x1a6.academic.analytics.v1.ListInstructorPassRatesResponse\x12\x85\x01\n" +
@@ -2281,7 +2457,9 @@ const file_academic_analytics_v1_analytics_proto_rawDesc = "" +
 	"\x18AcademicRecipientService\x12\x9a\x01\n" +
 	"\x1dListClassDiscussionRecipients\x12;.academic.analytics.v1.ListClassDiscussionRecipientsRequest\x1a<.academic.analytics.v1.ListClassDiscussionRecipientsResponse2\x98\x01\n" +
 	"\x18AcademicTimetableService\x12|\n" +
-	"\x13GetStudentTimetable\x121.academic.analytics.v1.GetStudentTimetableRequest\x1a2.academic.analytics.v1.GetStudentTimetableResponseBVZTgithub.com/LDouble/campus-academic-api/pkg/academic/analytics/v1;academicanalyticsv1b\x06proto3"
+	"\x13GetStudentTimetable\x121.academic.analytics.v1.GetStudentTimetableRequest\x1a2.academic.analytics.v1.GetStudentTimetableResponse2\x97\x01\n" +
+	"\x1dAcademicStudentProfileService\x12v\n" +
+	"\x11GetStudentProfile\x12/.academic.analytics.v1.GetStudentProfileRequest\x1a0.academic.analytics.v1.GetStudentProfileResponseBVZTgithub.com/LDouble/campus-academic-api/pkg/academic/analytics/v1;academicanalyticsv1b\x06proto3"
 
 var (
 	file_academic_analytics_v1_analytics_proto_rawDescOnce sync.Once
@@ -2295,7 +2473,7 @@ func file_academic_analytics_v1_analytics_proto_rawDescGZIP() []byte {
 	return file_academic_analytics_v1_analytics_proto_rawDescData
 }
 
-var file_academic_analytics_v1_analytics_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
+var file_academic_analytics_v1_analytics_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
 var file_academic_analytics_v1_analytics_proto_goTypes = []any{
 	(*PublicationMetadata)(nil),                   // 0: academic.analytics.v1.PublicationMetadata
 	(*GradeDistribution)(nil),                     // 1: academic.analytics.v1.GradeDistribution
@@ -2322,21 +2500,23 @@ var file_academic_analytics_v1_analytics_proto_goTypes = []any{
 	(*GetStudentTimetableRequest)(nil),            // 22: academic.analytics.v1.GetStudentTimetableRequest
 	(*TimetableCourse)(nil),                       // 23: academic.analytics.v1.TimetableCourse
 	(*GetStudentTimetableResponse)(nil),           // 24: academic.analytics.v1.GetStudentTimetableResponse
-	(*timestamppb.Timestamp)(nil),                 // 25: google.protobuf.Timestamp
+	(*GetStudentProfileRequest)(nil),              // 25: academic.analytics.v1.GetStudentProfileRequest
+	(*GetStudentProfileResponse)(nil),             // 26: academic.analytics.v1.GetStudentProfileResponse
+	(*timestamppb.Timestamp)(nil),                 // 27: google.protobuf.Timestamp
 }
 var file_academic_analytics_v1_analytics_proto_depIdxs = []int32{
-	25, // 0: academic.analytics.v1.PublicationMetadata.source_cutoff_at:type_name -> google.protobuf.Timestamp
-	25, // 1: academic.analytics.v1.PublicationMetadata.published_at:type_name -> google.protobuf.Timestamp
+	27, // 0: academic.analytics.v1.PublicationMetadata.source_cutoff_at:type_name -> google.protobuf.Timestamp
+	27, // 1: academic.analytics.v1.PublicationMetadata.published_at:type_name -> google.protobuf.Timestamp
 	1,  // 2: academic.analytics.v1.CoursePassRate.distribution:type_name -> academic.analytics.v1.GradeDistribution
 	1,  // 3: academic.analytics.v1.InstructorPassRate.distribution:type_name -> academic.analytics.v1.GradeDistribution
 	1,  // 4: academic.analytics.v1.PassRateTrendPoint.distribution:type_name -> academic.analytics.v1.GradeDistribution
 	4,  // 5: academic.analytics.v1.PassRateTrend.points:type_name -> academic.analytics.v1.PassRateTrendPoint
-	25, // 6: academic.analytics.v1.AcademicStatisticsBatch.source_cutoff_at:type_name -> google.protobuf.Timestamp
-	25, // 7: academic.analytics.v1.AcademicStatisticsBatch.started_at:type_name -> google.protobuf.Timestamp
-	25, // 8: academic.analytics.v1.AcademicStatisticsBatch.finished_at:type_name -> google.protobuf.Timestamp
-	25, // 9: academic.analytics.v1.AcademicStatisticsBatch.published_at:type_name -> google.protobuf.Timestamp
-	25, // 10: academic.analytics.v1.AcademicStatisticsBatch.created_at:type_name -> google.protobuf.Timestamp
-	25, // 11: academic.analytics.v1.AcademicStatisticsBatch.updated_at:type_name -> google.protobuf.Timestamp
+	27, // 6: academic.analytics.v1.AcademicStatisticsBatch.source_cutoff_at:type_name -> google.protobuf.Timestamp
+	27, // 7: academic.analytics.v1.AcademicStatisticsBatch.started_at:type_name -> google.protobuf.Timestamp
+	27, // 8: academic.analytics.v1.AcademicStatisticsBatch.finished_at:type_name -> google.protobuf.Timestamp
+	27, // 9: academic.analytics.v1.AcademicStatisticsBatch.published_at:type_name -> google.protobuf.Timestamp
+	27, // 10: academic.analytics.v1.AcademicStatisticsBatch.created_at:type_name -> google.protobuf.Timestamp
+	27, // 11: academic.analytics.v1.AcademicStatisticsBatch.updated_at:type_name -> google.protobuf.Timestamp
 	0,  // 12: academic.analytics.v1.ListCoursePassRatesResponse.metadata:type_name -> academic.analytics.v1.PublicationMetadata
 	2,  // 13: academic.analytics.v1.ListCoursePassRatesResponse.items:type_name -> academic.analytics.v1.CoursePassRate
 	0,  // 14: academic.analytics.v1.ListInstructorPassRatesResponse.metadata:type_name -> academic.analytics.v1.PublicationMetadata
@@ -2346,35 +2526,38 @@ var file_academic_analytics_v1_analytics_proto_depIdxs = []int32{
 	0,  // 18: academic.analytics.v1.GetInstructorPassRateTrendResponse.metadata:type_name -> academic.analytics.v1.PublicationMetadata
 	5,  // 19: academic.analytics.v1.GetInstructorPassRateTrendResponse.trend:type_name -> academic.analytics.v1.PassRateTrend
 	6,  // 20: academic.analytics.v1.ListBatchesResponse.items:type_name -> academic.analytics.v1.AcademicStatisticsBatch
-	25, // 21: academic.analytics.v1.TriggerManualRunResponse.queued_at:type_name -> google.protobuf.Timestamp
-	25, // 22: academic.analytics.v1.ListClassDiscussionRecipientsRequest.min_observed_at:type_name -> google.protobuf.Timestamp
-	25, // 23: academic.analytics.v1.ClassDiscussionRecipient.observed_at:type_name -> google.protobuf.Timestamp
+	27, // 21: academic.analytics.v1.TriggerManualRunResponse.queued_at:type_name -> google.protobuf.Timestamp
+	27, // 22: academic.analytics.v1.ListClassDiscussionRecipientsRequest.min_observed_at:type_name -> google.protobuf.Timestamp
+	27, // 23: academic.analytics.v1.ClassDiscussionRecipient.observed_at:type_name -> google.protobuf.Timestamp
 	20, // 24: academic.analytics.v1.ListClassDiscussionRecipientsResponse.recipients:type_name -> academic.analytics.v1.ClassDiscussionRecipient
-	25, // 25: academic.analytics.v1.ListClassDiscussionRecipientsResponse.evaluated_at:type_name -> google.protobuf.Timestamp
-	25, // 26: academic.analytics.v1.GetStudentTimetableResponse.observed_at:type_name -> google.protobuf.Timestamp
-	25, // 27: academic.analytics.v1.GetStudentTimetableResponse.complete_observed_at:type_name -> google.protobuf.Timestamp
+	27, // 25: academic.analytics.v1.ListClassDiscussionRecipientsResponse.evaluated_at:type_name -> google.protobuf.Timestamp
+	27, // 26: academic.analytics.v1.GetStudentTimetableResponse.observed_at:type_name -> google.protobuf.Timestamp
+	27, // 27: academic.analytics.v1.GetStudentTimetableResponse.complete_observed_at:type_name -> google.protobuf.Timestamp
 	23, // 28: academic.analytics.v1.GetStudentTimetableResponse.courses:type_name -> academic.analytics.v1.TimetableCourse
-	7,  // 29: academic.analytics.v1.AcademicAnalyticsService.ListCoursePassRates:input_type -> academic.analytics.v1.ListCoursePassRatesRequest
-	9,  // 30: academic.analytics.v1.AcademicAnalyticsService.ListInstructorPassRates:input_type -> academic.analytics.v1.ListInstructorPassRatesRequest
-	11, // 31: academic.analytics.v1.AcademicAnalyticsService.GetCoursePassRateTrend:input_type -> academic.analytics.v1.GetCoursePassRateTrendRequest
-	12, // 32: academic.analytics.v1.AcademicAnalyticsService.GetInstructorPassRateTrend:input_type -> academic.analytics.v1.GetInstructorPassRateTrendRequest
-	15, // 33: academic.analytics.v1.AcademicAnalyticsService.ListBatches:input_type -> academic.analytics.v1.ListBatchesRequest
-	17, // 34: academic.analytics.v1.AcademicAnalyticsService.TriggerManualRun:input_type -> academic.analytics.v1.TriggerManualRunRequest
-	19, // 35: academic.analytics.v1.AcademicRecipientService.ListClassDiscussionRecipients:input_type -> academic.analytics.v1.ListClassDiscussionRecipientsRequest
-	22, // 36: academic.analytics.v1.AcademicTimetableService.GetStudentTimetable:input_type -> academic.analytics.v1.GetStudentTimetableRequest
-	8,  // 37: academic.analytics.v1.AcademicAnalyticsService.ListCoursePassRates:output_type -> academic.analytics.v1.ListCoursePassRatesResponse
-	10, // 38: academic.analytics.v1.AcademicAnalyticsService.ListInstructorPassRates:output_type -> academic.analytics.v1.ListInstructorPassRatesResponse
-	13, // 39: academic.analytics.v1.AcademicAnalyticsService.GetCoursePassRateTrend:output_type -> academic.analytics.v1.GetCoursePassRateTrendResponse
-	14, // 40: academic.analytics.v1.AcademicAnalyticsService.GetInstructorPassRateTrend:output_type -> academic.analytics.v1.GetInstructorPassRateTrendResponse
-	16, // 41: academic.analytics.v1.AcademicAnalyticsService.ListBatches:output_type -> academic.analytics.v1.ListBatchesResponse
-	18, // 42: academic.analytics.v1.AcademicAnalyticsService.TriggerManualRun:output_type -> academic.analytics.v1.TriggerManualRunResponse
-	21, // 43: academic.analytics.v1.AcademicRecipientService.ListClassDiscussionRecipients:output_type -> academic.analytics.v1.ListClassDiscussionRecipientsResponse
-	24, // 44: academic.analytics.v1.AcademicTimetableService.GetStudentTimetable:output_type -> academic.analytics.v1.GetStudentTimetableResponse
-	37, // [37:45] is the sub-list for method output_type
-	29, // [29:37] is the sub-list for method input_type
-	29, // [29:29] is the sub-list for extension type_name
-	29, // [29:29] is the sub-list for extension extendee
-	0,  // [0:29] is the sub-list for field type_name
+	27, // 29: academic.analytics.v1.GetStudentProfileResponse.observed_at:type_name -> google.protobuf.Timestamp
+	7,  // 30: academic.analytics.v1.AcademicAnalyticsService.ListCoursePassRates:input_type -> academic.analytics.v1.ListCoursePassRatesRequest
+	9,  // 31: academic.analytics.v1.AcademicAnalyticsService.ListInstructorPassRates:input_type -> academic.analytics.v1.ListInstructorPassRatesRequest
+	11, // 32: academic.analytics.v1.AcademicAnalyticsService.GetCoursePassRateTrend:input_type -> academic.analytics.v1.GetCoursePassRateTrendRequest
+	12, // 33: academic.analytics.v1.AcademicAnalyticsService.GetInstructorPassRateTrend:input_type -> academic.analytics.v1.GetInstructorPassRateTrendRequest
+	15, // 34: academic.analytics.v1.AcademicAnalyticsService.ListBatches:input_type -> academic.analytics.v1.ListBatchesRequest
+	17, // 35: academic.analytics.v1.AcademicAnalyticsService.TriggerManualRun:input_type -> academic.analytics.v1.TriggerManualRunRequest
+	19, // 36: academic.analytics.v1.AcademicRecipientService.ListClassDiscussionRecipients:input_type -> academic.analytics.v1.ListClassDiscussionRecipientsRequest
+	22, // 37: academic.analytics.v1.AcademicTimetableService.GetStudentTimetable:input_type -> academic.analytics.v1.GetStudentTimetableRequest
+	25, // 38: academic.analytics.v1.AcademicStudentProfileService.GetStudentProfile:input_type -> academic.analytics.v1.GetStudentProfileRequest
+	8,  // 39: academic.analytics.v1.AcademicAnalyticsService.ListCoursePassRates:output_type -> academic.analytics.v1.ListCoursePassRatesResponse
+	10, // 40: academic.analytics.v1.AcademicAnalyticsService.ListInstructorPassRates:output_type -> academic.analytics.v1.ListInstructorPassRatesResponse
+	13, // 41: academic.analytics.v1.AcademicAnalyticsService.GetCoursePassRateTrend:output_type -> academic.analytics.v1.GetCoursePassRateTrendResponse
+	14, // 42: academic.analytics.v1.AcademicAnalyticsService.GetInstructorPassRateTrend:output_type -> academic.analytics.v1.GetInstructorPassRateTrendResponse
+	16, // 43: academic.analytics.v1.AcademicAnalyticsService.ListBatches:output_type -> academic.analytics.v1.ListBatchesResponse
+	18, // 44: academic.analytics.v1.AcademicAnalyticsService.TriggerManualRun:output_type -> academic.analytics.v1.TriggerManualRunResponse
+	21, // 45: academic.analytics.v1.AcademicRecipientService.ListClassDiscussionRecipients:output_type -> academic.analytics.v1.ListClassDiscussionRecipientsResponse
+	24, // 46: academic.analytics.v1.AcademicTimetableService.GetStudentTimetable:output_type -> academic.analytics.v1.GetStudentTimetableResponse
+	26, // 47: academic.analytics.v1.AcademicStudentProfileService.GetStudentProfile:output_type -> academic.analytics.v1.GetStudentProfileResponse
+	39, // [39:48] is the sub-list for method output_type
+	30, // [30:39] is the sub-list for method input_type
+	30, // [30:30] is the sub-list for extension type_name
+	30, // [30:30] is the sub-list for extension extendee
+	0,  // [0:30] is the sub-list for field type_name
 }
 
 func init() { file_academic_analytics_v1_analytics_proto_init() }
@@ -2389,9 +2572,9 @@ func file_academic_analytics_v1_analytics_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_academic_analytics_v1_analytics_proto_rawDesc), len(file_academic_analytics_v1_analytics_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   25,
+			NumMessages:   27,
 			NumExtensions: 0,
-			NumServices:   3,
+			NumServices:   4,
 		},
 		GoTypes:           file_academic_analytics_v1_analytics_proto_goTypes,
 		DependencyIndexes: file_academic_analytics_v1_analytics_proto_depIdxs,

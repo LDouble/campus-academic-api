@@ -166,6 +166,7 @@ var AcademicExecutionService_ServiceDesc = grpc.ServiceDesc{
 const (
 	AcademicExecutionAuthorityService_CheckExecutionAdmission_FullMethodName = "/academic.execution.v1.AcademicExecutionAuthorityService/CheckExecutionAdmission"
 	AcademicExecutionAuthorityService_RegisterObservation_FullMethodName     = "/academic.execution.v1.AcademicExecutionAuthorityService/RegisterObservation"
+	AcademicExecutionAuthorityService_RecordAcademicLogin_FullMethodName     = "/academic.execution.v1.AcademicExecutionAuthorityService/RecordAcademicLogin"
 )
 
 // AcademicExecutionAuthorityServiceClient is the client API for AcademicExecutionAuthorityService service.
@@ -176,6 +177,7 @@ const (
 type AcademicExecutionAuthorityServiceClient interface {
 	CheckExecutionAdmission(ctx context.Context, in *CheckExecutionAdmissionRequest, opts ...grpc.CallOption) (*CheckExecutionAdmissionResponse, error)
 	RegisterObservation(ctx context.Context, in *RegisterObservationRequest, opts ...grpc.CallOption) (*RegisterObservationResponse, error)
+	RecordAcademicLogin(ctx context.Context, in *RecordAcademicLoginRequest, opts ...grpc.CallOption) (*RecordAcademicLoginResponse, error)
 }
 
 type academicExecutionAuthorityServiceClient struct {
@@ -206,6 +208,16 @@ func (c *academicExecutionAuthorityServiceClient) RegisterObservation(ctx contex
 	return out, nil
 }
 
+func (c *academicExecutionAuthorityServiceClient) RecordAcademicLogin(ctx context.Context, in *RecordAcademicLoginRequest, opts ...grpc.CallOption) (*RecordAcademicLoginResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RecordAcademicLoginResponse)
+	err := c.cc.Invoke(ctx, AcademicExecutionAuthorityService_RecordAcademicLogin_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AcademicExecutionAuthorityServiceServer is the server API for AcademicExecutionAuthorityService service.
 // All implementations must embed UnimplementedAcademicExecutionAuthorityServiceServer
 // for forward compatibility.
@@ -214,6 +226,7 @@ func (c *academicExecutionAuthorityServiceClient) RegisterObservation(ctx contex
 type AcademicExecutionAuthorityServiceServer interface {
 	CheckExecutionAdmission(context.Context, *CheckExecutionAdmissionRequest) (*CheckExecutionAdmissionResponse, error)
 	RegisterObservation(context.Context, *RegisterObservationRequest) (*RegisterObservationResponse, error)
+	RecordAcademicLogin(context.Context, *RecordAcademicLoginRequest) (*RecordAcademicLoginResponse, error)
 	mustEmbedUnimplementedAcademicExecutionAuthorityServiceServer()
 }
 
@@ -229,6 +242,9 @@ func (UnimplementedAcademicExecutionAuthorityServiceServer) CheckExecutionAdmiss
 }
 func (UnimplementedAcademicExecutionAuthorityServiceServer) RegisterObservation(context.Context, *RegisterObservationRequest) (*RegisterObservationResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method RegisterObservation not implemented")
+}
+func (UnimplementedAcademicExecutionAuthorityServiceServer) RecordAcademicLogin(context.Context, *RecordAcademicLoginRequest) (*RecordAcademicLoginResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method RecordAcademicLogin not implemented")
 }
 func (UnimplementedAcademicExecutionAuthorityServiceServer) mustEmbedUnimplementedAcademicExecutionAuthorityServiceServer() {
 }
@@ -288,6 +304,24 @@ func _AcademicExecutionAuthorityService_RegisterObservation_Handler(srv interfac
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AcademicExecutionAuthorityService_RecordAcademicLogin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RecordAcademicLoginRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AcademicExecutionAuthorityServiceServer).RecordAcademicLogin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AcademicExecutionAuthorityService_RecordAcademicLogin_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AcademicExecutionAuthorityServiceServer).RecordAcademicLogin(ctx, req.(*RecordAcademicLoginRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AcademicExecutionAuthorityService_ServiceDesc is the grpc.ServiceDesc for AcademicExecutionAuthorityService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -302,6 +336,10 @@ var AcademicExecutionAuthorityService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RegisterObservation",
 			Handler:    _AcademicExecutionAuthorityService_RegisterObservation_Handler,
+		},
+		{
+			MethodName: "RecordAcademicLogin",
+			Handler:    _AcademicExecutionAuthorityService_RecordAcademicLogin_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

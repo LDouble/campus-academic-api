@@ -265,6 +265,7 @@ type QueryResult struct {
 	//	*QueryResult_CourseSelections
 	//	*QueryResult_CourseSelectionSchedule
 	//	*QueryResult_CourseAdditionResults
+	//	*QueryResult_StudentProfile
 	Result        isQueryResult_Result `protobuf_oneof:"result"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -361,6 +362,15 @@ func (x *QueryResult) GetCourseAdditionResults() *v12.ListCourseAdditionResultsR
 	return nil
 }
 
+func (x *QueryResult) GetStudentProfile() *StudentProfile {
+	if x != nil {
+		if x, ok := x.Result.(*QueryResult_StudentProfile); ok {
+			return x.StudentProfile
+		}
+	}
+	return nil
+}
+
 type isQueryResult_Result interface {
 	isQueryResult_Result()
 }
@@ -389,6 +399,10 @@ type QueryResult_CourseAdditionResults struct {
 	CourseAdditionResults *v12.ListCourseAdditionResultsResponse `protobuf:"bytes,6,opt,name=course_addition_results,json=courseAdditionResults,proto3,oneof"`
 }
 
+type QueryResult_StudentProfile struct {
+	StudentProfile *StudentProfile `protobuf:"bytes,7,opt,name=student_profile,json=studentProfile,proto3,oneof"`
+}
+
 func (*QueryResult_Courses) isQueryResult_Result() {}
 
 func (*QueryResult_Exams) isQueryResult_Result() {}
@@ -401,6 +415,117 @@ func (*QueryResult_CourseSelectionSchedule) isQueryResult_Result() {}
 
 func (*QueryResult_CourseAdditionResults) isQueryResult_Result() {}
 
+func (*QueryResult_StudentProfile) isQueryResult_Result() {}
+
+// StudentProfile 是受控托管采集得到的学生当前专业资料快照。
+type StudentProfile struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Provider       string                 `protobuf:"bytes,1,opt,name=provider,proto3" json:"provider,omitempty"`
+	EducationLevel string                 `protobuf:"bytes,2,opt,name=education_level,json=educationLevel,proto3" json:"education_level,omitempty"`
+	StudentNo      string                 `protobuf:"bytes,3,opt,name=student_no,json=studentNo,proto3" json:"student_no,omitempty"`
+	StudentOrigin  string                 `protobuf:"bytes,4,opt,name=student_origin,json=studentOrigin,proto3" json:"student_origin,omitempty"`
+	College        string                 `protobuf:"bytes,5,opt,name=college,proto3" json:"college,omitempty"`
+	Major          string                 `protobuf:"bytes,6,opt,name=major,proto3" json:"major,omitempty"`
+	ClassName      string                 `protobuf:"bytes,7,opt,name=class_name,json=className,proto3" json:"class_name,omitempty"`
+	EducationType  string                 `protobuf:"bytes,8,opt,name=education_type,json=educationType,proto3" json:"education_type,omitempty"`
+	Grade          string                 `protobuf:"bytes,9,opt,name=grade,proto3" json:"grade,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *StudentProfile) Reset() {
+	*x = StudentProfile{}
+	mi := &file_academic_execution_v1_execution_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StudentProfile) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StudentProfile) ProtoMessage() {}
+
+func (x *StudentProfile) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_execution_v1_execution_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StudentProfile.ProtoReflect.Descriptor instead.
+func (*StudentProfile) Descriptor() ([]byte, []int) {
+	return file_academic_execution_v1_execution_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *StudentProfile) GetProvider() string {
+	if x != nil {
+		return x.Provider
+	}
+	return ""
+}
+
+func (x *StudentProfile) GetEducationLevel() string {
+	if x != nil {
+		return x.EducationLevel
+	}
+	return ""
+}
+
+func (x *StudentProfile) GetStudentNo() string {
+	if x != nil {
+		return x.StudentNo
+	}
+	return ""
+}
+
+func (x *StudentProfile) GetStudentOrigin() string {
+	if x != nil {
+		return x.StudentOrigin
+	}
+	return ""
+}
+
+func (x *StudentProfile) GetCollege() string {
+	if x != nil {
+		return x.College
+	}
+	return ""
+}
+
+func (x *StudentProfile) GetMajor() string {
+	if x != nil {
+		return x.Major
+	}
+	return ""
+}
+
+func (x *StudentProfile) GetClassName() string {
+	if x != nil {
+		return x.ClassName
+	}
+	return ""
+}
+
+func (x *StudentProfile) GetEducationType() string {
+	if x != nil {
+		return x.EducationType
+	}
+	return ""
+}
+
+func (x *StudentProfile) GetGrade() string {
+	if x != nil {
+		return x.Grade
+	}
+	return ""
+}
+
 type CheckExecutionAdmissionRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	Lease *ExecutionLease        `protobuf:"bytes,1,opt,name=lease,proto3" json:"lease,omitempty"`
@@ -412,7 +537,7 @@ type CheckExecutionAdmissionRequest struct {
 
 func (x *CheckExecutionAdmissionRequest) Reset() {
 	*x = CheckExecutionAdmissionRequest{}
-	mi := &file_academic_execution_v1_execution_proto_msgTypes[4]
+	mi := &file_academic_execution_v1_execution_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -424,7 +549,7 @@ func (x *CheckExecutionAdmissionRequest) String() string {
 func (*CheckExecutionAdmissionRequest) ProtoMessage() {}
 
 func (x *CheckExecutionAdmissionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_execution_v1_execution_proto_msgTypes[4]
+	mi := &file_academic_execution_v1_execution_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -437,7 +562,7 @@ func (x *CheckExecutionAdmissionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CheckExecutionAdmissionRequest.ProtoReflect.Descriptor instead.
 func (*CheckExecutionAdmissionRequest) Descriptor() ([]byte, []int) {
-	return file_academic_execution_v1_execution_proto_rawDescGZIP(), []int{4}
+	return file_academic_execution_v1_execution_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *CheckExecutionAdmissionRequest) GetLease() *ExecutionLease {
@@ -471,7 +596,7 @@ type CheckExecutionAdmissionResponse struct {
 
 func (x *CheckExecutionAdmissionResponse) Reset() {
 	*x = CheckExecutionAdmissionResponse{}
-	mi := &file_academic_execution_v1_execution_proto_msgTypes[5]
+	mi := &file_academic_execution_v1_execution_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -483,7 +608,7 @@ func (x *CheckExecutionAdmissionResponse) String() string {
 func (*CheckExecutionAdmissionResponse) ProtoMessage() {}
 
 func (x *CheckExecutionAdmissionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_execution_v1_execution_proto_msgTypes[5]
+	mi := &file_academic_execution_v1_execution_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -496,7 +621,7 @@ func (x *CheckExecutionAdmissionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CheckExecutionAdmissionResponse.ProtoReflect.Descriptor instead.
 func (*CheckExecutionAdmissionResponse) Descriptor() ([]byte, []int) {
-	return file_academic_execution_v1_execution_proto_rawDescGZIP(), []int{5}
+	return file_academic_execution_v1_execution_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *CheckExecutionAdmissionResponse) GetAllowed() bool {
@@ -572,7 +697,7 @@ type RegisterObservationRequest struct {
 
 func (x *RegisterObservationRequest) Reset() {
 	*x = RegisterObservationRequest{}
-	mi := &file_academic_execution_v1_execution_proto_msgTypes[6]
+	mi := &file_academic_execution_v1_execution_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -584,7 +709,7 @@ func (x *RegisterObservationRequest) String() string {
 func (*RegisterObservationRequest) ProtoMessage() {}
 
 func (x *RegisterObservationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_execution_v1_execution_proto_msgTypes[6]
+	mi := &file_academic_execution_v1_execution_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -597,7 +722,7 @@ func (x *RegisterObservationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RegisterObservationRequest.ProtoReflect.Descriptor instead.
 func (*RegisterObservationRequest) Descriptor() ([]byte, []int) {
-	return file_academic_execution_v1_execution_proto_rawDescGZIP(), []int{6}
+	return file_academic_execution_v1_execution_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *RegisterObservationRequest) GetLease() *ExecutionLease {
@@ -625,7 +750,7 @@ type RegisterObservationResponse struct {
 
 func (x *RegisterObservationResponse) Reset() {
 	*x = RegisterObservationResponse{}
-	mi := &file_academic_execution_v1_execution_proto_msgTypes[7]
+	mi := &file_academic_execution_v1_execution_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -637,7 +762,7 @@ func (x *RegisterObservationResponse) String() string {
 func (*RegisterObservationResponse) ProtoMessage() {}
 
 func (x *RegisterObservationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_execution_v1_execution_proto_msgTypes[7]
+	mi := &file_academic_execution_v1_execution_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -650,7 +775,7 @@ func (x *RegisterObservationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RegisterObservationResponse.ProtoReflect.Descriptor instead.
 func (*RegisterObservationResponse) Descriptor() ([]byte, []int) {
-	return file_academic_execution_v1_execution_proto_rawDescGZIP(), []int{7}
+	return file_academic_execution_v1_execution_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *RegisterObservationResponse) GetAllowed() bool {
@@ -685,7 +810,7 @@ type FenceExecutionRequest struct {
 
 func (x *FenceExecutionRequest) Reset() {
 	*x = FenceExecutionRequest{}
-	mi := &file_academic_execution_v1_execution_proto_msgTypes[8]
+	mi := &file_academic_execution_v1_execution_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -697,7 +822,7 @@ func (x *FenceExecutionRequest) String() string {
 func (*FenceExecutionRequest) ProtoMessage() {}
 
 func (x *FenceExecutionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_execution_v1_execution_proto_msgTypes[8]
+	mi := &file_academic_execution_v1_execution_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -710,7 +835,7 @@ func (x *FenceExecutionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FenceExecutionRequest.ProtoReflect.Descriptor instead.
 func (*FenceExecutionRequest) Descriptor() ([]byte, []int) {
-	return file_academic_execution_v1_execution_proto_rawDescGZIP(), []int{8}
+	return file_academic_execution_v1_execution_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *FenceExecutionRequest) GetUserId() uint64 {
@@ -764,7 +889,7 @@ type FenceExecutionResponse struct {
 
 func (x *FenceExecutionResponse) Reset() {
 	*x = FenceExecutionResponse{}
-	mi := &file_academic_execution_v1_execution_proto_msgTypes[9]
+	mi := &file_academic_execution_v1_execution_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -776,7 +901,7 @@ func (x *FenceExecutionResponse) String() string {
 func (*FenceExecutionResponse) ProtoMessage() {}
 
 func (x *FenceExecutionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_academic_execution_v1_execution_proto_msgTypes[9]
+	mi := &file_academic_execution_v1_execution_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -789,10 +914,131 @@ func (x *FenceExecutionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FenceExecutionResponse.ProtoReflect.Descriptor instead.
 func (*FenceExecutionResponse) Descriptor() ([]byte, []int) {
-	return file_academic_execution_v1_execution_proto_rawDescGZIP(), []int{9}
+	return file_academic_execution_v1_execution_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *FenceExecutionResponse) GetAcknowledged() bool {
+	if x != nil {
+		return x.Acknowledged
+	}
+	return false
+}
+
+// RecordAcademicLoginRequest identifies a successful non-managed academic login.
+type RecordAcademicLoginRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	EventId        string                 `protobuf:"bytes,1,opt,name=event_id,json=eventId,proto3" json:"event_id,omitempty"`
+	Provider       string                 `protobuf:"bytes,2,opt,name=provider,proto3" json:"provider,omitempty"`
+	EducationLevel string                 `protobuf:"bytes,3,opt,name=education_level,json=educationLevel,proto3" json:"education_level,omitempty"`
+	StudentNo      string                 `protobuf:"bytes,4,opt,name=student_no,json=studentNo,proto3" json:"student_no,omitempty"`
+	OccurredAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=occurred_at,json=occurredAt,proto3" json:"occurred_at,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *RecordAcademicLoginRequest) Reset() {
+	*x = RecordAcademicLoginRequest{}
+	mi := &file_academic_execution_v1_execution_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RecordAcademicLoginRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RecordAcademicLoginRequest) ProtoMessage() {}
+
+func (x *RecordAcademicLoginRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_execution_v1_execution_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RecordAcademicLoginRequest.ProtoReflect.Descriptor instead.
+func (*RecordAcademicLoginRequest) Descriptor() ([]byte, []int) {
+	return file_academic_execution_v1_execution_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *RecordAcademicLoginRequest) GetEventId() string {
+	if x != nil {
+		return x.EventId
+	}
+	return ""
+}
+
+func (x *RecordAcademicLoginRequest) GetProvider() string {
+	if x != nil {
+		return x.Provider
+	}
+	return ""
+}
+
+func (x *RecordAcademicLoginRequest) GetEducationLevel() string {
+	if x != nil {
+		return x.EducationLevel
+	}
+	return ""
+}
+
+func (x *RecordAcademicLoginRequest) GetStudentNo() string {
+	if x != nil {
+		return x.StudentNo
+	}
+	return ""
+}
+
+func (x *RecordAcademicLoginRequest) GetOccurredAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.OccurredAt
+	}
+	return nil
+}
+
+type RecordAcademicLoginResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Acknowledged  bool                   `protobuf:"varint,1,opt,name=acknowledged,proto3" json:"acknowledged,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RecordAcademicLoginResponse) Reset() {
+	*x = RecordAcademicLoginResponse{}
+	mi := &file_academic_execution_v1_execution_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RecordAcademicLoginResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RecordAcademicLoginResponse) ProtoMessage() {}
+
+func (x *RecordAcademicLoginResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_execution_v1_execution_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RecordAcademicLoginResponse.ProtoReflect.Descriptor instead.
+func (*RecordAcademicLoginResponse) Descriptor() ([]byte, []int) {
+	return file_academic_execution_v1_execution_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *RecordAcademicLoginResponse) GetAcknowledged() bool {
 	if x != nil {
 		return x.Acknowledged
 	}
@@ -827,15 +1073,28 @@ const file_academic_execution_v1_execution_proto_rawDesc = "" +
 	"\x1bExecuteManagedQueryResponse\x12:\n" +
 	"\x06result\x18\x01 \x01(\v2\".academic.execution.v1.QueryResultR\x06result\x12K\n" +
 	"\vobservation\x18\x02 \x01(\v2).academic.archive.v1.ObservationReferenceR\vobservation\x12!\n" +
-	"\fcache_source\x18\x03 \x01(\tR\vcacheSource\"\xb1\x04\n" +
+	"\fcache_source\x18\x03 \x01(\tR\vcacheSource\"\x83\x05\n" +
 	"\vQueryResult\x12E\n" +
 	"\acourses\x18\x01 \x01(\v2).academic.provider.v1.ListCoursesResponseH\x00R\acourses\x12?\n" +
 	"\x05exams\x18\x02 \x01(\v2'.academic.provider.v1.ListExamsResponseH\x00R\x05exams\x12B\n" +
 	"\x06grades\x18\x03 \x01(\v2(.academic.provider.v1.ListGradesResponseH\x00R\x06grades\x12a\n" +
 	"\x11course_selections\x18\x04 \x01(\v22.academic.provider.v1.ListCourseSelectionsResponseH\x00R\x10courseSelections\x12v\n" +
 	"\x19course_selection_schedule\x18\x05 \x01(\v28.academic.provider.v1.GetCourseSelectionScheduleResponseH\x00R\x17courseSelectionSchedule\x12q\n" +
-	"\x17course_addition_results\x18\x06 \x01(\v27.academic.provider.v1.ListCourseAdditionResultsResponseH\x00R\x15courseAdditionResultsB\b\n" +
-	"\x06result\"s\n" +
+	"\x17course_addition_results\x18\x06 \x01(\v27.academic.provider.v1.ListCourseAdditionResultsResponseH\x00R\x15courseAdditionResults\x12P\n" +
+	"\x0fstudent_profile\x18\a \x01(\v2%.academic.execution.v1.StudentProfileH\x00R\x0estudentProfileB\b\n" +
+	"\x06result\"\xa7\x02\n" +
+	"\x0eStudentProfile\x12\x1a\n" +
+	"\bprovider\x18\x01 \x01(\tR\bprovider\x12'\n" +
+	"\x0feducation_level\x18\x02 \x01(\tR\x0eeducationLevel\x12\x1d\n" +
+	"\n" +
+	"student_no\x18\x03 \x01(\tR\tstudentNo\x12%\n" +
+	"\x0estudent_origin\x18\x04 \x01(\tR\rstudentOrigin\x12\x18\n" +
+	"\acollege\x18\x05 \x01(\tR\acollege\x12\x14\n" +
+	"\x05major\x18\x06 \x01(\tR\x05major\x12\x1d\n" +
+	"\n" +
+	"class_name\x18\a \x01(\tR\tclassName\x12%\n" +
+	"\x0eeducation_type\x18\b \x01(\tR\reducationType\x12\x14\n" +
+	"\x05grade\x18\t \x01(\tR\x05grade\"s\n" +
 	"\x1eCheckExecutionAdmissionRequest\x12;\n" +
 	"\x05lease\x18\x01 \x01(\v2%.academic.execution.v1.ExecutionLeaseR\x05lease\x12\x14\n" +
 	"\x05phase\x18\x02 \x01(\tR\x05phase\"\x9c\x03\n" +
@@ -870,13 +1129,24 @@ const file_academic_execution_v1_execution_proto_rawDesc = "" +
 	"\n" +
 	"account_id\x18\x06 \x01(\x04R\taccountId\"<\n" +
 	"\x16FenceExecutionResponse\x12\"\n" +
+	"\facknowledged\x18\x01 \x01(\bR\facknowledged\"\xd8\x01\n" +
+	"\x1aRecordAcademicLoginRequest\x12\x19\n" +
+	"\bevent_id\x18\x01 \x01(\tR\aeventId\x12\x1a\n" +
+	"\bprovider\x18\x02 \x01(\tR\bprovider\x12'\n" +
+	"\x0feducation_level\x18\x03 \x01(\tR\x0eeducationLevel\x12\x1d\n" +
+	"\n" +
+	"student_no\x18\x04 \x01(\tR\tstudentNo\x12;\n" +
+	"\voccurred_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"occurredAt\"A\n" +
+	"\x1bRecordAcademicLoginResponse\x12\"\n" +
 	"\facknowledged\x18\x01 \x01(\bR\facknowledged2\x87\x02\n" +
 	"\x18AcademicExecutionService\x12|\n" +
 	"\x13ExecuteManagedQuery\x121.academic.execution.v1.ExecuteManagedQueryRequest\x1a2.academic.execution.v1.ExecuteManagedQueryResponse\x12m\n" +
-	"\x0eFenceExecution\x12,.academic.execution.v1.FenceExecutionRequest\x1a-.academic.execution.v1.FenceExecutionResponse2\xac\x02\n" +
+	"\x0eFenceExecution\x12,.academic.execution.v1.FenceExecutionRequest\x1a-.academic.execution.v1.FenceExecutionResponse2\xaa\x03\n" +
 	"!AcademicExecutionAuthorityService\x12\x88\x01\n" +
 	"\x17CheckExecutionAdmission\x125.academic.execution.v1.CheckExecutionAdmissionRequest\x1a6.academic.execution.v1.CheckExecutionAdmissionResponse\x12|\n" +
-	"\x13RegisterObservation\x121.academic.execution.v1.RegisterObservationRequest\x1a2.academic.execution.v1.RegisterObservationResponseBVZTgithub.com/LDouble/campus-academic-api/pkg/academic/execution/v1;academicexecutionv1b\x06proto3"
+	"\x13RegisterObservation\x121.academic.execution.v1.RegisterObservationRequest\x1a2.academic.execution.v1.RegisterObservationResponse\x12|\n" +
+	"\x13RecordAcademicLogin\x121.academic.execution.v1.RecordAcademicLoginRequest\x1a2.academic.execution.v1.RecordAcademicLoginResponseBVZTgithub.com/LDouble/campus-academic-api/pkg/academic/execution/v1;academicexecutionv1b\x06proto3"
 
 var (
 	file_academic_execution_v1_execution_proto_rawDescOnce sync.Once
@@ -890,61 +1160,68 @@ func file_academic_execution_v1_execution_proto_rawDescGZIP() []byte {
 	return file_academic_execution_v1_execution_proto_rawDescData
 }
 
-var file_academic_execution_v1_execution_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_academic_execution_v1_execution_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
 var file_academic_execution_v1_execution_proto_goTypes = []any{
 	(*ExecutionLease)(nil),                         // 0: academic.execution.v1.ExecutionLease
 	(*ExecuteManagedQueryRequest)(nil),             // 1: academic.execution.v1.ExecuteManagedQueryRequest
 	(*ExecuteManagedQueryResponse)(nil),            // 2: academic.execution.v1.ExecuteManagedQueryResponse
 	(*QueryResult)(nil),                            // 3: academic.execution.v1.QueryResult
-	(*CheckExecutionAdmissionRequest)(nil),         // 4: academic.execution.v1.CheckExecutionAdmissionRequest
-	(*CheckExecutionAdmissionResponse)(nil),        // 5: academic.execution.v1.CheckExecutionAdmissionResponse
-	(*RegisterObservationRequest)(nil),             // 6: academic.execution.v1.RegisterObservationRequest
-	(*RegisterObservationResponse)(nil),            // 7: academic.execution.v1.RegisterObservationResponse
-	(*FenceExecutionRequest)(nil),                  // 8: academic.execution.v1.FenceExecutionRequest
-	(*FenceExecutionResponse)(nil),                 // 9: academic.execution.v1.FenceExecutionResponse
-	(*v1.CredentialReference)(nil),                 // 10: academic.credentials.v1.CredentialReference
-	(*timestamppb.Timestamp)(nil),                  // 11: google.protobuf.Timestamp
-	(*v11.ObservationReference)(nil),               // 12: academic.archive.v1.ObservationReference
-	(*v12.ListCoursesResponse)(nil),                // 13: academic.provider.v1.ListCoursesResponse
-	(*v12.ListExamsResponse)(nil),                  // 14: academic.provider.v1.ListExamsResponse
-	(*v12.ListGradesResponse)(nil),                 // 15: academic.provider.v1.ListGradesResponse
-	(*v12.ListCourseSelectionsResponse)(nil),       // 16: academic.provider.v1.ListCourseSelectionsResponse
-	(*v12.GetCourseSelectionScheduleResponse)(nil), // 17: academic.provider.v1.GetCourseSelectionScheduleResponse
-	(*v12.ListCourseAdditionResultsResponse)(nil),  // 18: academic.provider.v1.ListCourseAdditionResultsResponse
-	(*v1.Subject)(nil),                             // 19: academic.credentials.v1.Subject
+	(*StudentProfile)(nil),                         // 4: academic.execution.v1.StudentProfile
+	(*CheckExecutionAdmissionRequest)(nil),         // 5: academic.execution.v1.CheckExecutionAdmissionRequest
+	(*CheckExecutionAdmissionResponse)(nil),        // 6: academic.execution.v1.CheckExecutionAdmissionResponse
+	(*RegisterObservationRequest)(nil),             // 7: academic.execution.v1.RegisterObservationRequest
+	(*RegisterObservationResponse)(nil),            // 8: academic.execution.v1.RegisterObservationResponse
+	(*FenceExecutionRequest)(nil),                  // 9: academic.execution.v1.FenceExecutionRequest
+	(*FenceExecutionResponse)(nil),                 // 10: academic.execution.v1.FenceExecutionResponse
+	(*RecordAcademicLoginRequest)(nil),             // 11: academic.execution.v1.RecordAcademicLoginRequest
+	(*RecordAcademicLoginResponse)(nil),            // 12: academic.execution.v1.RecordAcademicLoginResponse
+	(*v1.CredentialReference)(nil),                 // 13: academic.credentials.v1.CredentialReference
+	(*timestamppb.Timestamp)(nil),                  // 14: google.protobuf.Timestamp
+	(*v11.ObservationReference)(nil),               // 15: academic.archive.v1.ObservationReference
+	(*v12.ListCoursesResponse)(nil),                // 16: academic.provider.v1.ListCoursesResponse
+	(*v12.ListExamsResponse)(nil),                  // 17: academic.provider.v1.ListExamsResponse
+	(*v12.ListGradesResponse)(nil),                 // 18: academic.provider.v1.ListGradesResponse
+	(*v12.ListCourseSelectionsResponse)(nil),       // 19: academic.provider.v1.ListCourseSelectionsResponse
+	(*v12.GetCourseSelectionScheduleResponse)(nil), // 20: academic.provider.v1.GetCourseSelectionScheduleResponse
+	(*v12.ListCourseAdditionResultsResponse)(nil),  // 21: academic.provider.v1.ListCourseAdditionResultsResponse
+	(*v1.Subject)(nil),                             // 22: academic.credentials.v1.Subject
 }
 var file_academic_execution_v1_execution_proto_depIdxs = []int32{
 	0,  // 0: academic.execution.v1.ExecuteManagedQueryRequest.lease:type_name -> academic.execution.v1.ExecutionLease
-	10, // 1: academic.execution.v1.ExecuteManagedQueryRequest.credential:type_name -> academic.credentials.v1.CredentialReference
-	11, // 2: academic.execution.v1.ExecuteManagedQueryRequest.expires_at:type_name -> google.protobuf.Timestamp
+	13, // 1: academic.execution.v1.ExecuteManagedQueryRequest.credential:type_name -> academic.credentials.v1.CredentialReference
+	14, // 2: academic.execution.v1.ExecuteManagedQueryRequest.expires_at:type_name -> google.protobuf.Timestamp
 	3,  // 3: academic.execution.v1.ExecuteManagedQueryResponse.result:type_name -> academic.execution.v1.QueryResult
-	12, // 4: academic.execution.v1.ExecuteManagedQueryResponse.observation:type_name -> academic.archive.v1.ObservationReference
-	13, // 5: academic.execution.v1.QueryResult.courses:type_name -> academic.provider.v1.ListCoursesResponse
-	14, // 6: academic.execution.v1.QueryResult.exams:type_name -> academic.provider.v1.ListExamsResponse
-	15, // 7: academic.execution.v1.QueryResult.grades:type_name -> academic.provider.v1.ListGradesResponse
-	16, // 8: academic.execution.v1.QueryResult.course_selections:type_name -> academic.provider.v1.ListCourseSelectionsResponse
-	17, // 9: academic.execution.v1.QueryResult.course_selection_schedule:type_name -> academic.provider.v1.GetCourseSelectionScheduleResponse
-	18, // 10: academic.execution.v1.QueryResult.course_addition_results:type_name -> academic.provider.v1.ListCourseAdditionResultsResponse
-	0,  // 11: academic.execution.v1.CheckExecutionAdmissionRequest.lease:type_name -> academic.execution.v1.ExecutionLease
-	19, // 12: academic.execution.v1.CheckExecutionAdmissionResponse.subject:type_name -> academic.credentials.v1.Subject
-	10, // 13: academic.execution.v1.CheckExecutionAdmissionResponse.credential:type_name -> academic.credentials.v1.CredentialReference
-	11, // 14: academic.execution.v1.CheckExecutionAdmissionResponse.expires_at:type_name -> google.protobuf.Timestamp
-	0,  // 15: academic.execution.v1.RegisterObservationRequest.lease:type_name -> academic.execution.v1.ExecutionLease
-	12, // 16: academic.execution.v1.RegisterObservationRequest.observation:type_name -> academic.archive.v1.ObservationReference
-	12, // 17: academic.execution.v1.RegisterObservationResponse.observation:type_name -> academic.archive.v1.ObservationReference
-	1,  // 18: academic.execution.v1.AcademicExecutionService.ExecuteManagedQuery:input_type -> academic.execution.v1.ExecuteManagedQueryRequest
-	8,  // 19: academic.execution.v1.AcademicExecutionService.FenceExecution:input_type -> academic.execution.v1.FenceExecutionRequest
-	4,  // 20: academic.execution.v1.AcademicExecutionAuthorityService.CheckExecutionAdmission:input_type -> academic.execution.v1.CheckExecutionAdmissionRequest
-	6,  // 21: academic.execution.v1.AcademicExecutionAuthorityService.RegisterObservation:input_type -> academic.execution.v1.RegisterObservationRequest
-	2,  // 22: academic.execution.v1.AcademicExecutionService.ExecuteManagedQuery:output_type -> academic.execution.v1.ExecuteManagedQueryResponse
-	9,  // 23: academic.execution.v1.AcademicExecutionService.FenceExecution:output_type -> academic.execution.v1.FenceExecutionResponse
-	5,  // 24: academic.execution.v1.AcademicExecutionAuthorityService.CheckExecutionAdmission:output_type -> academic.execution.v1.CheckExecutionAdmissionResponse
-	7,  // 25: academic.execution.v1.AcademicExecutionAuthorityService.RegisterObservation:output_type -> academic.execution.v1.RegisterObservationResponse
-	22, // [22:26] is the sub-list for method output_type
-	18, // [18:22] is the sub-list for method input_type
-	18, // [18:18] is the sub-list for extension type_name
-	18, // [18:18] is the sub-list for extension extendee
-	0,  // [0:18] is the sub-list for field type_name
+	15, // 4: academic.execution.v1.ExecuteManagedQueryResponse.observation:type_name -> academic.archive.v1.ObservationReference
+	16, // 5: academic.execution.v1.QueryResult.courses:type_name -> academic.provider.v1.ListCoursesResponse
+	17, // 6: academic.execution.v1.QueryResult.exams:type_name -> academic.provider.v1.ListExamsResponse
+	18, // 7: academic.execution.v1.QueryResult.grades:type_name -> academic.provider.v1.ListGradesResponse
+	19, // 8: academic.execution.v1.QueryResult.course_selections:type_name -> academic.provider.v1.ListCourseSelectionsResponse
+	20, // 9: academic.execution.v1.QueryResult.course_selection_schedule:type_name -> academic.provider.v1.GetCourseSelectionScheduleResponse
+	21, // 10: academic.execution.v1.QueryResult.course_addition_results:type_name -> academic.provider.v1.ListCourseAdditionResultsResponse
+	4,  // 11: academic.execution.v1.QueryResult.student_profile:type_name -> academic.execution.v1.StudentProfile
+	0,  // 12: academic.execution.v1.CheckExecutionAdmissionRequest.lease:type_name -> academic.execution.v1.ExecutionLease
+	22, // 13: academic.execution.v1.CheckExecutionAdmissionResponse.subject:type_name -> academic.credentials.v1.Subject
+	13, // 14: academic.execution.v1.CheckExecutionAdmissionResponse.credential:type_name -> academic.credentials.v1.CredentialReference
+	14, // 15: academic.execution.v1.CheckExecutionAdmissionResponse.expires_at:type_name -> google.protobuf.Timestamp
+	0,  // 16: academic.execution.v1.RegisterObservationRequest.lease:type_name -> academic.execution.v1.ExecutionLease
+	15, // 17: academic.execution.v1.RegisterObservationRequest.observation:type_name -> academic.archive.v1.ObservationReference
+	15, // 18: academic.execution.v1.RegisterObservationResponse.observation:type_name -> academic.archive.v1.ObservationReference
+	14, // 19: academic.execution.v1.RecordAcademicLoginRequest.occurred_at:type_name -> google.protobuf.Timestamp
+	1,  // 20: academic.execution.v1.AcademicExecutionService.ExecuteManagedQuery:input_type -> academic.execution.v1.ExecuteManagedQueryRequest
+	9,  // 21: academic.execution.v1.AcademicExecutionService.FenceExecution:input_type -> academic.execution.v1.FenceExecutionRequest
+	5,  // 22: academic.execution.v1.AcademicExecutionAuthorityService.CheckExecutionAdmission:input_type -> academic.execution.v1.CheckExecutionAdmissionRequest
+	7,  // 23: academic.execution.v1.AcademicExecutionAuthorityService.RegisterObservation:input_type -> academic.execution.v1.RegisterObservationRequest
+	11, // 24: academic.execution.v1.AcademicExecutionAuthorityService.RecordAcademicLogin:input_type -> academic.execution.v1.RecordAcademicLoginRequest
+	2,  // 25: academic.execution.v1.AcademicExecutionService.ExecuteManagedQuery:output_type -> academic.execution.v1.ExecuteManagedQueryResponse
+	10, // 26: academic.execution.v1.AcademicExecutionService.FenceExecution:output_type -> academic.execution.v1.FenceExecutionResponse
+	6,  // 27: academic.execution.v1.AcademicExecutionAuthorityService.CheckExecutionAdmission:output_type -> academic.execution.v1.CheckExecutionAdmissionResponse
+	8,  // 28: academic.execution.v1.AcademicExecutionAuthorityService.RegisterObservation:output_type -> academic.execution.v1.RegisterObservationResponse
+	12, // 29: academic.execution.v1.AcademicExecutionAuthorityService.RecordAcademicLogin:output_type -> academic.execution.v1.RecordAcademicLoginResponse
+	25, // [25:30] is the sub-list for method output_type
+	20, // [20:25] is the sub-list for method input_type
+	20, // [20:20] is the sub-list for extension type_name
+	20, // [20:20] is the sub-list for extension extendee
+	0,  // [0:20] is the sub-list for field type_name
 }
 
 func init() { file_academic_execution_v1_execution_proto_init() }
@@ -959,6 +1236,7 @@ func file_academic_execution_v1_execution_proto_init() {
 		(*QueryResult_CourseSelections)(nil),
 		(*QueryResult_CourseSelectionSchedule)(nil),
 		(*QueryResult_CourseAdditionResults)(nil),
+		(*QueryResult_StudentProfile)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -966,7 +1244,7 @@ func file_academic_execution_v1_execution_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_academic_execution_v1_execution_proto_rawDesc), len(file_academic_execution_v1_execution_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   13,
 			NumExtensions: 0,
 			NumServices:   2,
 		},
