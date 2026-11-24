@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package academic.studentdata.v1;
+
+import "academic/provider/v1/provider.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/LDouble/campus-academic-api/pkg/academic/studentdata/v1;academicstudentdatav1";
+
+// StudentDataProviderService is an internal, explicit-capture boundary for
+// ranking. It is deliberately separate from normal grade lookup APIs.
+service StudentDataProviderService {
+  rpc RefreshSnapshot(RefreshSnapshotRequest) returns (RefreshSnapshotResponse);
+}
+
+message RefreshSnapshotRequest {
+  academic.provider.v1.StudentReference student = 1;
+  academic.provider.v1.Credential credential = 2;
+  repeated string period_ids = 3;
+}
+
+message RefreshSnapshotResponse {
+  // event_id is the producer-generated idempotency key in the event payload.
+  string event_id = 1;
+  google.protobuf.Timestamp observed_at = 2;
+  bool profile_observed = 3;
+  int32 period_count = 4;
+}
