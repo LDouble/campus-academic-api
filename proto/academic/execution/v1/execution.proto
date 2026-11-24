@@ -30,6 +30,14 @@ message ExecutionLease {
   uint64 fence = 4;
 }
 
+// TrainingPlanTarget 由平台签发，绑定方案归属及该专业年级的发布代次。
+message TrainingPlanTarget {
+  string group_key = 1;
+  string major = 2;
+  uint32 cohort_year = 3;
+  uint64 generation = 4;
+}
+
 message ExecuteManagedQueryRequest {
   ExecutionLease lease = 1;
   academic.credentials.v1.CredentialReference credential = 2;
@@ -39,6 +47,7 @@ message ExecuteManagedQueryRequest {
   bool force_refresh = 6;
   bool omit_result = 7;
   google.protobuf.Timestamp expires_at = 8;
+  TrainingPlanTarget training_plan_target = 9;
 }
 message ExecuteManagedQueryResponse {
   QueryResult result = 1;
@@ -87,6 +96,7 @@ message CheckExecutionAdmissionResponse {
   bool omit_result = 7;
   google.protobuf.Timestamp expires_at = 8;
   string error_code = 9;
+  TrainingPlanTarget training_plan_target = 10;
 }
 
 message RegisterObservationRequest {

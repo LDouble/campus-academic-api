@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	AcademicArchiveService_GetObservationReceipts_FullMethodName = "/academic.archive.v1.AcademicArchiveService/GetObservationReceipts"
+	AcademicArchiveService_RetryTrainingPlanFiles_FullMethodName = "/academic.archive.v1.AcademicArchiveService/RetryTrainingPlanFiles"
 )
 
 // AcademicArchiveServiceClient is the client API for AcademicArchiveService service.
@@ -29,6 +30,7 @@ const (
 // AcademicArchiveService 只提供可信平台调用方需要的归档元数据回执。
 type AcademicArchiveServiceClient interface {
 	GetObservationReceipts(ctx context.Context, in *GetObservationReceiptsRequest, opts ...grpc.CallOption) (*GetObservationReceiptsResponse, error)
+	RetryTrainingPlanFiles(ctx context.Context, in *RetryTrainingPlanFilesRequest, opts ...grpc.CallOption) (*RetryTrainingPlanFilesResponse, error)
 }
 
 type academicArchiveServiceClient struct {
@@ -49,6 +51,16 @@ func (c *academicArchiveServiceClient) GetObservationReceipts(ctx context.Contex
 	return out, nil
 }
 
+func (c *academicArchiveServiceClient) RetryTrainingPlanFiles(ctx context.Context, in *RetryTrainingPlanFilesRequest, opts ...grpc.CallOption) (*RetryTrainingPlanFilesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RetryTrainingPlanFilesResponse)
+	err := c.cc.Invoke(ctx, AcademicArchiveService_RetryTrainingPlanFiles_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AcademicArchiveServiceServer is the server API for AcademicArchiveService service.
 // All implementations must embed UnimplementedAcademicArchiveServiceServer
 // for forward compatibility.
@@ -56,6 +68,7 @@ func (c *academicArchiveServiceClient) GetObservationReceipts(ctx context.Contex
 // AcademicArchiveService 只提供可信平台调用方需要的归档元数据回执。
 type AcademicArchiveServiceServer interface {
 	GetObservationReceipts(context.Context, *GetObservationReceiptsRequest) (*GetObservationReceiptsResponse, error)
+	RetryTrainingPlanFiles(context.Context, *RetryTrainingPlanFilesRequest) (*RetryTrainingPlanFilesResponse, error)
 	mustEmbedUnimplementedAcademicArchiveServiceServer()
 }
 
@@ -68,6 +81,9 @@ type UnimplementedAcademicArchiveServiceServer struct{}
 
 func (UnimplementedAcademicArchiveServiceServer) GetObservationReceipts(context.Context, *GetObservationReceiptsRequest) (*GetObservationReceiptsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetObservationReceipts not implemented")
+}
+func (UnimplementedAcademicArchiveServiceServer) RetryTrainingPlanFiles(context.Context, *RetryTrainingPlanFilesRequest) (*RetryTrainingPlanFilesResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method RetryTrainingPlanFiles not implemented")
 }
 func (UnimplementedAcademicArchiveServiceServer) mustEmbedUnimplementedAcademicArchiveServiceServer() {
 }
@@ -109,6 +125,24 @@ func _AcademicArchiveService_GetObservationReceipts_Handler(srv interface{}, ctx
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AcademicArchiveService_RetryTrainingPlanFiles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RetryTrainingPlanFilesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AcademicArchiveServiceServer).RetryTrainingPlanFiles(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AcademicArchiveService_RetryTrainingPlanFiles_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AcademicArchiveServiceServer).RetryTrainingPlanFiles(ctx, req.(*RetryTrainingPlanFilesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AcademicArchiveService_ServiceDesc is the grpc.ServiceDesc for AcademicArchiveService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -119,6 +153,10 @@ var AcademicArchiveService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetObservationReceipts",
 			Handler:    _AcademicArchiveService_GetObservationReceipts_Handler,
+		},
+		{
+			MethodName: "RetryTrainingPlanFiles",
+			Handler:    _AcademicArchiveService_RetryTrainingPlanFiles_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

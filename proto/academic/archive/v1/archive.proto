@@ -9,6 +9,7 @@ import "google/protobuf/timestamp.proto";
 // AcademicArchiveService 只提供可信平台调用方需要的归档元数据回执。
 service AcademicArchiveService {
   rpc GetObservationReceipts(GetObservationReceiptsRequest) returns (GetObservationReceiptsResponse);
+  rpc RetryTrainingPlanFiles(RetryTrainingPlanFilesRequest) returns (RetryTrainingPlanFilesResponse);
 }
 
 // ObservationReference 绑定不可变观察内容和精确作用域，不包含学生数据正文。
@@ -35,4 +36,24 @@ message ObservationReceipt {
   string result_code = 3;
   uint64 record_count = 4;
   google.protobuf.Timestamp completed_at = 5;
+  // TrainingPlanFiles 描述专用文件阶段，等待文件时仍保留原观察。
+  TrainingPlanFiles training_plan_files = 6;
 }
+
+message TrainingPlanFiles {
+  TrainingPlanFileState state = 1;
+  string error_code = 2;
+}
+
+enum TrainingPlanFileState {
+  TRAINING_PLAN_FILE_STATE_UNSPECIFIED = 0;
+  TRAINING_PLAN_FILE_STATE_PENDING = 1;
+  TRAINING_PLAN_FILE_STATE_RETRY_REQUIRED = 2;
+  TRAINING_PLAN_FILE_STATE_COMPLETE = 3;
+}
+
+message RetryTrainingPlanFilesRequest {
+  ObservationReference observation = 1;
+}
+
+message RetryTrainingPlanFilesResponse {}
