@@ -116,7 +116,9 @@ type CredentialMetadata struct {
 	EducationLevel string                 `protobuf:"bytes,3,opt,name=education_level,json=educationLevel,proto3" json:"education_level,omitempty"`
 	State          string                 `protobuf:"bytes,4,opt,name=state,proto3" json:"state,omitempty"`
 	// Account 是账号托管凭据的稳定业务键；账号记录必须同时提供 account_id 和 account。
-	Account       *AccountKey `protobuf:"bytes,5,opt,name=account,proto3" json:"account,omitempty"`
+	Account *AccountKey `protobuf:"bytes,5,opt,name=account,proto3" json:"account,omitempty"`
+	// VerifiedAt 是托管账号最近一次成功凭据验证的时间，未知时省略。
+	VerifiedAt    *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=verified_at,json=verifiedAt,proto3" json:"verified_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -182,6 +184,13 @@ func (x *CredentialMetadata) GetState() string {
 func (x *CredentialMetadata) GetAccount() *AccountKey {
 	if x != nil {
 		return x.Account
+	}
+	return nil
+}
+
+func (x *CredentialMetadata) GetVerifiedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.VerifiedAt
 	}
 	return nil
 }
@@ -3248,13 +3257,15 @@ const file_academic_credentials_v1_credentials_proto_rawDesc = "" +
 	"grantEpoch\x12)\n" +
 	"\x10identity_version\x18\x05 \x01(\x04R\x0fidentityVersion\x12\x1d\n" +
 	"\n" +
-	"account_id\x18\x06 \x01(\x04R\taccountId\"\xfa\x01\n" +
+	"account_id\x18\x06 \x01(\x04R\taccountId\"\xb7\x02\n" +
 	"\x12CredentialMetadata\x12J\n" +
 	"\treference\x18\x01 \x01(\v2,.academic.credentials.v1.CredentialReferenceR\treference\x12\x1a\n" +
 	"\bprovider\x18\x02 \x01(\tR\bprovider\x12'\n" +
 	"\x0feducation_level\x18\x03 \x01(\tR\x0eeducationLevel\x12\x14\n" +
 	"\x05state\x18\x04 \x01(\tR\x05state\x12=\n" +
-	"\aaccount\x18\x05 \x01(\v2#.academic.credentials.v1.AccountKeyR\aaccount\"p\n" +
+	"\aaccount\x18\x05 \x01(\v2#.academic.credentials.v1.AccountKeyR\aaccount\x12;\n" +
+	"\vverified_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"verifiedAt\"p\n" +
 	"\n" +
 	"AccountKey\x12\x1a\n" +
 	"\bprovider\x18\x01 \x01(\tR\bprovider\x12'\n" +
@@ -3587,8 +3598,8 @@ var file_academic_credentials_v1_credentials_proto_goTypes = []any{
 	(*GetEligibilityResponse)(nil),                // 47: academic.credentials.v1.GetEligibilityResponse
 	(*ConfirmBindingRequest)(nil),                 // 48: academic.credentials.v1.ConfirmBindingRequest
 	(*ConfirmBindingResponse)(nil),                // 49: academic.credentials.v1.ConfirmBindingResponse
-	(*v1.Credential)(nil),                         // 50: academic.provider.v1.Credential
-	(*timestamppb.Timestamp)(nil),                 // 51: google.protobuf.Timestamp
+	(*timestamppb.Timestamp)(nil),                 // 50: google.protobuf.Timestamp
+	(*v1.Credential)(nil),                         // 51: academic.provider.v1.Credential
 	(*v1.ListCoursesResponse)(nil),                // 52: academic.provider.v1.ListCoursesResponse
 	(*v1.ListExamsResponse)(nil),                  // 53: academic.provider.v1.ListExamsResponse
 	(*v1.ListGradesResponse)(nil),                 // 54: academic.provider.v1.ListGradesResponse
@@ -3599,97 +3610,98 @@ var file_academic_credentials_v1_credentials_proto_goTypes = []any{
 var file_academic_credentials_v1_credentials_proto_depIdxs = []int32{
 	0,  // 0: academic.credentials.v1.CredentialMetadata.reference:type_name -> academic.credentials.v1.CredentialReference
 	2,  // 1: academic.credentials.v1.CredentialMetadata.account:type_name -> academic.credentials.v1.AccountKey
-	1,  // 2: academic.credentials.v1.GetCredentialMetadataResponse.credential:type_name -> academic.credentials.v1.CredentialMetadata
-	1,  // 3: academic.credentials.v1.ListCredentialMetadataResponse.credentials:type_name -> academic.credentials.v1.CredentialMetadata
-	2,  // 4: academic.credentials.v1.GetAccountCredentialRequest.account:type_name -> academic.credentials.v1.AccountKey
-	1,  // 5: academic.credentials.v1.ListAccountCredentialsResponse.credentials:type_name -> academic.credentials.v1.CredentialMetadata
-	2,  // 6: academic.credentials.v1.CaptureVerifiedCredentialRequest.account:type_name -> academic.credentials.v1.AccountKey
-	50, // 7: academic.credentials.v1.CaptureVerifiedCredentialRequest.credential:type_name -> academic.provider.v1.Credential
-	51, // 8: academic.credentials.v1.CaptureVerifiedCredentialRequest.verified_at:type_name -> google.protobuf.Timestamp
-	0,  // 9: academic.credentials.v1.ResolveCredentialRequest.reference:type_name -> academic.credentials.v1.CredentialReference
-	0,  // 10: academic.credentials.v1.ResolveCredentialResponse.reference:type_name -> academic.credentials.v1.CredentialReference
-	20, // 11: academic.credentials.v1.ResolveCredentialResponse.subject:type_name -> academic.credentials.v1.Subject
-	50, // 12: academic.credentials.v1.ResolveCredentialResponse.credential:type_name -> academic.provider.v1.Credential
-	0,  // 13: academic.credentials.v1.ValidateCredentialUseRequest.reference:type_name -> academic.credentials.v1.CredentialReference
-	0,  // 14: academic.credentials.v1.ReportCredentialHealthRequest.reference:type_name -> academic.credentials.v1.CredentialReference
-	0,  // 15: academic.credentials.v1.AuthorizeCredentialAccessRequest.reference:type_name -> academic.credentials.v1.CredentialReference
-	20, // 16: academic.credentials.v1.AuthorizeCredentialAccessResponse.subject:type_name -> academic.credentials.v1.Subject
-	51, // 17: academic.credentials.v1.AuthorizeCredentialAccessResponse.expires_at:type_name -> google.protobuf.Timestamp
-	51, // 18: academic.credentials.v1.HostingStatus.last_sync_at:type_name -> google.protobuf.Timestamp
-	51, // 19: academic.credentials.v1.CreateBindingIntentResponse.expires_at:type_name -> google.protobuf.Timestamp
-	21, // 20: academic.credentials.v1.GetHostingStatusResponse.status:type_name -> academic.credentials.v1.HostingStatus
-	21, // 21: academic.credentials.v1.UpdateGrantResponse.status:type_name -> academic.credentials.v1.HostingStatus
-	21, // 22: academic.credentials.v1.RevokeCredentialResponse.status:type_name -> academic.credentials.v1.HostingStatus
-	36, // 23: academic.credentials.v1.CreateTaskResponse.task:type_name -> academic.credentials.v1.Task
-	36, // 24: academic.credentials.v1.GetTaskResponse.task:type_name -> academic.credentials.v1.Task
-	51, // 25: academic.credentials.v1.Task.created_at:type_name -> google.protobuf.Timestamp
-	51, // 26: academic.credentials.v1.Task.completed_at:type_name -> google.protobuf.Timestamp
-	37, // 27: academic.credentials.v1.Task.result:type_name -> academic.credentials.v1.TaskResult
-	52, // 28: academic.credentials.v1.TaskResult.courses:type_name -> academic.provider.v1.ListCoursesResponse
-	53, // 29: academic.credentials.v1.TaskResult.exams:type_name -> academic.provider.v1.ListExamsResponse
-	54, // 30: academic.credentials.v1.TaskResult.grades:type_name -> academic.provider.v1.ListGradesResponse
-	55, // 31: academic.credentials.v1.TaskResult.course_selections:type_name -> academic.provider.v1.ListCourseSelectionsResponse
-	56, // 32: academic.credentials.v1.TaskResult.course_selection_schedule:type_name -> academic.provider.v1.GetCourseSelectionScheduleResponse
-	57, // 33: academic.credentials.v1.TaskResult.course_addition_results:type_name -> academic.provider.v1.ListCourseAdditionResultsResponse
-	36, // 34: academic.credentials.v1.LeaseTaskResponse.task:type_name -> academic.credentials.v1.Task
-	51, // 35: academic.credentials.v1.LeaseTaskResponse.expires_at:type_name -> google.protobuf.Timestamp
-	20, // 36: academic.credentials.v1.ResolveTaskCredentialResponse.subject:type_name -> academic.credentials.v1.Subject
-	50, // 37: academic.credentials.v1.ResolveTaskCredentialResponse.credential:type_name -> academic.provider.v1.Credential
-	37, // 38: academic.credentials.v1.CompleteTaskRequest.result:type_name -> academic.credentials.v1.TaskResult
-	36, // 39: academic.credentials.v1.CompleteTaskResponse.task:type_name -> academic.credentials.v1.Task
-	20, // 40: academic.credentials.v1.GetEligibilityResponse.subject:type_name -> academic.credentials.v1.Subject
-	20, // 41: academic.credentials.v1.ConfirmBindingResponse.subject:type_name -> academic.credentials.v1.Subject
-	3,  // 42: academic.credentials.v1.CredentialsService.GetCredentialMetadata:input_type -> academic.credentials.v1.GetCredentialMetadataRequest
-	5,  // 43: academic.credentials.v1.CredentialsService.ListCredentialMetadata:input_type -> academic.credentials.v1.ListCredentialMetadataRequest
-	7,  // 44: academic.credentials.v1.CredentialsService.GetAccountCredential:input_type -> academic.credentials.v1.GetAccountCredentialRequest
-	8,  // 45: academic.credentials.v1.CredentialsService.ListAccountCredentials:input_type -> academic.credentials.v1.ListAccountCredentialsRequest
-	10, // 46: academic.credentials.v1.CredentialsService.CaptureVerifiedCredential:input_type -> academic.credentials.v1.CaptureVerifiedCredentialRequest
-	11, // 47: academic.credentials.v1.CredentialsService.SetAccountCredentialState:input_type -> academic.credentials.v1.SetAccountCredentialStateRequest
-	12, // 48: academic.credentials.v1.CredentialsService.ResolveCredential:input_type -> academic.credentials.v1.ResolveCredentialRequest
-	14, // 49: academic.credentials.v1.CredentialsService.ValidateCredentialUse:input_type -> academic.credentials.v1.ValidateCredentialUseRequest
-	16, // 50: academic.credentials.v1.CredentialsService.ReportCredentialHealth:input_type -> academic.credentials.v1.ReportCredentialHealthRequest
-	22, // 51: academic.credentials.v1.CredentialsService.CreateBindingIntent:input_type -> academic.credentials.v1.CreateBindingIntentRequest
-	24, // 52: academic.credentials.v1.CredentialsService.GetHostingStatus:input_type -> academic.credentials.v1.GetHostingStatusRequest
-	26, // 53: academic.credentials.v1.CredentialsService.UpdateGrant:input_type -> academic.credentials.v1.UpdateGrantRequest
-	28, // 54: academic.credentials.v1.CredentialsService.RevokeCredential:input_type -> academic.credentials.v1.RevokeCredentialRequest
-	30, // 55: academic.credentials.v1.CredentialsService.FenceSubject:input_type -> academic.credentials.v1.FenceSubjectRequest
-	32, // 56: academic.credentials.v1.CredentialsService.CreateTask:input_type -> academic.credentials.v1.CreateTaskRequest
-	34, // 57: academic.credentials.v1.CredentialsService.GetTask:input_type -> academic.credentials.v1.GetTaskRequest
-	38, // 58: academic.credentials.v1.CredentialsService.LeaseTask:input_type -> academic.credentials.v1.LeaseTaskRequest
-	40, // 59: academic.credentials.v1.CredentialsService.ResolveTaskCredential:input_type -> academic.credentials.v1.ResolveTaskCredentialRequest
-	42, // 60: academic.credentials.v1.CredentialsService.CheckExecutionAdmission:input_type -> academic.credentials.v1.CheckExecutionAdmissionRequest
-	44, // 61: academic.credentials.v1.CredentialsService.CompleteTask:input_type -> academic.credentials.v1.CompleteTaskRequest
-	46, // 62: academic.credentials.v1.AcademicCredentialAuthorityService.GetEligibility:input_type -> academic.credentials.v1.GetEligibilityRequest
-	48, // 63: academic.credentials.v1.AcademicCredentialAuthorityService.ConfirmBinding:input_type -> academic.credentials.v1.ConfirmBindingRequest
-	18, // 64: academic.credentials.v1.AcademicCredentialAuthorityService.AuthorizeCredentialAccess:input_type -> academic.credentials.v1.AuthorizeCredentialAccessRequest
-	4,  // 65: academic.credentials.v1.CredentialsService.GetCredentialMetadata:output_type -> academic.credentials.v1.GetCredentialMetadataResponse
-	6,  // 66: academic.credentials.v1.CredentialsService.ListCredentialMetadata:output_type -> academic.credentials.v1.ListCredentialMetadataResponse
-	4,  // 67: academic.credentials.v1.CredentialsService.GetAccountCredential:output_type -> academic.credentials.v1.GetCredentialMetadataResponse
-	9,  // 68: academic.credentials.v1.CredentialsService.ListAccountCredentials:output_type -> academic.credentials.v1.ListAccountCredentialsResponse
-	4,  // 69: academic.credentials.v1.CredentialsService.CaptureVerifiedCredential:output_type -> academic.credentials.v1.GetCredentialMetadataResponse
-	4,  // 70: academic.credentials.v1.CredentialsService.SetAccountCredentialState:output_type -> academic.credentials.v1.GetCredentialMetadataResponse
-	13, // 71: academic.credentials.v1.CredentialsService.ResolveCredential:output_type -> academic.credentials.v1.ResolveCredentialResponse
-	15, // 72: academic.credentials.v1.CredentialsService.ValidateCredentialUse:output_type -> academic.credentials.v1.ValidateCredentialUseResponse
-	17, // 73: academic.credentials.v1.CredentialsService.ReportCredentialHealth:output_type -> academic.credentials.v1.ReportCredentialHealthResponse
-	23, // 74: academic.credentials.v1.CredentialsService.CreateBindingIntent:output_type -> academic.credentials.v1.CreateBindingIntentResponse
-	25, // 75: academic.credentials.v1.CredentialsService.GetHostingStatus:output_type -> academic.credentials.v1.GetHostingStatusResponse
-	27, // 76: academic.credentials.v1.CredentialsService.UpdateGrant:output_type -> academic.credentials.v1.UpdateGrantResponse
-	29, // 77: academic.credentials.v1.CredentialsService.RevokeCredential:output_type -> academic.credentials.v1.RevokeCredentialResponse
-	31, // 78: academic.credentials.v1.CredentialsService.FenceSubject:output_type -> academic.credentials.v1.FenceSubjectResponse
-	33, // 79: academic.credentials.v1.CredentialsService.CreateTask:output_type -> academic.credentials.v1.CreateTaskResponse
-	35, // 80: academic.credentials.v1.CredentialsService.GetTask:output_type -> academic.credentials.v1.GetTaskResponse
-	39, // 81: academic.credentials.v1.CredentialsService.LeaseTask:output_type -> academic.credentials.v1.LeaseTaskResponse
-	41, // 82: academic.credentials.v1.CredentialsService.ResolveTaskCredential:output_type -> academic.credentials.v1.ResolveTaskCredentialResponse
-	43, // 83: academic.credentials.v1.CredentialsService.CheckExecutionAdmission:output_type -> academic.credentials.v1.CheckExecutionAdmissionResponse
-	45, // 84: academic.credentials.v1.CredentialsService.CompleteTask:output_type -> academic.credentials.v1.CompleteTaskResponse
-	47, // 85: academic.credentials.v1.AcademicCredentialAuthorityService.GetEligibility:output_type -> academic.credentials.v1.GetEligibilityResponse
-	49, // 86: academic.credentials.v1.AcademicCredentialAuthorityService.ConfirmBinding:output_type -> academic.credentials.v1.ConfirmBindingResponse
-	19, // 87: academic.credentials.v1.AcademicCredentialAuthorityService.AuthorizeCredentialAccess:output_type -> academic.credentials.v1.AuthorizeCredentialAccessResponse
-	65, // [65:88] is the sub-list for method output_type
-	42, // [42:65] is the sub-list for method input_type
-	42, // [42:42] is the sub-list for extension type_name
-	42, // [42:42] is the sub-list for extension extendee
-	0,  // [0:42] is the sub-list for field type_name
+	50, // 2: academic.credentials.v1.CredentialMetadata.verified_at:type_name -> google.protobuf.Timestamp
+	1,  // 3: academic.credentials.v1.GetCredentialMetadataResponse.credential:type_name -> academic.credentials.v1.CredentialMetadata
+	1,  // 4: academic.credentials.v1.ListCredentialMetadataResponse.credentials:type_name -> academic.credentials.v1.CredentialMetadata
+	2,  // 5: academic.credentials.v1.GetAccountCredentialRequest.account:type_name -> academic.credentials.v1.AccountKey
+	1,  // 6: academic.credentials.v1.ListAccountCredentialsResponse.credentials:type_name -> academic.credentials.v1.CredentialMetadata
+	2,  // 7: academic.credentials.v1.CaptureVerifiedCredentialRequest.account:type_name -> academic.credentials.v1.AccountKey
+	51, // 8: academic.credentials.v1.CaptureVerifiedCredentialRequest.credential:type_name -> academic.provider.v1.Credential
+	50, // 9: academic.credentials.v1.CaptureVerifiedCredentialRequest.verified_at:type_name -> google.protobuf.Timestamp
+	0,  // 10: academic.credentials.v1.ResolveCredentialRequest.reference:type_name -> academic.credentials.v1.CredentialReference
+	0,  // 11: academic.credentials.v1.ResolveCredentialResponse.reference:type_name -> academic.credentials.v1.CredentialReference
+	20, // 12: academic.credentials.v1.ResolveCredentialResponse.subject:type_name -> academic.credentials.v1.Subject
+	51, // 13: academic.credentials.v1.ResolveCredentialResponse.credential:type_name -> academic.provider.v1.Credential
+	0,  // 14: academic.credentials.v1.ValidateCredentialUseRequest.reference:type_name -> academic.credentials.v1.CredentialReference
+	0,  // 15: academic.credentials.v1.ReportCredentialHealthRequest.reference:type_name -> academic.credentials.v1.CredentialReference
+	0,  // 16: academic.credentials.v1.AuthorizeCredentialAccessRequest.reference:type_name -> academic.credentials.v1.CredentialReference
+	20, // 17: academic.credentials.v1.AuthorizeCredentialAccessResponse.subject:type_name -> academic.credentials.v1.Subject
+	50, // 18: academic.credentials.v1.AuthorizeCredentialAccessResponse.expires_at:type_name -> google.protobuf.Timestamp
+	50, // 19: academic.credentials.v1.HostingStatus.last_sync_at:type_name -> google.protobuf.Timestamp
+	50, // 20: academic.credentials.v1.CreateBindingIntentResponse.expires_at:type_name -> google.protobuf.Timestamp
+	21, // 21: academic.credentials.v1.GetHostingStatusResponse.status:type_name -> academic.credentials.v1.HostingStatus
+	21, // 22: academic.credentials.v1.UpdateGrantResponse.status:type_name -> academic.credentials.v1.HostingStatus
+	21, // 23: academic.credentials.v1.RevokeCredentialResponse.status:type_name -> academic.credentials.v1.HostingStatus
+	36, // 24: academic.credentials.v1.CreateTaskResponse.task:type_name -> academic.credentials.v1.Task
+	36, // 25: academic.credentials.v1.GetTaskResponse.task:type_name -> academic.credentials.v1.Task
+	50, // 26: academic.credentials.v1.Task.created_at:type_name -> google.protobuf.Timestamp
+	50, // 27: academic.credentials.v1.Task.completed_at:type_name -> google.protobuf.Timestamp
+	37, // 28: academic.credentials.v1.Task.result:type_name -> academic.credentials.v1.TaskResult
+	52, // 29: academic.credentials.v1.TaskResult.courses:type_name -> academic.provider.v1.ListCoursesResponse
+	53, // 30: academic.credentials.v1.TaskResult.exams:type_name -> academic.provider.v1.ListExamsResponse
+	54, // 31: academic.credentials.v1.TaskResult.grades:type_name -> academic.provider.v1.ListGradesResponse
+	55, // 32: academic.credentials.v1.TaskResult.course_selections:type_name -> academic.provider.v1.ListCourseSelectionsResponse
+	56, // 33: academic.credentials.v1.TaskResult.course_selection_schedule:type_name -> academic.provider.v1.GetCourseSelectionScheduleResponse
+	57, // 34: academic.credentials.v1.TaskResult.course_addition_results:type_name -> academic.provider.v1.ListCourseAdditionResultsResponse
+	36, // 35: academic.credentials.v1.LeaseTaskResponse.task:type_name -> academic.credentials.v1.Task
+	50, // 36: academic.credentials.v1.LeaseTaskResponse.expires_at:type_name -> google.protobuf.Timestamp
+	20, // 37: academic.credentials.v1.ResolveTaskCredentialResponse.subject:type_name -> academic.credentials.v1.Subject
+	51, // 38: academic.credentials.v1.ResolveTaskCredentialResponse.credential:type_name -> academic.provider.v1.Credential
+	37, // 39: academic.credentials.v1.CompleteTaskRequest.result:type_name -> academic.credentials.v1.TaskResult
+	36, // 40: academic.credentials.v1.CompleteTaskResponse.task:type_name -> academic.credentials.v1.Task
+	20, // 41: academic.credentials.v1.GetEligibilityResponse.subject:type_name -> academic.credentials.v1.Subject
+	20, // 42: academic.credentials.v1.ConfirmBindingResponse.subject:type_name -> academic.credentials.v1.Subject
+	3,  // 43: academic.credentials.v1.CredentialsService.GetCredentialMetadata:input_type -> academic.credentials.v1.GetCredentialMetadataRequest
+	5,  // 44: academic.credentials.v1.CredentialsService.ListCredentialMetadata:input_type -> academic.credentials.v1.ListCredentialMetadataRequest
+	7,  // 45: academic.credentials.v1.CredentialsService.GetAccountCredential:input_type -> academic.credentials.v1.GetAccountCredentialRequest
+	8,  // 46: academic.credentials.v1.CredentialsService.ListAccountCredentials:input_type -> academic.credentials.v1.ListAccountCredentialsRequest
+	10, // 47: academic.credentials.v1.CredentialsService.CaptureVerifiedCredential:input_type -> academic.credentials.v1.CaptureVerifiedCredentialRequest
+	11, // 48: academic.credentials.v1.CredentialsService.SetAccountCredentialState:input_type -> academic.credentials.v1.SetAccountCredentialStateRequest
+	12, // 49: academic.credentials.v1.CredentialsService.ResolveCredential:input_type -> academic.credentials.v1.ResolveCredentialRequest
+	14, // 50: academic.credentials.v1.CredentialsService.ValidateCredentialUse:input_type -> academic.credentials.v1.ValidateCredentialUseRequest
+	16, // 51: academic.credentials.v1.CredentialsService.ReportCredentialHealth:input_type -> academic.credentials.v1.ReportCredentialHealthRequest
+	22, // 52: academic.credentials.v1.CredentialsService.CreateBindingIntent:input_type -> academic.credentials.v1.CreateBindingIntentRequest
+	24, // 53: academic.credentials.v1.CredentialsService.GetHostingStatus:input_type -> academic.credentials.v1.GetHostingStatusRequest
+	26, // 54: academic.credentials.v1.CredentialsService.UpdateGrant:input_type -> academic.credentials.v1.UpdateGrantRequest
+	28, // 55: academic.credentials.v1.CredentialsService.RevokeCredential:input_type -> academic.credentials.v1.RevokeCredentialRequest
+	30, // 56: academic.credentials.v1.CredentialsService.FenceSubject:input_type -> academic.credentials.v1.FenceSubjectRequest
+	32, // 57: academic.credentials.v1.CredentialsService.CreateTask:input_type -> academic.credentials.v1.CreateTaskRequest
+	34, // 58: academic.credentials.v1.CredentialsService.GetTask:input_type -> academic.credentials.v1.GetTaskRequest
+	38, // 59: academic.credentials.v1.CredentialsService.LeaseTask:input_type -> academic.credentials.v1.LeaseTaskRequest
+	40, // 60: academic.credentials.v1.CredentialsService.ResolveTaskCredential:input_type -> academic.credentials.v1.ResolveTaskCredentialRequest
+	42, // 61: academic.credentials.v1.CredentialsService.CheckExecutionAdmission:input_type -> academic.credentials.v1.CheckExecutionAdmissionRequest
+	44, // 62: academic.credentials.v1.CredentialsService.CompleteTask:input_type -> academic.credentials.v1.CompleteTaskRequest
+	46, // 63: academic.credentials.v1.AcademicCredentialAuthorityService.GetEligibility:input_type -> academic.credentials.v1.GetEligibilityRequest
+	48, // 64: academic.credentials.v1.AcademicCredentialAuthorityService.ConfirmBinding:input_type -> academic.credentials.v1.ConfirmBindingRequest
+	18, // 65: academic.credentials.v1.AcademicCredentialAuthorityService.AuthorizeCredentialAccess:input_type -> academic.credentials.v1.AuthorizeCredentialAccessRequest
+	4,  // 66: academic.credentials.v1.CredentialsService.GetCredentialMetadata:output_type -> academic.credentials.v1.GetCredentialMetadataResponse
+	6,  // 67: academic.credentials.v1.CredentialsService.ListCredentialMetadata:output_type -> academic.credentials.v1.ListCredentialMetadataResponse
+	4,  // 68: academic.credentials.v1.CredentialsService.GetAccountCredential:output_type -> academic.credentials.v1.GetCredentialMetadataResponse
+	9,  // 69: academic.credentials.v1.CredentialsService.ListAccountCredentials:output_type -> academic.credentials.v1.ListAccountCredentialsResponse
+	4,  // 70: academic.credentials.v1.CredentialsService.CaptureVerifiedCredential:output_type -> academic.credentials.v1.GetCredentialMetadataResponse
+	4,  // 71: academic.credentials.v1.CredentialsService.SetAccountCredentialState:output_type -> academic.credentials.v1.GetCredentialMetadataResponse
+	13, // 72: academic.credentials.v1.CredentialsService.ResolveCredential:output_type -> academic.credentials.v1.ResolveCredentialResponse
+	15, // 73: academic.credentials.v1.CredentialsService.ValidateCredentialUse:output_type -> academic.credentials.v1.ValidateCredentialUseResponse
+	17, // 74: academic.credentials.v1.CredentialsService.ReportCredentialHealth:output_type -> academic.credentials.v1.ReportCredentialHealthResponse
+	23, // 75: academic.credentials.v1.CredentialsService.CreateBindingIntent:output_type -> academic.credentials.v1.CreateBindingIntentResponse
+	25, // 76: academic.credentials.v1.CredentialsService.GetHostingStatus:output_type -> academic.credentials.v1.GetHostingStatusResponse
+	27, // 77: academic.credentials.v1.CredentialsService.UpdateGrant:output_type -> academic.credentials.v1.UpdateGrantResponse
+	29, // 78: academic.credentials.v1.CredentialsService.RevokeCredential:output_type -> academic.credentials.v1.RevokeCredentialResponse
+	31, // 79: academic.credentials.v1.CredentialsService.FenceSubject:output_type -> academic.credentials.v1.FenceSubjectResponse
+	33, // 80: academic.credentials.v1.CredentialsService.CreateTask:output_type -> academic.credentials.v1.CreateTaskResponse
+	35, // 81: academic.credentials.v1.CredentialsService.GetTask:output_type -> academic.credentials.v1.GetTaskResponse
+	39, // 82: academic.credentials.v1.CredentialsService.LeaseTask:output_type -> academic.credentials.v1.LeaseTaskResponse
+	41, // 83: academic.credentials.v1.CredentialsService.ResolveTaskCredential:output_type -> academic.credentials.v1.ResolveTaskCredentialResponse
+	43, // 84: academic.credentials.v1.CredentialsService.CheckExecutionAdmission:output_type -> academic.credentials.v1.CheckExecutionAdmissionResponse
+	45, // 85: academic.credentials.v1.CredentialsService.CompleteTask:output_type -> academic.credentials.v1.CompleteTaskResponse
+	47, // 86: academic.credentials.v1.AcademicCredentialAuthorityService.GetEligibility:output_type -> academic.credentials.v1.GetEligibilityResponse
+	49, // 87: academic.credentials.v1.AcademicCredentialAuthorityService.ConfirmBinding:output_type -> academic.credentials.v1.ConfirmBindingResponse
+	19, // 88: academic.credentials.v1.AcademicCredentialAuthorityService.AuthorizeCredentialAccess:output_type -> academic.credentials.v1.AuthorizeCredentialAccessResponse
+	66, // [66:89] is the sub-list for method output_type
+	43, // [43:66] is the sub-list for method input_type
+	43, // [43:43] is the sub-list for extension type_name
+	43, // [43:43] is the sub-list for extension extendee
+	0,  // [0:43] is the sub-list for field type_name
 }
 
 func init() { file_academic_credentials_v1_credentials_proto_init() }

@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package academic.analytics.v1;
+
+option go_package = "github.com/LDouble/campus-academic-api/pkg/academic/analytics/v1;academicanalyticsv1";
+
+import "academic/provider/v1/provider.proto";
+import "google/protobuf/timestamp.proto";
+
+// AcademicTrainingPlanService 向平台提供本科培养方案的分组、候选和归档查询。
+service AcademicTrainingPlanService {
+  rpc ListTrainingPlanGroups(ListTrainingPlanGroupsRequest) returns (ListTrainingPlanGroupsResponse);
+  rpc ListTrainingPlanCandidates(ListTrainingPlanCandidatesRequest) returns (ListTrainingPlanCandidatesResponse);
+  rpc GetArchivedTrainingPlan(GetArchivedTrainingPlanRequest) returns (GetArchivedTrainingPlanResponse);
+  rpc GetTrainingPlanFile(GetTrainingPlanFileRequest) returns (GetTrainingPlanFileResponse);
+}
+
+message TrainingPlanGroup {
+  string group_key = 1;
+  string major = 2;
+  uint32 cohort_year = 3;
+  string college = 4;
+  bool archived = 5;
+  bool requires_review = 6;
+}
+
+message ListTrainingPlanGroupsRequest {
+  string college = 1;
+  string major = 2;
+  uint32 cohort_year = 3;
+  string page_token = 4;
+  uint32 page_size = 5;
+}
+
+message ListTrainingPlanGroupsResponse {
+  repeated TrainingPlanGroup groups = 1;
+  string next_page_token = 2;
+}
+
+message TrainingPlanCandidate {
+  string student_no = 1;
+  google.protobuf.Timestamp last_successful_query_at = 2;
+}
+
+message ListTrainingPlanCandidatesRequest {
+  string group_key = 1;
+  string page_token = 2;
+  uint32 page_size = 3;
+}
+
+message ListTrainingPlanCandidatesResponse {
+  repeated TrainingPlanCandidate candidates = 1;
+  string next_page_token = 2;
+}
+
+message GetArchivedTrainingPlanRequest {
+  string group_key = 1;
+}
+
+message GetArchivedTrainingPlanResponse {
+  TrainingPlanGroup group = 1;
+  academic.provider.v1.TrainingPlan plan = 2;
+  google.protobuf.Timestamp captured_at = 3;
+  google.protobuf.Timestamp verified_at = 4;
+}
+
+message GetTrainingPlanFileRequest {
+  string group_key = 1;
+  TrainingPlanFileKind kind = 2;
+}
+
+enum TrainingPlanFileKind {
+  TRAINING_PLAN_FILE_KIND_UNSPECIFIED = 0;
+  TRAINING_PLAN_FILE_KIND_HTML = 1;
+  TRAINING_PLAN_FILE_KIND_PDF = 2;
+}
+
+message GetTrainingPlanFileResponse {
+  string download_url = 1;
+  google.protobuf.Timestamp expires_at = 2;
+}

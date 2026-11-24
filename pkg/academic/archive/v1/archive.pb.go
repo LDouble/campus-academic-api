@@ -22,6 +22,58 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type TrainingPlanFileState int32
+
+const (
+	TrainingPlanFileState_TRAINING_PLAN_FILE_STATE_UNSPECIFIED    TrainingPlanFileState = 0
+	TrainingPlanFileState_TRAINING_PLAN_FILE_STATE_PENDING        TrainingPlanFileState = 1
+	TrainingPlanFileState_TRAINING_PLAN_FILE_STATE_RETRY_REQUIRED TrainingPlanFileState = 2
+	TrainingPlanFileState_TRAINING_PLAN_FILE_STATE_COMPLETE       TrainingPlanFileState = 3
+)
+
+// Enum value maps for TrainingPlanFileState.
+var (
+	TrainingPlanFileState_name = map[int32]string{
+		0: "TRAINING_PLAN_FILE_STATE_UNSPECIFIED",
+		1: "TRAINING_PLAN_FILE_STATE_PENDING",
+		2: "TRAINING_PLAN_FILE_STATE_RETRY_REQUIRED",
+		3: "TRAINING_PLAN_FILE_STATE_COMPLETE",
+	}
+	TrainingPlanFileState_value = map[string]int32{
+		"TRAINING_PLAN_FILE_STATE_UNSPECIFIED":    0,
+		"TRAINING_PLAN_FILE_STATE_PENDING":        1,
+		"TRAINING_PLAN_FILE_STATE_RETRY_REQUIRED": 2,
+		"TRAINING_PLAN_FILE_STATE_COMPLETE":       3,
+	}
+)
+
+func (x TrainingPlanFileState) Enum() *TrainingPlanFileState {
+	p := new(TrainingPlanFileState)
+	*p = x
+	return p
+}
+
+func (x TrainingPlanFileState) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (TrainingPlanFileState) Descriptor() protoreflect.EnumDescriptor {
+	return file_academic_archive_v1_archive_proto_enumTypes[0].Descriptor()
+}
+
+func (TrainingPlanFileState) Type() protoreflect.EnumType {
+	return &file_academic_archive_v1_archive_proto_enumTypes[0]
+}
+
+func (x TrainingPlanFileState) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use TrainingPlanFileState.Descriptor instead.
+func (TrainingPlanFileState) EnumDescriptor() ([]byte, []int) {
+	return file_academic_archive_v1_archive_proto_rawDescGZIP(), []int{0}
+}
+
 // ObservationReference 绑定不可变观察内容和精确作用域，不包含学生数据正文。
 type ObservationReference struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
@@ -210,11 +262,13 @@ type ObservationReceipt struct {
 	// State 取值为 not_found、committed 或 rejected，不以队列接收冒充落库。
 	State string `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
 	// ResultCode 使用 applied、unchanged 或固定拒绝类别。
-	ResultCode    string                 `protobuf:"bytes,3,opt,name=result_code,json=resultCode,proto3" json:"result_code,omitempty"`
-	RecordCount   uint64                 `protobuf:"varint,4,opt,name=record_count,json=recordCount,proto3" json:"record_count,omitempty"`
-	CompletedAt   *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=completed_at,json=completedAt,proto3" json:"completed_at,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	ResultCode  string                 `protobuf:"bytes,3,opt,name=result_code,json=resultCode,proto3" json:"result_code,omitempty"`
+	RecordCount uint64                 `protobuf:"varint,4,opt,name=record_count,json=recordCount,proto3" json:"record_count,omitempty"`
+	CompletedAt *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=completed_at,json=completedAt,proto3" json:"completed_at,omitempty"`
+	// TrainingPlanFiles 描述专用文件阶段，等待文件时仍保留原观察。
+	TrainingPlanFiles *TrainingPlanFiles `protobuf:"bytes,6,opt,name=training_plan_files,json=trainingPlanFiles,proto3" json:"training_plan_files,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *ObservationReceipt) Reset() {
@@ -282,6 +336,145 @@ func (x *ObservationReceipt) GetCompletedAt() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *ObservationReceipt) GetTrainingPlanFiles() *TrainingPlanFiles {
+	if x != nil {
+		return x.TrainingPlanFiles
+	}
+	return nil
+}
+
+type TrainingPlanFiles struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	State         TrainingPlanFileState  `protobuf:"varint,1,opt,name=state,proto3,enum=academic.archive.v1.TrainingPlanFileState" json:"state,omitempty"`
+	ErrorCode     string                 `protobuf:"bytes,2,opt,name=error_code,json=errorCode,proto3" json:"error_code,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TrainingPlanFiles) Reset() {
+	*x = TrainingPlanFiles{}
+	mi := &file_academic_archive_v1_archive_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TrainingPlanFiles) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TrainingPlanFiles) ProtoMessage() {}
+
+func (x *TrainingPlanFiles) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_archive_v1_archive_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TrainingPlanFiles.ProtoReflect.Descriptor instead.
+func (*TrainingPlanFiles) Descriptor() ([]byte, []int) {
+	return file_academic_archive_v1_archive_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *TrainingPlanFiles) GetState() TrainingPlanFileState {
+	if x != nil {
+		return x.State
+	}
+	return TrainingPlanFileState_TRAINING_PLAN_FILE_STATE_UNSPECIFIED
+}
+
+func (x *TrainingPlanFiles) GetErrorCode() string {
+	if x != nil {
+		return x.ErrorCode
+	}
+	return ""
+}
+
+type RetryTrainingPlanFilesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Observation   *ObservationReference  `protobuf:"bytes,1,opt,name=observation,proto3" json:"observation,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RetryTrainingPlanFilesRequest) Reset() {
+	*x = RetryTrainingPlanFilesRequest{}
+	mi := &file_academic_archive_v1_archive_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RetryTrainingPlanFilesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RetryTrainingPlanFilesRequest) ProtoMessage() {}
+
+func (x *RetryTrainingPlanFilesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_archive_v1_archive_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RetryTrainingPlanFilesRequest.ProtoReflect.Descriptor instead.
+func (*RetryTrainingPlanFilesRequest) Descriptor() ([]byte, []int) {
+	return file_academic_archive_v1_archive_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *RetryTrainingPlanFilesRequest) GetObservation() *ObservationReference {
+	if x != nil {
+		return x.Observation
+	}
+	return nil
+}
+
+type RetryTrainingPlanFilesResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RetryTrainingPlanFilesResponse) Reset() {
+	*x = RetryTrainingPlanFilesResponse{}
+	mi := &file_academic_archive_v1_archive_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RetryTrainingPlanFilesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RetryTrainingPlanFilesResponse) ProtoMessage() {}
+
+func (x *RetryTrainingPlanFilesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_academic_archive_v1_archive_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RetryTrainingPlanFilesResponse.ProtoReflect.Descriptor instead.
+func (*RetryTrainingPlanFilesResponse) Descriptor() ([]byte, []int) {
+	return file_academic_archive_v1_archive_proto_rawDescGZIP(), []int{6}
+}
+
 var File_academic_archive_v1_archive_proto protoreflect.FileDescriptor
 
 const file_academic_archive_v1_archive_proto_rawDesc = "" +
@@ -299,16 +492,30 @@ const file_academic_archive_v1_archive_proto_rawDesc = "" +
 	"\x1dGetObservationReceiptsRequest\x12M\n" +
 	"\fobservations\x18\x01 \x03(\v2).academic.archive.v1.ObservationReferenceR\fobservations\"e\n" +
 	"\x1eGetObservationReceiptsResponse\x12C\n" +
-	"\breceipts\x18\x01 \x03(\v2'.academic.archive.v1.ObservationReceiptR\breceipts\"\xfa\x01\n" +
+	"\breceipts\x18\x01 \x03(\v2'.academic.archive.v1.ObservationReceiptR\breceipts\"\xd2\x02\n" +
 	"\x12ObservationReceipt\x12K\n" +
 	"\vobservation\x18\x01 \x01(\v2).academic.archive.v1.ObservationReferenceR\vobservation\x12\x14\n" +
 	"\x05state\x18\x02 \x01(\tR\x05state\x12\x1f\n" +
 	"\vresult_code\x18\x03 \x01(\tR\n" +
 	"resultCode\x12!\n" +
 	"\frecord_count\x18\x04 \x01(\x04R\vrecordCount\x12=\n" +
-	"\fcompleted_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\vcompletedAt2\x9c\x01\n" +
+	"\fcompleted_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\vcompletedAt\x12V\n" +
+	"\x13training_plan_files\x18\x06 \x01(\v2&.academic.archive.v1.TrainingPlanFilesR\x11trainingPlanFiles\"t\n" +
+	"\x11TrainingPlanFiles\x12@\n" +
+	"\x05state\x18\x01 \x01(\x0e2*.academic.archive.v1.TrainingPlanFileStateR\x05state\x12\x1d\n" +
+	"\n" +
+	"error_code\x18\x02 \x01(\tR\terrorCode\"l\n" +
+	"\x1dRetryTrainingPlanFilesRequest\x12K\n" +
+	"\vobservation\x18\x01 \x01(\v2).academic.archive.v1.ObservationReferenceR\vobservation\" \n" +
+	"\x1eRetryTrainingPlanFilesResponse*\xbb\x01\n" +
+	"\x15TrainingPlanFileState\x12(\n" +
+	"$TRAINING_PLAN_FILE_STATE_UNSPECIFIED\x10\x00\x12$\n" +
+	" TRAINING_PLAN_FILE_STATE_PENDING\x10\x01\x12+\n" +
+	"'TRAINING_PLAN_FILE_STATE_RETRY_REQUIRED\x10\x02\x12%\n" +
+	"!TRAINING_PLAN_FILE_STATE_COMPLETE\x10\x032\xa0\x02\n" +
 	"\x16AcademicArchiveService\x12\x81\x01\n" +
-	"\x16GetObservationReceipts\x122.academic.archive.v1.GetObservationReceiptsRequest\x1a3.academic.archive.v1.GetObservationReceiptsResponseBRZPgithub.com/LDouble/campus-academic-api/pkg/academic/archive/v1;academicarchivev1b\x06proto3"
+	"\x16GetObservationReceipts\x122.academic.archive.v1.GetObservationReceiptsRequest\x1a3.academic.archive.v1.GetObservationReceiptsResponse\x12\x81\x01\n" +
+	"\x16RetryTrainingPlanFiles\x122.academic.archive.v1.RetryTrainingPlanFilesRequest\x1a3.academic.archive.v1.RetryTrainingPlanFilesResponseBRZPgithub.com/LDouble/campus-academic-api/pkg/academic/archive/v1;academicarchivev1b\x06proto3"
 
 var (
 	file_academic_archive_v1_archive_proto_rawDescOnce sync.Once
@@ -322,27 +529,37 @@ func file_academic_archive_v1_archive_proto_rawDescGZIP() []byte {
 	return file_academic_archive_v1_archive_proto_rawDescData
 }
 
-var file_academic_archive_v1_archive_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_academic_archive_v1_archive_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_academic_archive_v1_archive_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_academic_archive_v1_archive_proto_goTypes = []any{
-	(*ObservationReference)(nil),           // 0: academic.archive.v1.ObservationReference
-	(*GetObservationReceiptsRequest)(nil),  // 1: academic.archive.v1.GetObservationReceiptsRequest
-	(*GetObservationReceiptsResponse)(nil), // 2: academic.archive.v1.GetObservationReceiptsResponse
-	(*ObservationReceipt)(nil),             // 3: academic.archive.v1.ObservationReceipt
-	(*timestamppb.Timestamp)(nil),          // 4: google.protobuf.Timestamp
+	(TrainingPlanFileState)(0),             // 0: academic.archive.v1.TrainingPlanFileState
+	(*ObservationReference)(nil),           // 1: academic.archive.v1.ObservationReference
+	(*GetObservationReceiptsRequest)(nil),  // 2: academic.archive.v1.GetObservationReceiptsRequest
+	(*GetObservationReceiptsResponse)(nil), // 3: academic.archive.v1.GetObservationReceiptsResponse
+	(*ObservationReceipt)(nil),             // 4: academic.archive.v1.ObservationReceipt
+	(*TrainingPlanFiles)(nil),              // 5: academic.archive.v1.TrainingPlanFiles
+	(*RetryTrainingPlanFilesRequest)(nil),  // 6: academic.archive.v1.RetryTrainingPlanFilesRequest
+	(*RetryTrainingPlanFilesResponse)(nil), // 7: academic.archive.v1.RetryTrainingPlanFilesResponse
+	(*timestamppb.Timestamp)(nil),          // 8: google.protobuf.Timestamp
 }
 var file_academic_archive_v1_archive_proto_depIdxs = []int32{
-	4, // 0: academic.archive.v1.ObservationReference.observed_at:type_name -> google.protobuf.Timestamp
-	0, // 1: academic.archive.v1.GetObservationReceiptsRequest.observations:type_name -> academic.archive.v1.ObservationReference
-	3, // 2: academic.archive.v1.GetObservationReceiptsResponse.receipts:type_name -> academic.archive.v1.ObservationReceipt
-	0, // 3: academic.archive.v1.ObservationReceipt.observation:type_name -> academic.archive.v1.ObservationReference
-	4, // 4: academic.archive.v1.ObservationReceipt.completed_at:type_name -> google.protobuf.Timestamp
-	1, // 5: academic.archive.v1.AcademicArchiveService.GetObservationReceipts:input_type -> academic.archive.v1.GetObservationReceiptsRequest
-	2, // 6: academic.archive.v1.AcademicArchiveService.GetObservationReceipts:output_type -> academic.archive.v1.GetObservationReceiptsResponse
-	6, // [6:7] is the sub-list for method output_type
-	5, // [5:6] is the sub-list for method input_type
-	5, // [5:5] is the sub-list for extension type_name
-	5, // [5:5] is the sub-list for extension extendee
-	0, // [0:5] is the sub-list for field type_name
+	8,  // 0: academic.archive.v1.ObservationReference.observed_at:type_name -> google.protobuf.Timestamp
+	1,  // 1: academic.archive.v1.GetObservationReceiptsRequest.observations:type_name -> academic.archive.v1.ObservationReference
+	4,  // 2: academic.archive.v1.GetObservationReceiptsResponse.receipts:type_name -> academic.archive.v1.ObservationReceipt
+	1,  // 3: academic.archive.v1.ObservationReceipt.observation:type_name -> academic.archive.v1.ObservationReference
+	8,  // 4: academic.archive.v1.ObservationReceipt.completed_at:type_name -> google.protobuf.Timestamp
+	5,  // 5: academic.archive.v1.ObservationReceipt.training_plan_files:type_name -> academic.archive.v1.TrainingPlanFiles
+	0,  // 6: academic.archive.v1.TrainingPlanFiles.state:type_name -> academic.archive.v1.TrainingPlanFileState
+	1,  // 7: academic.archive.v1.RetryTrainingPlanFilesRequest.observation:type_name -> academic.archive.v1.ObservationReference
+	2,  // 8: academic.archive.v1.AcademicArchiveService.GetObservationReceipts:input_type -> academic.archive.v1.GetObservationReceiptsRequest
+	6,  // 9: academic.archive.v1.AcademicArchiveService.RetryTrainingPlanFiles:input_type -> academic.archive.v1.RetryTrainingPlanFilesRequest
+	3,  // 10: academic.archive.v1.AcademicArchiveService.GetObservationReceipts:output_type -> academic.archive.v1.GetObservationReceiptsResponse
+	7,  // 11: academic.archive.v1.AcademicArchiveService.RetryTrainingPlanFiles:output_type -> academic.archive.v1.RetryTrainingPlanFilesResponse
+	10, // [10:12] is the sub-list for method output_type
+	8,  // [8:10] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_academic_archive_v1_archive_proto_init() }
@@ -355,13 +572,14 @@ func file_academic_archive_v1_archive_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_academic_archive_v1_archive_proto_rawDesc), len(file_academic_archive_v1_archive_proto_rawDesc)),
-			NumEnums:      0,
-			NumMessages:   4,
+			NumEnums:      1,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_academic_archive_v1_archive_proto_goTypes,
 		DependencyIndexes: file_academic_archive_v1_archive_proto_depIdxs,
+		EnumInfos:         file_academic_archive_v1_archive_proto_enumTypes,
 		MessageInfos:      file_academic_archive_v1_archive_proto_msgTypes,
 	}.Build()
 	File_academic_archive_v1_archive_proto = out.File
