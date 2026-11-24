@@ -73,13 +73,14 @@ func (TrainingPlanFileKind) EnumDescriptor() ([]byte, []int) {
 }
 
 type TrainingPlanGroup struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	GroupKey       string                 `protobuf:"bytes,1,opt,name=group_key,json=groupKey,proto3" json:"group_key,omitempty"`
-	Major          string                 `protobuf:"bytes,2,opt,name=major,proto3" json:"major,omitempty"`
-	CohortYear     uint32                 `protobuf:"varint,3,opt,name=cohort_year,json=cohortYear,proto3" json:"cohort_year,omitempty"`
-	College        string                 `protobuf:"bytes,4,opt,name=college,proto3" json:"college,omitempty"`
-	Archived       bool                   `protobuf:"varint,5,opt,name=archived,proto3" json:"archived,omitempty"`
-	RequiresReview bool                   `protobuf:"varint,6,opt,name=requires_review,json=requiresReview,proto3" json:"requires_review,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// GroupKey 是规范化专业和入学年级组成的固定摘要。
+	GroupKey       string `protobuf:"bytes,1,opt,name=group_key,json=groupKey,proto3" json:"group_key,omitempty"`
+	Major          string `protobuf:"bytes,2,opt,name=major,proto3" json:"major,omitempty"`
+	CohortYear     uint32 `protobuf:"varint,3,opt,name=cohort_year,json=cohortYear,proto3" json:"cohort_year,omitempty"`
+	College        string `protobuf:"bytes,4,opt,name=college,proto3" json:"college,omitempty"`
+	Archived       bool   `protobuf:"varint,5,opt,name=archived,proto3" json:"archived,omitempty"`
+	RequiresReview bool   `protobuf:"varint,6,opt,name=requires_review,json=requiresReview,proto3" json:"requires_review,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -337,10 +338,13 @@ func (x *TrainingPlanCandidate) GetLastSuccessfulQueryAt() *timestamppb.Timestam
 }
 
 type ListTrainingPlanCandidatesRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	GroupKey      string                 `protobuf:"bytes,1,opt,name=group_key,json=groupKey,proto3" json:"group_key,omitempty"`
-	PageToken     string                 `protobuf:"bytes,2,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
-	PageSize      uint32                 `protobuf:"varint,3,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	state     protoimpl.MessageState `protogen:"open.v1"`
+	GroupKey  string                 `protobuf:"bytes,1,opt,name=group_key,json=groupKey,proto3" json:"group_key,omitempty"`
+	PageToken string                 `protobuf:"bytes,2,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	PageSize  uint32                 `protobuf:"varint,3,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	// Major 和 CohortYear 用于索引查询，服务端核对它们与 GroupKey 一致。
+	Major         string `protobuf:"bytes,4,opt,name=major,proto3" json:"major,omitempty"`
+	CohortYear    uint32 `protobuf:"varint,5,opt,name=cohort_year,json=cohortYear,proto3" json:"cohort_year,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -392,6 +396,20 @@ func (x *ListTrainingPlanCandidatesRequest) GetPageToken() string {
 func (x *ListTrainingPlanCandidatesRequest) GetPageSize() uint32 {
 	if x != nil {
 		return x.PageSize
+	}
+	return 0
+}
+
+func (x *ListTrainingPlanCandidatesRequest) GetMajor() string {
+	if x != nil {
+		return x.Major
+	}
+	return ""
+}
+
+func (x *ListTrainingPlanCandidatesRequest) GetCohortYear() uint32 {
+	if x != nil {
+		return x.CohortYear
 	}
 	return 0
 }
@@ -691,12 +709,15 @@ const file_academic_analytics_v1_training_plan_proto_rawDesc = "" +
 	"\x15TrainingPlanCandidate\x12\x1d\n" +
 	"\n" +
 	"student_no\x18\x01 \x01(\tR\tstudentNo\x12S\n" +
-	"\x18last_successful_query_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x15lastSuccessfulQueryAt\"|\n" +
+	"\x18last_successful_query_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x15lastSuccessfulQueryAt\"\xb3\x01\n" +
 	"!ListTrainingPlanCandidatesRequest\x12\x1b\n" +
 	"\tgroup_key\x18\x01 \x01(\tR\bgroupKey\x12\x1d\n" +
 	"\n" +
 	"page_token\x18\x02 \x01(\tR\tpageToken\x12\x1b\n" +
-	"\tpage_size\x18\x03 \x01(\rR\bpageSize\"\x9a\x01\n" +
+	"\tpage_size\x18\x03 \x01(\rR\bpageSize\x12\x14\n" +
+	"\x05major\x18\x04 \x01(\tR\x05major\x12\x1f\n" +
+	"\vcohort_year\x18\x05 \x01(\rR\n" +
+	"cohortYear\"\x9a\x01\n" +
 	"\"ListTrainingPlanCandidatesResponse\x12L\n" +
 	"\n" +
 	"candidates\x18\x01 \x03(\v2,.academic.analytics.v1.TrainingPlanCandidateR\n" +

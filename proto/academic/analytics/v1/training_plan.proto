@@ -16,6 +16,7 @@ service AcademicTrainingPlanService {
 }
 
 message TrainingPlanGroup {
+  // GroupKey 是规范化专业和入学年级组成的固定摘要。
   string group_key = 1;
   string major = 2;
   uint32 cohort_year = 3;
@@ -46,6 +47,9 @@ message ListTrainingPlanCandidatesRequest {
   string group_key = 1;
   string page_token = 2;
   uint32 page_size = 3;
+  // Major 和 CohortYear 用于索引查询，服务端核对它们与 GroupKey 一致。
+  string major = 4;
+  uint32 cohort_year = 5;
 }
 
 message ListTrainingPlanCandidatesResponse {
