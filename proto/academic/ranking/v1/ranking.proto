@@ -1,0 +1,319 @@
+syntax = "proto3";
+
+package academic.ranking.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/LDouble/campus-academic-api/pkg/academic/ranking/v1;academicrankingv1";
+
+// AcademicRankingService 为经平台认证的用户实时计算本人的成绩排名。
+// 服务端须验证调用方身份，每个响应只能包含发起人本人的成绩解释。
+service AcademicRankingService {
+  rpc GetRankingOptions(GetRankingOptionsRequest) returns (GetRankingOptionsResponse);
+  rpc ListRankingCourses(ListRankingCoursesRequest) returns (ListRankingCoursesResponse);
+  rpc PrepareRanking(PrepareRankingRequest) returns (PrepareRankingResponse);
+  rpc ComputeRanking(ComputeRankingRequest) returns (ComputeRankingResponse);
+  rpc GetActualMajor(GetActualMajorRequest) returns (GetActualMajorResponse);
+  rpc ListActualMajorCandidates(ListActualMajorCandidatesRequest) returns (ListActualMajorCandidatesResponse);
+  rpc SaveActualMajor(SaveActualMajorRequest) returns (SaveActualMajorResponse);
+  rpc RebuildProjection(RebuildProjectionRequest) returns (RebuildProjectionResponse);
+}
+
+// RankingSubject 由可信平台填入，客户端不得指定其他人的学号。
+message RankingSubject {
+  string provider = 1;
+  string education_level = 2;
+  string student_no = 3;
+  string requester_scope = 4;
+}
+
+message ActualMajorValidation {
+  uint32 min_major_courses = 1;
+  string class_coverage_ratio = 2;
+  string exclusive_ratio = 3;
+  uint32 min_class_size = 4;
+  repeated string major_course_types = 5;
+}
+
+message RankingPolicy {
+  uint32 min_participants = 1;
+  uint32 min_courses = 2;
+  repeated string default_excluded_course_types = 3;
+  ActualMajorValidation actual_major = 4;
+  string config_version = 5;
+}
+
+message PopulationScope {
+  // kind 为 enrollment 或 actual_major，成员资格由服务端解析。
+  string kind = 1;
+}
+
+message CourseScope {
+  string course_key = 1;
+  repeated string term_codes = 2;
+}
+
+message RankingScope {
+  oneof scope {
+    PopulationScope population = 1;
+    CourseScope course = 2;
+  }
+}
+
+message PeriodSelection {
+  // mode 为 terms、academic_years 或 since_enrollment。
+  string mode = 1;
+  repeated string term_codes = 2;
+  repeated string academic_years = 3;
+}
+
+message AttemptRules {
+  // preset 为 current、first、replace_failed、makeup_pass_line、improve_average、latest、highest、custom。
+  string preset = 1;
+  // makeup 为 original、actual 或 pass_line。
+  string makeup = 2;
+  // retake 为 first、latest、highest 或 average。
+  string retake = 3;
+  // improvement 为 ignore、latest、average 或 highest。
+  string improvement = 4;
+  // multiple_makeups 为 latest 或 highest。
+  string multiple_makeups = 5;
+}
+
+message CourseTypeRule {
+  string course_type = 1;
+  bool enabled = 2;
+  // selection 为 all、highest 或 earliest。
+  string selection = 3;
+  optional string credit_limit = 4;
+  // boundary 为 partial 或 whole。
+  string boundary = 5;
+  string weight = 6;
+  optional uint32 max_courses = 7;
+  optional uint32 min_courses = 8;
+  optional string contribution_limit = 9;
+}
+
+message CourseTypeOverride {
+  string course_key = 1;
+  string course_type = 2;
+}
+
+message CourseTypeMerge {
+  repeated string source_types = 1;
+  string target_type = 2;
+}
+
+message RankingRuleSet {
+  uint32 schema_version = 1;
+  PeriodSelection period = 2;
+  repeated CourseTypeRule course_types = 3;
+  repeated string excluded_course_keys = 4;
+  AttemptRules attempts = 5;
+  // grade_levels 为 convert 或 ignore。
+  string grade_levels = 6;
+  // binary_grades 为 convert 或 ignore。
+  string binary_grades = 7;
+  // exemption 为 ignore、fixed_90、population_highest 或 course_term_highest。
+  string exemption = 8;
+  // aggregation 为 combined 或 by_type。
+  string aggregation = 9;
+  // weighting 为 credit 或 equal。
+  string weighting = 10;
+  repeated CourseTypeOverride type_overrides = 11;
+  repeated CourseTypeMerge type_merges = 12;
+}
+
+message RankingVersions {
+  uint32 schema_version = 1;
+  string mapping_version = 2;
+  string config_version = 3;
+  string projection_generation = 4;
+  string view_version = 5;
+}
+
+message PopulationSummary {
+  string kind = 1;
+  string label = 2;
+  string group_key = 3;
+  uint32 candidates = 4;
+}
+
+message StudentProfile {
+  bool available = 1;
+  string college = 2;
+  string major = 3;
+  string class_name = 4;
+  string education_type = 5;
+  uint32 cohort_year = 6;
+  google.protobuf.Timestamp observed_at = 7;
+}
+
+message TermOption {
+  string term_code = 1;
+  string label = 2;
+  string academic_year = 3;
+  bool own_has_grades = 4;
+}
+
+message CourseTypeOption {
+  string course_type = 1;
+  uint32 visible_course_count = 2;
+  bool own_has_grades = 3;
+  bool default_enabled = 4;
+}
+
+message RankingCourse {
+  string course_key = 1;
+  string course_code = 2;
+  string course_name = 3;
+  string course_type = 4;
+  string segment_label = 5;
+  bool own_has_grades = 6;
+}
+
+message GetRankingOptionsRequest {
+  RankingSubject subject = 1;
+  RankingPolicy policy = 2;
+  RankingScope scope = 3;
+  PeriodSelection period = 4;
+}
+
+message GetRankingOptionsResponse {
+  PopulationSummary population = 1;
+  StudentProfile profile = 2;
+  repeated TermOption terms = 3;
+  repeated CourseTypeOption course_types = 4;
+  RankingRuleSet defaults = 5;
+  RankingVersions versions = 6;
+  string visibility_notice = 7;
+  repeated string available_attempt_presets = 8;
+}
+
+message ListRankingCoursesRequest {
+  RankingSubject subject = 1;
+  RankingPolicy policy = 2;
+  RankingScope scope = 3;
+  PeriodSelection period = 4;
+  string course_type = 5;
+  string query = 6;
+}
+
+message ListRankingCoursesResponse {
+  repeated RankingCourse courses = 1;
+  string visibility_notice = 2;
+  RankingVersions versions = 3;
+}
+
+message PrepareRankingRequest {
+  RankingSubject subject = 1;
+  RankingPolicy policy = 2;
+  RankingScope scope = 3;
+  RankingRuleSet rules = 4;
+  string request_hash = 5;
+}
+
+message PrepareRankingResponse {
+  string view_version = 1;
+  // reused_result 仅限同一请求人和有效版本，未命中时为空。
+  ComputeRankingResponse reused_result = 2;
+}
+
+message ComputeRankingRequest {
+  RankingSubject subject = 1;
+  RankingPolicy policy = 2;
+  RankingScope scope = 3;
+  RankingRuleSet rules = 4;
+  string request_hash = 5;
+  string expected_view_version = 6;
+  string operation_id = 7;
+}
+
+message ExclusionCount {
+  string reason = 1;
+  uint32 count = 2;
+}
+
+message CourseExplanation {
+  string course_key = 1;
+  string course_code = 2;
+  string course_name = 3;
+  string term_code = 4;
+  string original_score = 5;
+  string adopted_score = 6;
+  string original_credit = 7;
+  string counted_credit = 8;
+  string original_type = 9;
+  string counted_type = 10;
+  bool included = 11;
+  string reason = 12;
+  string contribution = 13;
+  repeated string attempt_evidence = 14;
+}
+
+message ComputeRankingResponse {
+  // outcome 为 ranked、insufficient_participants、insufficient_courses 或 not_eligible。
+  string outcome = 1;
+  uint32 rank = 2;
+  uint32 participants = 3;
+  string total_score = 4;
+  repeated ExclusionCount exclusions = 5;
+  repeated CourseExplanation courses = 6;
+  RankingVersions versions = 7;
+  google.protobuf.Timestamp data_cutoff = 8;
+  bool reused = 9;
+  string view_version = 10;
+  PopulationSummary population = 11;
+  string reason = 12;
+}
+
+message ActualMajorSelection {
+  string target_group_key = 1;
+  string target_label = 2;
+  string source_group_key = 3;
+  uint64 revision = 4;
+  bool effective = 5;
+  string reason = 6;
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+message ActualMajorCandidate {
+  string group_key = 1;
+  string label = 2;
+  bool eligible = 3;
+  string reason = 4;
+  repeated string own_matching_courses = 5;
+}
+
+message GetActualMajorRequest {
+  RankingSubject subject = 1;
+  RankingPolicy policy = 2;
+}
+message GetActualMajorResponse {
+  ActualMajorSelection selection = 1;
+}
+message ListActualMajorCandidatesRequest {
+  RankingSubject subject = 1;
+  RankingPolicy policy = 2;
+}
+message ListActualMajorCandidatesResponse {
+  repeated ActualMajorCandidate candidates = 1;
+}
+message SaveActualMajorRequest {
+  RankingSubject subject = 1;
+  RankingPolicy policy = 2;
+  // 空字符串表示清除选择并恢复同学籍。
+  string target_group_key = 3;
+  optional uint64 expected_revision = 4;
+}
+message SaveActualMajorResponse {
+  ActualMajorSelection selection = 1;
+}
+message RebuildProjectionRequest {
+  // request_id 由已鉴权的管理入口生成，用于合并重复请求。
+  string request_id = 1;
+}
+message RebuildProjectionResponse {
+  string run_id = 1;
+  string status = 2;
+}
