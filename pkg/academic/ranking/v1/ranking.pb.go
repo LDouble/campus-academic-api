@@ -1449,8 +1449,10 @@ type GetRankingOptionsResponse struct {
 	Versions                *RankingVersions       `protobuf:"bytes,6,opt,name=versions,proto3" json:"versions,omitempty"`
 	VisibilityNotice        string                 `protobuf:"bytes,7,opt,name=visibility_notice,json=visibilityNotice,proto3" json:"visibility_notice,omitempty"`
 	AvailableAttemptPresets []string               `protobuf:"bytes,8,rep,name=available_attempt_presets,json=availableAttemptPresets,proto3" json:"available_attempt_presets,omitempty"`
-	unknownFields           protoimpl.UnknownFields
-	sizeCache               protoimpl.SizeCache
+	// visible_courses_version 标识当前可操作的课程与类型范围，仅成绩变化时保持不变。
+	VisibleCoursesVersion string `protobuf:"bytes,9,opt,name=visible_courses_version,json=visibleCoursesVersion,proto3" json:"visible_courses_version,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
 }
 
 func (x *GetRankingOptionsResponse) Reset() {
@@ -1537,6 +1539,13 @@ func (x *GetRankingOptionsResponse) GetAvailableAttemptPresets() []string {
 		return x.AvailableAttemptPresets
 	}
 	return nil
+}
+
+func (x *GetRankingOptionsResponse) GetVisibleCoursesVersion() string {
+	if x != nil {
+		return x.VisibleCoursesVersion
+	}
+	return ""
 }
 
 type ListRankingCoursesRequest struct {
@@ -1684,14 +1693,17 @@ func (x *ListRankingCoursesResponse) GetVersions() *RankingVersions {
 }
 
 type PrepareRankingRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Subject       *RankingSubject        `protobuf:"bytes,1,opt,name=subject,proto3" json:"subject,omitempty"`
-	Policy        *RankingPolicy         `protobuf:"bytes,2,opt,name=policy,proto3" json:"policy,omitempty"`
-	Scope         *RankingScope          `protobuf:"bytes,3,opt,name=scope,proto3" json:"scope,omitempty"`
-	Rules         *RankingRuleSet        `protobuf:"bytes,4,opt,name=rules,proto3" json:"rules,omitempty"`
-	RequestHash   string                 `protobuf:"bytes,5,opt,name=request_hash,json=requestHash,proto3" json:"request_hash,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state       protoimpl.MessageState `protogen:"open.v1"`
+	Subject     *RankingSubject        `protobuf:"bytes,1,opt,name=subject,proto3" json:"subject,omitempty"`
+	Policy      *RankingPolicy         `protobuf:"bytes,2,opt,name=policy,proto3" json:"policy,omitempty"`
+	Scope       *RankingScope          `protobuf:"bytes,3,opt,name=scope,proto3" json:"scope,omitempty"`
+	Rules       *RankingRuleSet        `protobuf:"bytes,4,opt,name=rules,proto3" json:"rules,omitempty"`
+	RequestHash string                 `protobuf:"bytes,5,opt,name=request_hash,json=requestHash,proto3" json:"request_hash,omitempty"`
+	// confirmed_courses_version 为空时兼容旧调用方，非空且范围变化时返回
+	// FailedPrecondition / ranking_courses_changed，要求用户重新确认课程范围。
+	ConfirmedCoursesVersion string `protobuf:"bytes,6,opt,name=confirmed_courses_version,json=confirmedCoursesVersion,proto3" json:"confirmed_courses_version,omitempty"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *PrepareRankingRequest) Reset() {
@@ -1759,13 +1771,22 @@ func (x *PrepareRankingRequest) GetRequestHash() string {
 	return ""
 }
 
+func (x *PrepareRankingRequest) GetConfirmedCoursesVersion() string {
+	if x != nil {
+		return x.ConfirmedCoursesVersion
+	}
+	return ""
+}
+
 type PrepareRankingResponse struct {
 	state       protoimpl.MessageState `protogen:"open.v1"`
 	ViewVersion string                 `protobuf:"bytes,1,opt,name=view_version,json=viewVersion,proto3" json:"view_version,omitempty"`
 	// reused_result 仅限同一请求人和有效版本，未命中时为空。
-	ReusedResult  *ComputeRankingResponse `protobuf:"bytes,2,opt,name=reused_result,json=reusedResult,proto3" json:"reused_result,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	ReusedResult *ComputeRankingResponse `protobuf:"bytes,2,opt,name=reused_result,json=reusedResult,proto3" json:"reused_result,omitempty"`
+	// visible_courses_version 返回服务端核验后的范围版本，供调用方确认已支持范围校验。
+	VisibleCoursesVersion string `protobuf:"bytes,3,opt,name=visible_courses_version,json=visibleCoursesVersion,proto3" json:"visible_courses_version,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
 }
 
 func (x *PrepareRankingResponse) Reset() {
@@ -1810,6 +1831,13 @@ func (x *PrepareRankingResponse) GetReusedResult() *ComputeRankingResponse {
 		return x.ReusedResult
 	}
 	return nil
+}
+
+func (x *PrepareRankingResponse) GetVisibleCoursesVersion() string {
+	if x != nil {
+		return x.VisibleCoursesVersion
+	}
+	return ""
 }
 
 type ComputeRankingRequest struct {
@@ -2947,7 +2975,7 @@ const file_academic_ranking_v1_ranking_proto_rawDesc = "" +
 	"\asubject\x18\x01 \x01(\v2#.academic.ranking.v1.RankingSubjectR\asubject\x12:\n" +
 	"\x06policy\x18\x02 \x01(\v2\".academic.ranking.v1.RankingPolicyR\x06policy\x127\n" +
 	"\x05scope\x18\x03 \x01(\v2!.academic.ranking.v1.RankingScopeR\x05scope\x12<\n" +
-	"\x06period\x18\x04 \x01(\v2$.academic.ranking.v1.PeriodSelectionR\x06period\"\x8f\x04\n" +
+	"\x06period\x18\x04 \x01(\v2$.academic.ranking.v1.PeriodSelectionR\x06period\"\xc7\x04\n" +
 	"\x19GetRankingOptionsResponse\x12F\n" +
 	"\n" +
 	"population\x18\x01 \x01(\v2&.academic.ranking.v1.PopulationSummaryR\n" +
@@ -2958,7 +2986,8 @@ const file_academic_ranking_v1_ranking_proto_rawDesc = "" +
 	"\bdefaults\x18\x05 \x01(\v2#.academic.ranking.v1.RankingRuleSetR\bdefaults\x12@\n" +
 	"\bversions\x18\x06 \x01(\v2$.academic.ranking.v1.RankingVersionsR\bversions\x12+\n" +
 	"\x11visibility_notice\x18\a \x01(\tR\x10visibilityNotice\x12:\n" +
-	"\x19available_attempt_presets\x18\b \x03(\tR\x17availableAttemptPresets\"\xc4\x02\n" +
+	"\x19available_attempt_presets\x18\b \x03(\tR\x17availableAttemptPresets\x126\n" +
+	"\x17visible_courses_version\x18\t \x01(\tR\x15visibleCoursesVersion\"\xc4\x02\n" +
 	"\x19ListRankingCoursesRequest\x12=\n" +
 	"\asubject\x18\x01 \x01(\v2#.academic.ranking.v1.RankingSubjectR\asubject\x12:\n" +
 	"\x06policy\x18\x02 \x01(\v2\".academic.ranking.v1.RankingPolicyR\x06policy\x127\n" +
@@ -2970,16 +2999,18 @@ const file_academic_ranking_v1_ranking_proto_rawDesc = "" +
 	"\x1aListRankingCoursesResponse\x12<\n" +
 	"\acourses\x18\x01 \x03(\v2\".academic.ranking.v1.RankingCourseR\acourses\x12+\n" +
 	"\x11visibility_notice\x18\x02 \x01(\tR\x10visibilityNotice\x12@\n" +
-	"\bversions\x18\x03 \x01(\v2$.academic.ranking.v1.RankingVersionsR\bversions\"\xa9\x02\n" +
+	"\bversions\x18\x03 \x01(\v2$.academic.ranking.v1.RankingVersionsR\bversions\"\xe5\x02\n" +
 	"\x15PrepareRankingRequest\x12=\n" +
 	"\asubject\x18\x01 \x01(\v2#.academic.ranking.v1.RankingSubjectR\asubject\x12:\n" +
 	"\x06policy\x18\x02 \x01(\v2\".academic.ranking.v1.RankingPolicyR\x06policy\x127\n" +
 	"\x05scope\x18\x03 \x01(\v2!.academic.ranking.v1.RankingScopeR\x05scope\x129\n" +
 	"\x05rules\x18\x04 \x01(\v2#.academic.ranking.v1.RankingRuleSetR\x05rules\x12!\n" +
-	"\frequest_hash\x18\x05 \x01(\tR\vrequestHash\"\x8d\x01\n" +
+	"\frequest_hash\x18\x05 \x01(\tR\vrequestHash\x12:\n" +
+	"\x19confirmed_courses_version\x18\x06 \x01(\tR\x17confirmedCoursesVersion\"\xc5\x01\n" +
 	"\x16PrepareRankingResponse\x12!\n" +
 	"\fview_version\x18\x01 \x01(\tR\vviewVersion\x12P\n" +
-	"\rreused_result\x18\x02 \x01(\v2+.academic.ranking.v1.ComputeRankingResponseR\freusedResult\"\x80\x03\n" +
+	"\rreused_result\x18\x02 \x01(\v2+.academic.ranking.v1.ComputeRankingResponseR\freusedResult\x126\n" +
+	"\x17visible_courses_version\x18\x03 \x01(\tR\x15visibleCoursesVersion\"\x80\x03\n" +
 	"\x15ComputeRankingRequest\x12=\n" +
 	"\asubject\x18\x01 \x01(\v2#.academic.ranking.v1.RankingSubjectR\asubject\x12:\n" +
 	"\x06policy\x18\x02 \x01(\v2\".academic.ranking.v1.RankingPolicyR\x06policy\x127\n" +
