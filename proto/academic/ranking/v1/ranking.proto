@@ -11,7 +11,9 @@ option go_package = "github.com/LDouble/campus-academic-api/pkg/academic/ranking
 service AcademicRankingService {
   rpc GetRankingOptions(GetRankingOptionsRequest) returns (GetRankingOptionsResponse);
   rpc ListRankingCourses(ListRankingCoursesRequest) returns (ListRankingCoursesResponse);
+  // PrepareRanking 校验用户确认的课程范围，并返回短时数据一致性校验所需版本。
   rpc PrepareRanking(PrepareRankingRequest) returns (PrepareRankingResponse);
+  // ComputeRanking 每次调用均实时计算，平台对每个成功的计算请求独立计次。
   rpc ComputeRanking(ComputeRankingRequest) returns (ComputeRankingResponse);
   rpc GetActualMajor(GetActualMajorRequest) returns (GetActualMajorResponse);
   rpc ListActualMajorCandidates(ListActualMajorCandidatesRequest) returns (ListActualMajorCandidatesResponse);
@@ -188,6 +190,8 @@ message GetRankingOptionsResponse {
   RankingVersions versions = 6;
   string visibility_notice = 7;
   repeated string available_attempt_presets = 8;
+  // visible_courses_version 标识当前可操作的课程与类型范围，仅成绩变化时保持不变。
+  string visible_courses_version = 9;
 }
 
 message ListRankingCoursesRequest {
@@ -211,12 +215,17 @@ message PrepareRankingRequest {
   RankingScope scope = 3;
   RankingRuleSet rules = 4;
   string request_hash = 5;
+  // confirmed_courses_version 为空时兼容旧调用方，非空且范围变化时返回
+  // FailedPrecondition / ranking_courses_changed，要求用户重新确认课程范围。
+  string confirmed_courses_version = 6;
 }
 
 message PrepareRankingResponse {
   string view_version = 1;
-  // reused_result 仅限同一请求人和有效版本，未命中时为空。
+  // reused_result 保留为历史响应字段，新服务始终不填充。
   ComputeRankingResponse reused_result = 2;
+  // visible_courses_version 返回服务端核验后的范围版本，供调用方确认已支持范围校验。
+  string visible_courses_version = 3;
 }
 
 message ComputeRankingRequest {
@@ -225,8 +234,14 @@ message ComputeRankingRequest {
   RankingScope scope = 3;
   RankingRuleSet rules = 4;
   string request_hash = 5;
+  // expected_view_version 供旧调用方校验 Prepare 返回的数据版本。
   string expected_view_version = 6;
+  // operation_id 可选，仅用于请求追踪，不用于请求去重或复用结果。
   string operation_id = 7;
+  // confirmed_courses_version 非空时，在本次计算的一致视图中直接校验课程范围，
+  // 无需 Prepare；范围变化返回 FailedPrecondition / ranking_courses_changed。
+  // 同时传入 expected_view_version 时，课程范围和数据版本都必须匹配。
+  string confirmed_courses_version = 8;
 }
 
 message ExclusionCount {
@@ -261,6 +276,7 @@ message ComputeRankingResponse {
   repeated CourseExplanation courses = 6;
   RankingVersions versions = 7;
   google.protobuf.Timestamp data_cutoff = 8;
+  // reused 保留为历史响应字段，新服务始终返回 false。
   bool reused = 9;
   string view_version = 10;
   PopulationSummary population = 11;
