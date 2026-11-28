@@ -38,7 +38,9 @@ const (
 type AcademicRankingServiceClient interface {
 	GetRankingOptions(ctx context.Context, in *GetRankingOptionsRequest, opts ...grpc.CallOption) (*GetRankingOptionsResponse, error)
 	ListRankingCourses(ctx context.Context, in *ListRankingCoursesRequest, opts ...grpc.CallOption) (*ListRankingCoursesResponse, error)
+	// PrepareRanking 校验用户确认的课程范围，并返回短时数据一致性校验所需版本。
 	PrepareRanking(ctx context.Context, in *PrepareRankingRequest, opts ...grpc.CallOption) (*PrepareRankingResponse, error)
+	// ComputeRanking 每次调用均实时计算，平台对每个成功的计算请求独立计次。
 	ComputeRanking(ctx context.Context, in *ComputeRankingRequest, opts ...grpc.CallOption) (*ComputeRankingResponse, error)
 	GetActualMajor(ctx context.Context, in *GetActualMajorRequest, opts ...grpc.CallOption) (*GetActualMajorResponse, error)
 	ListActualMajorCandidates(ctx context.Context, in *ListActualMajorCandidatesRequest, opts ...grpc.CallOption) (*ListActualMajorCandidatesResponse, error)
@@ -143,7 +145,9 @@ func (c *academicRankingServiceClient) RebuildProjection(ctx context.Context, in
 type AcademicRankingServiceServer interface {
 	GetRankingOptions(context.Context, *GetRankingOptionsRequest) (*GetRankingOptionsResponse, error)
 	ListRankingCourses(context.Context, *ListRankingCoursesRequest) (*ListRankingCoursesResponse, error)
+	// PrepareRanking 校验用户确认的课程范围，并返回短时数据一致性校验所需版本。
 	PrepareRanking(context.Context, *PrepareRankingRequest) (*PrepareRankingResponse, error)
+	// ComputeRanking 每次调用均实时计算，平台对每个成功的计算请求独立计次。
 	ComputeRanking(context.Context, *ComputeRankingRequest) (*ComputeRankingResponse, error)
 	GetActualMajor(context.Context, *GetActualMajorRequest) (*GetActualMajorResponse, error)
 	ListActualMajorCandidates(context.Context, *ListActualMajorCandidatesRequest) (*ListActualMajorCandidatesResponse, error)

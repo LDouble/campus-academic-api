@@ -1781,7 +1781,7 @@ func (x *PrepareRankingRequest) GetConfirmedCoursesVersion() string {
 type PrepareRankingResponse struct {
 	state       protoimpl.MessageState `protogen:"open.v1"`
 	ViewVersion string                 `protobuf:"bytes,1,opt,name=view_version,json=viewVersion,proto3" json:"view_version,omitempty"`
-	// reused_result 仅限同一请求人和有效版本，未命中时为空。
+	// reused_result 保留为历史响应字段，新服务始终不填充。
 	ReusedResult *ComputeRankingResponse `protobuf:"bytes,2,opt,name=reused_result,json=reusedResult,proto3" json:"reused_result,omitempty"`
 	// visible_courses_version 返回服务端核验后的范围版本，供调用方确认已支持范围校验。
 	VisibleCoursesVersion string `protobuf:"bytes,3,opt,name=visible_courses_version,json=visibleCoursesVersion,proto3" json:"visible_courses_version,omitempty"`
@@ -1848,9 +1848,10 @@ type ComputeRankingRequest struct {
 	Rules               *RankingRuleSet        `protobuf:"bytes,4,opt,name=rules,proto3" json:"rules,omitempty"`
 	RequestHash         string                 `protobuf:"bytes,5,opt,name=request_hash,json=requestHash,proto3" json:"request_hash,omitempty"`
 	ExpectedViewVersion string                 `protobuf:"bytes,6,opt,name=expected_view_version,json=expectedViewVersion,proto3" json:"expected_view_version,omitempty"`
-	OperationId         string                 `protobuf:"bytes,7,opt,name=operation_id,json=operationId,proto3" json:"operation_id,omitempty"`
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
+	// operation_id 可选，仅用于请求追踪，不用于请求去重或复用结果。
+	OperationId   string `protobuf:"bytes,7,opt,name=operation_id,json=operationId,proto3" json:"operation_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ComputeRankingRequest) Reset() {
@@ -2135,18 +2136,19 @@ func (x *CourseExplanation) GetAttemptEvidence() []string {
 type ComputeRankingResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// outcome 为 ranked、insufficient_participants、insufficient_courses 或 not_eligible。
-	Outcome       string                 `protobuf:"bytes,1,opt,name=outcome,proto3" json:"outcome,omitempty"`
-	Rank          uint32                 `protobuf:"varint,2,opt,name=rank,proto3" json:"rank,omitempty"`
-	Participants  uint32                 `protobuf:"varint,3,opt,name=participants,proto3" json:"participants,omitempty"`
-	TotalScore    string                 `protobuf:"bytes,4,opt,name=total_score,json=totalScore,proto3" json:"total_score,omitempty"`
-	Exclusions    []*ExclusionCount      `protobuf:"bytes,5,rep,name=exclusions,proto3" json:"exclusions,omitempty"`
-	Courses       []*CourseExplanation   `protobuf:"bytes,6,rep,name=courses,proto3" json:"courses,omitempty"`
-	Versions      *RankingVersions       `protobuf:"bytes,7,opt,name=versions,proto3" json:"versions,omitempty"`
-	DataCutoff    *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=data_cutoff,json=dataCutoff,proto3" json:"data_cutoff,omitempty"`
-	Reused        bool                   `protobuf:"varint,9,opt,name=reused,proto3" json:"reused,omitempty"`
-	ViewVersion   string                 `protobuf:"bytes,10,opt,name=view_version,json=viewVersion,proto3" json:"view_version,omitempty"`
-	Population    *PopulationSummary     `protobuf:"bytes,11,opt,name=population,proto3" json:"population,omitempty"`
-	Reason        string                 `protobuf:"bytes,12,opt,name=reason,proto3" json:"reason,omitempty"`
+	Outcome      string                 `protobuf:"bytes,1,opt,name=outcome,proto3" json:"outcome,omitempty"`
+	Rank         uint32                 `protobuf:"varint,2,opt,name=rank,proto3" json:"rank,omitempty"`
+	Participants uint32                 `protobuf:"varint,3,opt,name=participants,proto3" json:"participants,omitempty"`
+	TotalScore   string                 `protobuf:"bytes,4,opt,name=total_score,json=totalScore,proto3" json:"total_score,omitempty"`
+	Exclusions   []*ExclusionCount      `protobuf:"bytes,5,rep,name=exclusions,proto3" json:"exclusions,omitempty"`
+	Courses      []*CourseExplanation   `protobuf:"bytes,6,rep,name=courses,proto3" json:"courses,omitempty"`
+	Versions     *RankingVersions       `protobuf:"bytes,7,opt,name=versions,proto3" json:"versions,omitempty"`
+	DataCutoff   *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=data_cutoff,json=dataCutoff,proto3" json:"data_cutoff,omitempty"`
+	// reused 保留为历史响应字段，新服务始终返回 false。
+	Reused        bool               `protobuf:"varint,9,opt,name=reused,proto3" json:"reused,omitempty"`
+	ViewVersion   string             `protobuf:"bytes,10,opt,name=view_version,json=viewVersion,proto3" json:"view_version,omitempty"`
+	Population    *PopulationSummary `protobuf:"bytes,11,opt,name=population,proto3" json:"population,omitempty"`
+	Reason        string             `protobuf:"bytes,12,opt,name=reason,proto3" json:"reason,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
