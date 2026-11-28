@@ -1841,17 +1841,22 @@ func (x *PrepareRankingResponse) GetVisibleCoursesVersion() string {
 }
 
 type ComputeRankingRequest struct {
-	state               protoimpl.MessageState `protogen:"open.v1"`
-	Subject             *RankingSubject        `protobuf:"bytes,1,opt,name=subject,proto3" json:"subject,omitempty"`
-	Policy              *RankingPolicy         `protobuf:"bytes,2,opt,name=policy,proto3" json:"policy,omitempty"`
-	Scope               *RankingScope          `protobuf:"bytes,3,opt,name=scope,proto3" json:"scope,omitempty"`
-	Rules               *RankingRuleSet        `protobuf:"bytes,4,opt,name=rules,proto3" json:"rules,omitempty"`
-	RequestHash         string                 `protobuf:"bytes,5,opt,name=request_hash,json=requestHash,proto3" json:"request_hash,omitempty"`
-	ExpectedViewVersion string                 `protobuf:"bytes,6,opt,name=expected_view_version,json=expectedViewVersion,proto3" json:"expected_view_version,omitempty"`
+	state       protoimpl.MessageState `protogen:"open.v1"`
+	Subject     *RankingSubject        `protobuf:"bytes,1,opt,name=subject,proto3" json:"subject,omitempty"`
+	Policy      *RankingPolicy         `protobuf:"bytes,2,opt,name=policy,proto3" json:"policy,omitempty"`
+	Scope       *RankingScope          `protobuf:"bytes,3,opt,name=scope,proto3" json:"scope,omitempty"`
+	Rules       *RankingRuleSet        `protobuf:"bytes,4,opt,name=rules,proto3" json:"rules,omitempty"`
+	RequestHash string                 `protobuf:"bytes,5,opt,name=request_hash,json=requestHash,proto3" json:"request_hash,omitempty"`
+	// expected_view_version 供旧调用方校验 Prepare 返回的数据版本。
+	ExpectedViewVersion string `protobuf:"bytes,6,opt,name=expected_view_version,json=expectedViewVersion,proto3" json:"expected_view_version,omitempty"`
 	// operation_id 可选，仅用于请求追踪，不用于请求去重或复用结果。
-	OperationId   string `protobuf:"bytes,7,opt,name=operation_id,json=operationId,proto3" json:"operation_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	OperationId string `protobuf:"bytes,7,opt,name=operation_id,json=operationId,proto3" json:"operation_id,omitempty"`
+	// confirmed_courses_version 非空时，在本次计算的一致视图中直接校验课程范围，
+	// 无需 Prepare；范围变化返回 FailedPrecondition / ranking_courses_changed。
+	// 同时传入 expected_view_version 时，课程范围和数据版本都必须匹配。
+	ConfirmedCoursesVersion string `protobuf:"bytes,8,opt,name=confirmed_courses_version,json=confirmedCoursesVersion,proto3" json:"confirmed_courses_version,omitempty"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *ComputeRankingRequest) Reset() {
@@ -1929,6 +1934,13 @@ func (x *ComputeRankingRequest) GetExpectedViewVersion() string {
 func (x *ComputeRankingRequest) GetOperationId() string {
 	if x != nil {
 		return x.OperationId
+	}
+	return ""
+}
+
+func (x *ComputeRankingRequest) GetConfirmedCoursesVersion() string {
+	if x != nil {
+		return x.ConfirmedCoursesVersion
 	}
 	return ""
 }
@@ -3012,7 +3024,7 @@ const file_academic_ranking_v1_ranking_proto_rawDesc = "" +
 	"\x16PrepareRankingResponse\x12!\n" +
 	"\fview_version\x18\x01 \x01(\tR\vviewVersion\x12P\n" +
 	"\rreused_result\x18\x02 \x01(\v2+.academic.ranking.v1.ComputeRankingResponseR\freusedResult\x126\n" +
-	"\x17visible_courses_version\x18\x03 \x01(\tR\x15visibleCoursesVersion\"\x80\x03\n" +
+	"\x17visible_courses_version\x18\x03 \x01(\tR\x15visibleCoursesVersion\"\xbc\x03\n" +
 	"\x15ComputeRankingRequest\x12=\n" +
 	"\asubject\x18\x01 \x01(\v2#.academic.ranking.v1.RankingSubjectR\asubject\x12:\n" +
 	"\x06policy\x18\x02 \x01(\v2\".academic.ranking.v1.RankingPolicyR\x06policy\x127\n" +
@@ -3020,7 +3032,8 @@ const file_academic_ranking_v1_ranking_proto_rawDesc = "" +
 	"\x05rules\x18\x04 \x01(\v2#.academic.ranking.v1.RankingRuleSetR\x05rules\x12!\n" +
 	"\frequest_hash\x18\x05 \x01(\tR\vrequestHash\x122\n" +
 	"\x15expected_view_version\x18\x06 \x01(\tR\x13expectedViewVersion\x12!\n" +
-	"\foperation_id\x18\a \x01(\tR\voperationId\">\n" +
+	"\foperation_id\x18\a \x01(\tR\voperationId\x12:\n" +
+	"\x19confirmed_courses_version\x18\b \x01(\tR\x17confirmedCoursesVersion\">\n" +
 	"\x0eExclusionCount\x12\x16\n" +
 	"\x06reason\x18\x01 \x01(\tR\x06reason\x12\x14\n" +
 	"\x05count\x18\x02 \x01(\rR\x05count\"\xf8\x03\n" +

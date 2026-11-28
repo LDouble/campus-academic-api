@@ -234,9 +234,14 @@ message ComputeRankingRequest {
   RankingScope scope = 3;
   RankingRuleSet rules = 4;
   string request_hash = 5;
+  // expected_view_version 供旧调用方校验 Prepare 返回的数据版本。
   string expected_view_version = 6;
   // operation_id 可选，仅用于请求追踪，不用于请求去重或复用结果。
   string operation_id = 7;
+  // confirmed_courses_version 非空时，在本次计算的一致视图中直接校验课程范围，
+  // 无需 Prepare；范围变化返回 FailedPrecondition / ranking_courses_changed。
+  // 同时传入 expected_view_version 时，课程范围和数据版本都必须匹配。
+  string confirmed_courses_version = 8;
 }
 
 message ExclusionCount {
